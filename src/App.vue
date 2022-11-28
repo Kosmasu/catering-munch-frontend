@@ -3,7 +3,7 @@ import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
-  <header>
+  <!-- <header>
     <img
       alt="Vue logo"
       class="logo"
@@ -16,12 +16,14 @@ import { RouterLink, RouterView } from "vue-router";
       <HelloWorld msg="MUNCH" />
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/login">Login</RouterLink>
+        <RouterLink to="/register">Register</RouterLink>
+        <RouterLink to="/admin">Admin</RouterLink>
+        <RouterLink to="/provider">Provider</RouterLink>
+        <RouterLink to="/customer">Customer</RouterLink>
       </nav>
     </div>
-  </header>
+  </header> -->
 
   <RouterView />
 </template>

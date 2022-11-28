@@ -1,7 +1,16 @@
 <template>
-  <div></div>
+  <navbar />
+  Admin Home
 </template>
+
 <script>
-export default {};
+import Navbar from "../components/AdminNavbar.vue";
+export default {
+  name: "AdminHome",
+  components: {
+    Navbar,
+  },
+};
 </script>
+
 <style></style>

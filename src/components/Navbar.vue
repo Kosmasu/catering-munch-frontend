@@ -1,12 +1,21 @@
 <template>
-  <nav class="bg-indigo-500 top-0 z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 sticky bg-navy-primary">
+  <nav
+    class="bg-indigo-500 top-0 z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 sticky bg-navy-primary"
+  >
     <div class="container mx-auto flex flex-wrap items-center justify-between">
-      <div class="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
+      <div
+        class="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start"
+      >
         <router-link
           to="/"
           class="text-lg xl:text-xl font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap text-white w-full"
         >
-          <img id="logo-stts" src="@/assets/img/istts_warna-min.png" class="inline-block mr-2">ISTTS
+          <!-- <img
+            id="logo-stts"
+            src="@/assets/img/istts_warna-min.png"
+            class="inline-block mr-2"
+          /> -->
+          MUNCH
         </router-link>
         <button
           class="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
@@ -23,58 +32,26 @@
         <ul class="flex flex-col lg:flex-row list-none mr-auto">
           <li class="flex items-center">
             <router-link
-              to="/"
+              to="/admin"
               class="lg:text-white lg:hover:text-gray-300 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs xl:text-sm uppercase"
             >
-              Home</router-link
+              Admin</router-link
             >
           </li>
           <li class="flex items-center">
             <router-link
-              to="/jalur-pendaftaran"
+              to="/provider"
               class="lg:text-white lg:hover:text-gray-300 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs xl:text-sm uppercase"
             >
-              Jalur Pendaftaran</router-link
+              Provider</router-link
             >
           </li>
           <li class="flex items-center">
             <router-link
-              to="/biaya-study"
+              to="/customer"
               class="lg:text-white lg:hover:text-gray-300 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs xl:text-sm uppercase"
             >
-              Biaya Study</router-link
-            >
-          </li>
-          <li class="flex items-center">
-            <router-link
-              to="/beasiswa-pmb"
-              class="lg:text-white lg:hover:text-gray-300 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs xl:text-sm uppercase"
-            >
-              Beasiswa</router-link
-            >
-          </li>
-          <li class="flex items-center">
-            <a
-              href="https://infopmb.istts.ac.id/pilih-prodi/"
-              class="lg:text-white lg:hover:text-gray-300 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs xl:text-sm uppercase"
-            >
-              Informasi Jurusan</a
-            >
-          </li>
-          <li class="flex items-center lg:hidden">
-            <router-link
-              to="/pendaftaran-online-d3-s1"
-              class="lg:text-white lg:hover:text-gray-300 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs xl:text-sm uppercase"
-            >
-              Pendaftaran D-3 & S-1</router-link
-            >
-          </li>
-          <li class="flex items-center lg:hidden">
-            <router-link
-              to="/pendaftaran-online-s2"
-              class="lg:text-white lg:hover:text-gray-300 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs xl:text-sm uppercase"
-            >
-              Pendaftaran S-2</router-link
+              Customer</router-link
             >
           </li>
         </ul>
@@ -140,12 +117,12 @@ export default {
 </script>
 
 <style scoped>
+#logo-stts {
+  max-width: 32px;
+}
+@media only screen and (min-width: 1280px) {
   #logo-stts {
-    max-width: 32px;
+    max-width: 64px;
   }
-  @media only screen and (min-width: 1280px) {
-    #logo-stts {
-      max-width: 64px;
-    }
-  }
+}
 </style>

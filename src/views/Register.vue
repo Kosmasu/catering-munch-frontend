@@ -36,22 +36,53 @@
               <span class="label-text">Password</span>
             </label>
             <input
-              type="text"
-              placeholder="password"
+              type="password"
+              placeholder="Password"
               class="input input-bordered"
             />
+          </div>
+          <div class="form-control">
             <label class="label">
-              <a href="#" class="label-text-alt link link-hover"
-                >Forgot password?</a
-              >
+              <span class="label-text">Confirm Password</span>
             </label>
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              class="input input-bordered"
+            />
+          </div>
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Alamat</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Alamat"
+              class="input input-bordered"
+            />
+          </div>
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Nomor Telepon</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Alamat"
+              class="input input-bordered"
+            />
           </div>
           <div class="form-control mt-6">
             <button class="btn btn-primary">Register</button>
           </div>
           <label class="label">
+            Already have account?
             <a href="/login" class="label-text-alt link link-hover"
-              >Already have account? Login Now!</a
+              >Login Now!</a
+            >
+          </label>
+          <label class="label">
+            <a href="/" class="label-text-alt link link-hover"
+              >&lt; Back to Home</a
             >
           </label>
         </div>

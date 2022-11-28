@@ -30,18 +30,19 @@
               placeholder="Password"
               class="input input-bordered"
             />
-            <label class="label">
-              <a href="#" class="label-text-alt link link-hover"
-                >Forgot password?</a
-              >
-            </label>
           </div>
           <div class="form-control mt-6">
             <button class="btn btn-primary">Login</button>
           </div>
           <label class="label">
+            No account?
             <a href="/register" class="label-text-alt link link-hover"
-              >No account? Register Now!</a
+              >Register Now!</a
+            >
+          </label>
+          <label class="label">
+            <a href="/" class="label-text-alt link link-hover"
+              >&lt; Back to Home</a
             >
           </label>
         </div>

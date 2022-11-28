@@ -1,6 +1,6 @@
 <template>
   <navbar-vue/>
-  Landing Page gais
+  Landing Page
 </template>
 
 <script>
