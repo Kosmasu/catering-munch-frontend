@@ -53,6 +53,31 @@ const router = createRouter({
       component: ProviderHome,
     },
     {
+      path: "/provider/menus",
+      name: "provider-menus",
+      component: ProviderMenus,
+    },
+    {
+      path: "/provider/menus/detail",
+      name: "provider-menus-detail",
+      component: ProviderMenusDetail,
+    },
+    {
+      path: "/provider/menus/add",
+      name: "provider-menus-add",
+      component: ProviderMenusAdd,
+    },
+    {
+      path: "/provider/menus/edit",
+      name: "provider-menus-edit",
+      component: ProviderMenusEdit,
+    },
+    {
+      path: "/provider/history",
+      name: "provider-history",
+      component: ProviderHistory,
+    },
+    {
       path: "/customer",
       name: "customer",
       component: CustomerHome,

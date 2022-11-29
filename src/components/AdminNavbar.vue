@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar bg-base-100">
+  <div class="navbar bg-primary-content">
     <div class="navbar-start">
       <div class="dropdown">
         <label tabindex="0" class="btn btn-ghost lg:hidden">
@@ -8,7 +8,7 @@
             class="h-5 w-5"
             fill="none"
             viewBox="0 0 24 24"
-            stroke="currentColor"
+            stroke="white"
           >
             <path
               stroke-linecap="round"
@@ -22,64 +22,54 @@
           tabindex="0"
           class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
         >
-          <li><a>Item 1</a></li>
-          <li tabindex="0">
-            <a class="justify-between">
-              Parent
-              <svg
-                class="fill-current"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
-                />
-              </svg>
-            </a>
-            <ul class="p-2">
-              <li><a>Submenu 1</a></li>
-              <li><a>Submenu 2</a></li>
-            </ul>
+          <li v-bind:class="getPage('admin-customers')">
+            <RouterLink to="/admin/customers">Customers</RouterLink>
           </li>
-          <li><a>Item 3</a></li>
+          <li v-bind:class="getPage('admin-providers')">
+            <RouterLink to="/admin/providers">Providers</RouterLink>
+          </li>
+          <li v-bind:class="getPage('admin-history')">
+            <RouterLink to="/admin/history">History</RouterLink>
+          </li>
         </ul>
       </div>
-      <a class="btn btn-ghost normal-case text-xl">daisyUI</a>
-    </div>
-    <div class="navbar-center hidden lg:flex">
-      <ul class="menu menu-horizontal p-0">
-        <li><a>Item 1</a></li>
-        <li tabindex="0">
-          <a>
-            Parent
-            <svg
-              class="fill-current"
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
-              />
-            </svg>
-          </a>
-          <ul class="p-2">
-            <li><a>Submenu 1</a></li>
-            <li><a>Submenu 2</a></li>
-          </ul>
-        </li>
-        <li><a>Item 3</a></li>
-      </ul>
+      <button
+        class="btn btn-ghost normal-case text-xl text-primary hover:btn-primary"
+      >
+        <RouterLink to="/admin"> Munch </RouterLink>
+      </button>
+      <div class="hidden lg:flex">
+        <ul class="menu menu-horizontal p-0 space-x-2 rounded-full">
+          <li v-bind:class="getPage('admin-customers')">
+            <RouterLink to="/admin/customers">Customers</RouterLink>
+          </li>
+          <li v-bind:class="getPage('admin-providers')">
+            <RouterLink to="/admin/providers">Providers</RouterLink>
+          </li>
+          <li v-bind:class="getPage('admin-history')">
+            <RouterLink to="/admin/history">History</RouterLink>
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="navbar-end">
-      <a class="btn">Get started</a>
+      <button class="btn btn-primary">
+        <RouterLink to="/">Logout</RouterLink>
+      </button>
     </div>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  methods: {
+    getPage(name) {
+      return {
+        "bg-primary rounded-full": this.$route.name == name,
+        "text-primary hover:bg-primary;text-primary-focus":
+          this.$route.name != name,
+      };
+    },
+  },
+};
 </script>
 <style></style>
