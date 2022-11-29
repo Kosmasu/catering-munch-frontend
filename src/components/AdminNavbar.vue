@@ -65,7 +65,7 @@ export default {
     getPage(name) {
       return {
         "bg-primary rounded-full": this.$route.name == name,
-        "text-primary hover:bg-primary;text-primary-focus":
+        "text-primary hover:bg-primary hover:text-neutral":
           this.$route.name != name,
       };
     },
