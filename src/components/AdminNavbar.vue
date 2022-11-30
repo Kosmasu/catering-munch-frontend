@@ -36,7 +36,7 @@
       <button
         class="btn btn-ghost normal-case text-xl text-primary hover:btn-primary"
       >
-        <RouterLink to="/admin"> Munch </RouterLink>
+        <RouterLink to="/admin">Munch</RouterLink>
       </button>
       <div class="hidden lg:flex">
         <ul class="menu menu-horizontal p-0 space-x-2 rounded-full">

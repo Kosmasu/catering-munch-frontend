@@ -78,8 +78,8 @@ export default {
   },
   data() {
     return {
-      registeredAccount: 0,
-      totalCustomer: 1,
+      registeredAccount: 4,
+      totalCustomer: 2,
       totalProvider: 1,
       totalUnverified: 1,
       providerList: [

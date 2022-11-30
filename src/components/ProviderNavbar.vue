@@ -33,7 +33,7 @@
       <button
         class="btn btn-ghost normal-case text-xl text-accent-content hover:btn-accent-focus"
       >
-        <RouterLink to="/provider"> Munch </RouterLink>
+        <RouterLink to="/provider">Munch</RouterLink>
       </button>
       <div class="hidden lg:flex">
         <ul class="menu menu-horizontal p-0 space-x-2 rounded-full">
@@ -47,9 +47,21 @@
       </div>
     </div>
     <div class="navbar-end">
-      <button class="btn btn-accent-focus">
-        <RouterLink to="/">Welcome, Provider</RouterLink>
-      </button>
+      <div class="dropdown dropdown-hover">
+        <label tabindex="0" class="btn">
+            Welcome, Provider
+          <img
+            src="https://placeimg.com/80/80/people"
+            class="ml-4 -mr-4 w-11 rounded-full"
+          />
+        </label>
+        <ul
+          tabindex="0"
+          class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+        >
+          <li><RouterLink to="/">Logout</RouterLink></li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>

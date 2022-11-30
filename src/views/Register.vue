@@ -2,10 +2,15 @@
   <div class="hero min-h-screen bg-base-200">
     <div class="hero-content flex-col lg:flex-row-reverse w-full">
       <div class="text-center lg:text-left">
+        <img
+          src="@/assets/munch.png"
+          alt=""
+          class="hidden rounded-lg xl:block"
+        />
         <h1 class="text-5xl font-bold">REGISTER</h1>
         <p class="text-lg py-6">Explore new home cookings through catering</p>
       </div>
-      <div class="card flex-shrink w-full max-w-lg shadow-2xl bg-base-100">
+      <div class="card flex-shrink w-full max-w-2xl shadow-2xl bg-base-100">
         <div class="card-body">
           <form @submit.prevent="register" class="form-control">
             <!-- NAMA -->

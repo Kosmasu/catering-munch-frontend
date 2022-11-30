@@ -6,8 +6,8 @@
       <div class="flex space-x-8">
         <div>
           <div>Showing :</div>
-          <div v-if="menuList.length <= 1">{{ menuList.length }} Menu</div>
-          <div v-else>{{ menuList.length }} Menus</div>
+          <div v-if="menuSearch.length <= 1">{{ menuSearch.length }} Menu</div>
+          <div v-else>{{ menuSearch.length }} Menus</div>
         </div>
         <form class="form-control">
           <div class="input-group">
@@ -37,19 +37,36 @@
         </form>
       </div>
     </div>
+    <RouterLink to="/provider/menus/add">
+      <button class="btn btn-success rounded-md">Add New Menu</button>
+    </RouterLink>
     <div class="overflow-x-auto">
       <table class="table table-compact w-full text-center">
-        <tbody>
-          <tr>
+        <thead></thead>
+        <tbody v-if="menuList.length > 0">
+          <tr v-for="(menu, index) in menuSearch" :key="index" class="hover">
+            <td>{{ index + 1 }}</td>
             <td>
-              <img src="" alt="Foto" />
+              <img src="@/assets/munch.png" class="w-24" />
             </td>
-            <td>Detail Item</td>
+            <td>{{ menu.menu_nama }}</td>
+            <td>Rp. {{ menu.menu_harga.toLocaleString("id-ID") }},00</td>
             <td>
-              <button class="btn btn-accent-content">Detail</button>
+              <form @submit.prevent="submit">
+                <button
+                  @click.prevent="detail(menu.id)"
+                  class="btn btn-primary rounded-lg"
+                >
+                  Detail
+                </button>
+              </form>
             </td>
           </tr>
-          <button class="btn btn-accent-content">Add New Menu</button>
+        </tbody>
+        <tbody v-else>
+          <tr>
+            <td colspan="3">Belum ada menu saat ini!</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -64,10 +81,40 @@ export default {
   },
   data() {
     return {
-      menuList: [],
+      query: "",
+      menuList: [
+        {
+          id: 1,
+          menu_nama: "Jiwa Toast",
+          menu_harga: 35000,
+          menu_foto: "munch.png",
+          menu_status: "Tersedia",
+        },
+        {
+          id: 2,
+          menu_nama: "Mixue",
+          menu_harga: 15000,
+          menu_foto: "munch.png",
+          menu_status: "Tidak Tersedia",
+        },
+      ],
     };
   },
-  methods: {},
+  computed: {
+    menuSearch() {
+      return this.menuList.filter((menu) => {
+        return menu.menu_nama.indexOf(this.query) > -1;
+      });
+    },
+  },
+  methods: {
+    submit(id) {
+      console.log(this.menuList.find((menu) => menu.id == id));
+    },
+    detail(id) {
+      this.submit(id);
+    },
+  },
 };
 </script>
 <style></style>

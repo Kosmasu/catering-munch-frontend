@@ -6,10 +6,10 @@
       <div class="flex space-x-8">
         <div>
           <div>Showing :</div>
-          <div v-if="customerList.length <= 1">
-            {{ customerList.length }} Customer
+          <div v-if="customerSearch.length <= 1">
+            {{ customerSearch.length }} Customer
           </div>
-          <div v-else>{{ customerList.length }} Customers</div>
+          <div v-else>{{ customerSearch.length }} Customers</div>
         </div>
         <form class="form-control">
           <div class="input-group">

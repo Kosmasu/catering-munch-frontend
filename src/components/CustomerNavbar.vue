@@ -30,7 +30,7 @@
       <button
         class="btn btn-ghost normal-case text-xl text-accent-content hover:btn-accent-focus"
       >
-        <RouterLink to="/customer"> Munch </RouterLink>
+        <RouterLink to="/customer">Munch</RouterLink>
       </button>
       <div class="hidden lg:flex">
         <ul class="menu menu-horizontal p-0 space-x-2 rounded-full">

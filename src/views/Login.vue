@@ -2,6 +2,11 @@
   <div class="hero min-h-screen bg-base-200">
     <div class="hero-content flex-col lg:flex-row-reverse w-full">
       <div class="text-center lg:text-left">
+        <img
+          src="@/assets/munch.png"
+          alt=""
+          class="hidden rounded-lg xl:block"
+        />
         <h1 class="text-5xl font-bold">LOGIN</h1>
         <p class="text-lg py-6">Enjoy the vast selection of catering service</p>
       </div>
