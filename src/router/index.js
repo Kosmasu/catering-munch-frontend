@@ -14,9 +14,16 @@ import ProviderMenusEdit from "../views/Provider/MenusEdit.vue";
 import ProviderHistory from "../views/Provider/History.vue";
 import CustomerHome from "../views/Customer/Home.vue";
 
+import CobaAxios from "../views/CobaAxios.vue";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: "/coba-axios",
+      name: "coba-axios",
+      component: CobaAxios,
+    },
     {
       path: "/",
       name: "landing-page",
