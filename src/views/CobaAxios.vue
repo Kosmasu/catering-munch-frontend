@@ -2,14 +2,20 @@
   <div class="p-8">
     <h1 class="text-3xl">Customers:</h1>
     <div v-if="this.customers">
-      <pre> 
+      <pre>
+ 
         {{ this.customers }}
       </pre>
     </div>
-    <font-awesome-icon v-else icon="fa-solid fa-spinner" class="text-6xl animate-spin"/>
+    <font-awesome-icon
+      v-else
+      icon="fa-solid fa-spinner"
+      class="text-6xl animate-spin"
+    />
     <h1 class="text-3xl">Providers:</h1>
     <div v-if="this.providers">
-      <pre> 
+      <pre>
+ 
         {{ this.providers }}
       </pre>
     </div>
@@ -17,28 +23,25 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'pinia';
-import { useAdminStore } from '@/stores/AdminStore'
+import { mapActions, mapState } from "pinia";
+import { useAdminStore } from "@/stores/AdminStore";
 
 export default {
   name: "CobaAxios",
   data() {
-    return {
-
-    }
+    return {};
   },
   methods: {
-    ...mapActions(useAdminStore, ['fetchCustomers'])
+    ...mapActions(useAdminStore, ["fetchCustomers", "fetchProviders"]),
   },
   computed: {
-    ...mapState(useAdminStore, ['customers', 'providers'])
+    ...mapState(useAdminStore, ["customers", "providers"]),
   },
   created() {
     this.fetchCustomers();
-  }
-}
+    this.fetchProviders();
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
