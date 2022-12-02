@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-primary">
-    <div class="container">
+  <div class="bg-base-100 drop-shadow-md">
+    <div class="container ">
       <div class="navbar">
         <div class="navbar-start">
           <div class="dropdown">
@@ -38,11 +38,11 @@
             <RouterLink to="/provider">Munch</RouterLink>
           </button>
           <div class="hidden lg:flex">
-            <ul class="menu menu-horizontal p-0 space-x-2 rounded-full">
-              <li v-bind:class="getPage('provider-menus')">
+            <ul class="menu menu-horizontal rounded-box p-0 space-x-2">
+              <li class="rounded-full" v-bind:class="getPage('provider-menus')">
                 <RouterLink to="/provider/menus">Menus</RouterLink>
               </li>
-              <li v-bind:class="getPage('provider-history')">
+              <li class="rounded-lg" v-bind:class="getPage('provider-history')">
                 <RouterLink to="/provider/history">History</RouterLink>
               </li>
             </ul>
@@ -74,8 +74,8 @@ export default {
   methods: {
     getPage(name) {
       return {
-        "bg-accent-content text-accent rounded-full": this.$route.name == name,
-        "text-accent-content hover:bg-accent-content hover:text-accent rounded-full":
+        "font-semibold rounded-full": this.$route.name == name,
+        "rounded-full":
           this.$route.name != name,
       };
     },
