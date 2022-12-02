@@ -71,7 +71,7 @@ export default {
     getPage(name) {
       return {
         "bg-accent-content text-accent rounded-full": this.$route.name == name,
-        "text-accent-content hover:bg-accent-content hover:text-accent":
+        "text-accent-content hover:bg-accent-content hover:text-accent rounded-full":
           this.$route.name != name,
       };
     },
