@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-munch drop-shadow-md">
+  <div class="bg-base-100 drop-shadow-md">
     <div class="container ">
       <div class="navbar">
         <div class="navbar-start">
@@ -35,15 +35,19 @@
           <button
             class="btn btn-ghost normal-case text-xl text-accent-content hover:btn-accent-focus"
           >
-            <RouterLink to="/provider">Munch</RouterLink>
+            <RouterLink to="/provider">
+              <img src="@/assets/munch.png" alt="" class="h-12">
+            </RouterLink>
           </button>
           <div class="hidden lg:flex">
-            <ul class="menu menu-horizontal rounded-box p-0 space-x-2">
-              <li class="rounded-full" v-bind:class="getPage('provider-menus')">
+            <ul class="menu menu-horizontal rounded-box p-2 space-x-2">
+              <li class="relative" v-bind:class="getPage('provider-menus')">
                 <RouterLink to="/provider/menus">Menus</RouterLink>
+                <div v-if="isThisPage('provider-menus')" class="absolute h-1 w-full bg-munch p-0 rounded bottom-0"></div>
               </li>
-              <li class="rounded-lg" v-bind:class="getPage('provider-history')">
+              <li class="relative" v-bind:class="getPage('provider-history')">
                 <RouterLink to="/provider/history">History</RouterLink>
+                <div v-if="isThisPage('provider-history')" class="absolute h-1 w-full bg-munch p-0 rounded bottom-0"></div>
               </li>
             </ul>
           </div>
@@ -72,11 +76,13 @@
 <script>
 export default {
   methods: {
+    isThisPage(name) {
+      return this.$route.name == name
+    },
     getPage(name) {
       return {
-        "font-semibold rounded-full": this.$route.name == name,
-        "rounded-full":
-          this.$route.name != name,
+        "font-semibold": this.isThisPage(name),
+        // "rounded-full": !this.isThisPage(name),
       };
     },
   },
