@@ -1,6 +1,6 @@
 <template>
   <navbar />
-  <div class="border-solid border-2 rounded-md m-8 p-4">
+  <div class="border-solid border-2 rounded-md m-8 p-4 space-y-2">
     <div class="flex justify-between mb-8">
       <div class="text-3xl">List of Menus</div>
       <div class="flex space-x-8">
