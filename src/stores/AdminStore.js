@@ -2,6 +2,8 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import MunchService from '@/MunchService'
 
+// composition sama option
+// ini option api
 export const useAdminStore = defineStore('AdminStore', {
   // state itu data
   state: ()=>({
