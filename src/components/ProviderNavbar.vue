@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-base-100 drop-shadow-md">
+  <div class="bg-munch drop-shadow-md">
     <div class="container ">
       <div class="navbar">
         <div class="navbar-start">
