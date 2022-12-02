@@ -1,5 +1,22 @@
 <template>
-  <div class="bg-base-100 drop-shadow-md">
+  <div class="bg-base-100 drop-shadow-md min-h-screen">
+    <ul class="menu flex flex-col w-full pt-6 space-y-4">
+      <RouterLink to="/admin" class="btn btn-ghost">
+        <img src="@/assets/munch.png" alt="" class="h-12" />
+      </RouterLink>
+      <li v-bind:class="getPage('admin-customers')">
+        <RouterLink to="/admin/customers">Customers</RouterLink>
+      </li>
+      <li v-bind:class="getPage('admin-providers')">
+        <RouterLink to="/admin/providers">Providers</RouterLink>
+      </li>
+      <li v-bind:class="getPage('admin-history')">
+        <RouterLink to="/admin/history">History</RouterLink>
+      </li>
+      <RouterLink to="/" class="btn btn-primary">Logout</RouterLink>
+    </ul>
+  </div>
+  <!-- <div class="bg-base-100 drop-shadow-md">
     <div class="container">
       <div class="navbar">
         <div class="navbar-start">
@@ -73,7 +90,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 <script>
 export default {
@@ -83,7 +100,7 @@ export default {
     },
     getPage(name) {
       return {
-        "font-semibold": this.isThisPage(name),
+        "bordered font-semibold text-primary": this.isThisPage(name),
       };
     },
   },
