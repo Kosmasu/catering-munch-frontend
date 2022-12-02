@@ -3,24 +3,36 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     colors: {
-      munch: '#73853f'
+      munch: "#73853f",
     },
     extend: {},
     container: {
       center: true,
       padding: {
-        DEFAULT: '1rem',
-        sm: '2rem',
-        lg: '4rem',
-        xl: '5rem',
-        '2xl': '6rem',
+        DEFAULT: "1rem",
+        sm: "2rem",
+        lg: "4rem",
+        xl: "5rem",
+        "2xl": "6rem",
       },
     },
   },
   daisyui: {
-    // themes: ["cupcake"],
-    themes: ["light", "dark"],
-    // themes: ["light"],
+    themes: [
+      {
+        munch: {
+          primary: "#73853F",
+          secondary: "#EF9FBC",
+          accent: "#EEAF3A",
+          neutral: "#291334",
+          "base-100": "#FAF7F5",
+          info: "#3ABFF8",
+          success: "#36D399",
+          warning: "#FBBD23",
+          error: "#F87272",
+        },
+      },
+    ],
   },
   plugins: [require("daisyui")],
 };

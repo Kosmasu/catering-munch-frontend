@@ -82,7 +82,6 @@ export default {
     getPage(name) {
       return {
         "font-semibold": this.isThisPage(name),
-        // "rounded-full": !this.isThisPage(name),
       };
     },
   },
