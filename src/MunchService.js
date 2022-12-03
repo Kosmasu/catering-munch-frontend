@@ -25,15 +25,25 @@ class MunchService {
     });
   }
 
-  static register(name, email, alamat, telepon, password, role, tna) {
+  static register(
+    nama,
+    email,
+    alamat,
+    telepon,
+    password,
+    password_confirmation,
+    role,
+    tnc
+  ) {
     return this.http.post("/register", {
-      name,
-      email,
-      alamat,
-      telepon,
-      password,
-      role,
-      tna,
+      users_nama: nama,
+      users_email: email,
+      users_alamat: alamat,
+      users_telepon: telepon,
+      users_password: password,
+      users_password_confirmation: password_confirmation,
+      users_role: role,
+      users_tnc: tnc,
     });
   }
 
@@ -55,28 +65,28 @@ class MunchService {
   }
 
   static banUser(id) {
-    return this.http.get("/admin/users/banUser/" + id);
+    return this.http.patch("/admin/users/banUser/" + id);
   }
 
   static unbanUser(id) {
-    return this.http.get("/admin/users/unbanUser/" + id);
+    return this.http.patch("/admin/users/unbanUser/" + id);
   }
 
   static approveProvider(id) {
-    return this.http.get("/admin/users/approveProvider/" + id);
+    return this.http.patch("/admin/users/approveProvider/" + id);
   }
 
   // PROVIDER
   static menu() {
-    return this.http.get("provider/menu");
+    return this.http.get("/provider/menu");
   }
 
   static addMenu() {
-    return this.http.get("provider/menu/add");
+    return this.http.post("/provider/menu");
   }
 
   static getPesananProvider() {
-    return this.http.get("/pesanan/getPesananProvider");
+    return this.http.get("/provider/pesanan/getPesananProvider");
   }
 }
 
