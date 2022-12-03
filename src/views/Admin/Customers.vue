@@ -24,7 +24,7 @@
             />
           </div>
         </div>
-        <div class="overflow-x-auto">
+        <div class="">
           <table class="table table-compact text-center w-full">
             <thead>
               <tr>
@@ -78,7 +78,7 @@
             </tbody>
           </table>
           <div class="w-full flex justify-center">
-            <pagination-vue :maxPage="5"/>
+            <pagination-vue :maxPage="10" v-model:currentPage="currentPage"/>
           </div>
         </div>
       </div>
@@ -100,6 +100,7 @@ export default {
   data() {
     return {
       query: "",
+      currentPage: 1,
     };
   },
   methods: {
