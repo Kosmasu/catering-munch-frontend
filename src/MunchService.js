@@ -60,6 +60,10 @@ class MunchService {
     return this.http.get("provider/menu");
   }
 
+  static addMenu() {
+    return this.http.get("provider/menu/add");
+  }
+
   static getPesananProvider() {
     return this.http.get("/pesanan/getPesananProvider");
   }
