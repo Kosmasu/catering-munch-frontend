@@ -28,13 +28,13 @@
           <table class="table table-compact text-center w-full">
             <thead>
               <tr>
-                <th class="bg-primary">ID</th>
-                <th class="bg-primary">Nama</th>
-                <th class="bg-primary">Email</th>
-                <th class="bg-primary">Alamat</th>
-                <th class="bg-primary">Nomor Telepon</th>
-                <th class="bg-primary">Status</th>
-                <th class="bg-primary">Action</th>
+                <th class="bg-primary text-primary-content">ID</th>
+                <th class="bg-primary text-primary-content">Nama</th>
+                <th class="bg-primary text-primary-content">Email</th>
+                <th class="bg-primary text-primary-content">Alamat</th>
+                <th class="bg-primary text-primary-content">Nomor Telepon</th>
+                <th class="bg-primary text-primary-content">Status</th>
+                <th class="bg-primary text-primary-content">Action</th>
               </tr>
             </thead>
             <tbody v-if="customers">
@@ -77,6 +77,9 @@
               </tr>
             </tbody>
           </table>
+          <div class="w-full flex justify-center">
+            <pagination-vue :maxPage="5"/>
+          </div>
         </div>
       </div>
     </div>
@@ -86,11 +89,13 @@
 import { mapActions, mapState } from "pinia";
 import { useAdminStore } from "@/stores/AdminStore";
 import AdminLayout from "@/views/Admin/Layout.vue";
+import PaginationVue from "@/components/Pagination.vue";
 
 export default {
   name: "AdminCustomers",
   components: {
     AdminLayout,
+    PaginationVue
   },
   data() {
     return {
