@@ -13,7 +13,7 @@
       <li v-bind:class="getPage('admin-history')">
         <RouterLink to="/admin/history">History</RouterLink>
       </li>
-      <li class="justify-self-end">
+      <li>
         <RouterLink to="/" class="btn btn-primary">Logout</RouterLink>
       </li>
     </ul>
