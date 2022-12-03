@@ -14,24 +14,6 @@ export const useLoginRegisterStore = defineStore("LoginRegisterStore", {
   getters: {},
   // actions itu method
   actions: {
-    async register(name, email, alamat, telepon, password, role, tna) {
-      await MunchService.register(
-        name,
-        email,
-        alamat,
-        telepon,
-        password,
-        role,
-        tna
-      )
-        .then((response) => {
-          this.result = response.data;
-          console.log("this.result:", this.result);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
     async login(email, password) {
       await MunchService.login(email, password)
         .then((response) => {
@@ -39,13 +21,47 @@ export const useLoginRegisterStore = defineStore("LoginRegisterStore", {
           console.log("this.result:", this.result);
           if (this.result.status == "success") {
             if (this.result.user.users_role == "admin") {
-              console.log("Hello");
               router.push({ name: "admin" });
             } else if (this.result.user.users_role == "customer") {
               router.push({ name: "customer" });
             } else {
               router.push({ name: "provider" });
             }
+          } else {
+            console.log(this.result.status);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    async register(
+      nama,
+      email,
+      alamat,
+      telepon,
+      password,
+      password_confirmation,
+      role,
+      tnc
+    ) {
+      await MunchService.register(
+        nama,
+        email,
+        alamat,
+        telepon,
+        password,
+        password_confirmation,
+        role,
+        tnc
+      )
+        .then((response) => {
+          this.result = response.data;
+          console.log("this.result:", this.result);
+          if (this.result.status == "created") {
+            router.push({ name: "login" });
+          } else {
+            console.log(this.result.status);
           }
         })
         .catch((error) => {

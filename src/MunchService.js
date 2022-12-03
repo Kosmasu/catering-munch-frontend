@@ -25,15 +25,25 @@ class MunchService {
     });
   }
 
-  static register(name, email, alamat, telepon, password, role, tna) {
+  static register(
+    nama,
+    email,
+    alamat,
+    telepon,
+    password,
+    password_confirmation,
+    role,
+    tnc
+  ) {
     return this.http.post("/register", {
-      name,
-      email,
-      alamat,
-      telepon,
-      password,
-      role,
-      tna,
+      users_nama: nama,
+      users_email: email,
+      users_alamat: alamat,
+      users_telepon: telepon,
+      users_password: password,
+      users_password_confirmation: password_confirmation,
+      users_role: role,
+      users_tnc: tnc,
     });
   }
 
