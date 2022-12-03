@@ -70,17 +70,17 @@ const router = createRouter({
       component: ProviderMenus,
     },
     {
-      path: "/provider/menus/detail",
-      name: "provider-menus-detail",
-      component: ProviderMenusDetail,
-    },
-    {
       path: "/provider/menus/add",
       name: "provider-menus-add",
       component: ProviderMenusAdd,
     },
     {
-      path: "/provider/menus/edit",
+      path: "/provider/menus/detail/:id",
+      name: "provider-menus-detail",
+      component: ProviderMenusDetail,
+    },
+    {
+      path: "/provider/menus/edit/:id",
       name: "provider-menus-edit",
       component: ProviderMenusEdit,
     },

@@ -9,6 +9,11 @@ export const useAdminStore = defineStore("AdminStore", {
   state: () => ({
     customers: undefined,
     providers: undefined,
+    historyLog: undefined,
+    historyMenu: undefined,
+    historyPemesanan: undefined,
+    historyRating: undefined,
+    historyTopup: undefined,
     result: undefined,
   }),
   // getters itu computed properties (tidak boleh ada parameter)
@@ -18,8 +23,10 @@ export const useAdminStore = defineStore("AdminStore", {
     async fetchCustomers() {
       await MunchService.getAllCustomers()
         .then((response) => {
-          this.customers = response.data;
-          console.log("this.customers:", this.customers);
+          if (response.data.status == "success") {
+            this.customers = response.data.data;
+            console.log("this.customers:", this.customers);
+          }
         })
         .catch((error) => {
           console.error(error);
@@ -28,13 +35,16 @@ export const useAdminStore = defineStore("AdminStore", {
     async fetchProviders() {
       await MunchService.getAllProviders()
         .then((response) => {
-          this.providers = response.data;
-          console.log("this.providers:", this.providers);
+          if (response.data.status == "success") {
+            this.providers = response.data.data;
+            console.log("this.providers:", this.providers);
+          }
         })
         .catch((error) => {
           console.error(error);
         });
     },
+    async fetchHistoryLog() {},
     async banUser(role, id) {
       await MunchService.banUser(id)
         .then((response) => {
@@ -97,6 +107,7 @@ export const useAdminStore = defineStore("AdminStore", {
         }
       }
     },
+
     providerWaiting() {
       if (this.providers) {
         return this.providers.filter((provider) => {

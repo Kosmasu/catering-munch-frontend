@@ -18,12 +18,23 @@ class MunchService {
   });
 
   // COMMON
-  static login() {
-    return this.http.get("/login");
+  static login(email, password) {
+    return this.http.post("/login", {
+      users_email: email,
+      password,
+    });
   }
 
-  static register() {
-    return this.http.get("/register");
+  static register(name, email, alamat, telepon, password, role, tna) {
+    return this.http.post("/register", {
+      name,
+      email,
+      alamat,
+      telepon,
+      password,
+      role,
+      tna,
+    });
   }
 
   static getUser() {

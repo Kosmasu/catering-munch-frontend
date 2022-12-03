@@ -5,14 +5,16 @@
         <img
           src="@/assets/munch.png"
           alt=""
-          class="hidden rounded-lg xl:block py-4 w-96"
+          class="hidden rounded-lg lg:block py-4 w-96"
         />
-        <p class="text-center text-lg py-2">Enjoy the vast selection of catering service.</p>
+        <p class="text-center text-lg py-2">
+          Enjoy the vast selection of catering service.
+        </p>
       </div>
       <div class="card flex-shrink w-full max-w-xl shadow-2xl bg-base-100">
         <div class="card-body">
           <h1 class="text-4xl font-bold mb-4 text-primary">Login</h1>
-          <form @submit.prevent="login" class="form-control">
+          <form @submit.prevent="submit" class="form-control">
             <!-- EMAIL -->
             <label class="label">
               <span class="label-text">Email</span>
@@ -33,9 +35,7 @@
               placeholder="Password"
               class="input input-bordered"
             />
-            <div class="form-control mt-6">
-              <button class="btn btn-primary">Login</button>
-            </div>
+            <button class="btn btn-primary mt-4">Login</button>
           </form>
           <div>
             Don't have an account?
@@ -44,7 +44,7 @@
             </a>
           </div>
           <label class="label">
-            <a href="/" class="link link-hover text-secondary">
+            <a href="/" class="link link-hover text-error">
               &lt; Back to Home
             </a>
           </label>
@@ -54,18 +54,26 @@
   </div>
 </template>
 <script>
+import { mapActions, mapState } from "pinia";
+import { useLoginRegisterStore } from "@/stores/LoginRegisterStore";
+
 export default {
-  data: function () {
+  name: "Login",
+  components: {},
+  data() {
     return {
       email: "",
       password: "",
     };
   },
   methods: {
-    login() {
-      console.log(this.email);
-      console.log(this.password);
+    ...mapActions(useLoginRegisterStore, ["login"]),
+    submit() {
+      this.login(this.email, this.password);
     },
+  },
+  computed: {
+    ...mapState(useLoginRegisterStore, ["result"]),
   },
 };
 </script>
