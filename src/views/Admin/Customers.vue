@@ -1,28 +1,26 @@
 <template>
   <admin-layout>
-    <div class="">
-      <div class="border-solid border-2 rounded-md m-12 p-4">
-        <div class="flex justify-between mb-8">
-          <div class="text-3xl m-2">List of Customer</div>
-          <div class="flex space-x-8">
-            <div>
-              <div>Showing :</div>
-              <div v-if="customers">
-                <div v-if="usersSearch('customer', query).length <= 1">
-                  {{ usersSearch("customer", query).length }} Customer
-                </div>
-                <div v-else>
-                  {{ usersSearch("customer", query).length }} Customers
-                </div>
+    <div class="border-solid border-2 rounded-lg m-12 p-4">
+      <div class="flex justify-between mb-8">
+        <div class="text-3xl m-2">List of Customers</div>
+        <div class="flex space-x-8">
+          <div>
+            <div>Showing :</div>
+            <div v-if="customers">
+              <div v-if="usersSearch('customer', query).length <= 1">
+                {{ usersSearch("customer", query).length }} Customer
+              </div>
+              <div v-else>
+                {{ usersSearch("customer", query).length }} Customers
               </div>
             </div>
-            <input
-              type="text"
-              v-model="query"
-              placeholder="Search…"
-              class="input input-bordered rounded-lg"
-            />
           </div>
+          <input
+            type="text"
+            v-model="query"
+            placeholder="Search…"
+            class="input input-primary input-bordered"
+          />
         </div>
         <div class="">
           <table class="table table-compact text-center w-full">
@@ -95,7 +93,7 @@ export default {
   name: "AdminCustomers",
   components: {
     AdminLayout,
-    PaginationVue
+    PaginationVue,
   },
   data() {
     return {
@@ -118,7 +116,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(useAdminStore, ["status", "customers"]),
+    ...mapState(useAdminStore, ["result", "customers"]),
   },
   created() {
     this.fetchCustomers();

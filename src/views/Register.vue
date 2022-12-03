@@ -7,12 +7,14 @@
           alt=""
           class="hidden rounded-lg xl:block py-4 w-96"
         />
-        <p class="text-center text-lg py-2">Explore new home cookings through catering.</p>
+        <p class="text-center text-lg py-2">
+          Explore new home cookings through catering.
+        </p>
       </div>
       <div class="card flex-shrink w-full max-w-xl shadow-2xl bg-base-100">
         <div class="card-body">
           <h1 class="text-4xl font-bold mb-4 text-primary">Register</h1>
-          <form @submit.prevent="register" class="form-control">
+          <form @submit.prevent="submit" class="form-control">
             <!-- NAMA -->
             <label class="label">
               <span class="label-text">Nama</span>
@@ -69,7 +71,7 @@
             </label>
             <input
               type="password"
-              v-model="confirm"
+              v-model="password_confirmation"
               placeholder="Confirm Password"
               class="input input-bordered"
             />
@@ -104,9 +106,7 @@
                 </a>
               </span>
             </label>
-            <div class="form-control mt-4">
-              <button class="btn btn-primary">Register</button>
-            </div>
+            <button class="btn btn-primary w-full mt-4">Register</button>
           </form>
           <div>
             Already have an account?
@@ -125,30 +125,41 @@
   </div>
 </template>
 <script>
+import { mapActions, mapState } from "pinia";
+import { useLoginRegisterStore } from "@/stores/LoginRegisterStore";
+
 export default {
-  data: function () {
+  name: "Register",
+  components: {},
+  data() {
     return {
       nama: "",
       email: "",
       alamat: "",
       telepon: "",
       password: "",
-      confirm: "",
+      password_confirmation: "",
       role: "customer",
       tnc: "false",
     };
   },
   methods: {
-    register() {
-      console.log(this.nama);
-      console.log(this.email);
-      console.log(this.alamat);
-      console.log(this.telepon);
-      console.log(this.password);
-      console.log(this.confirm);
-      console.log(this.role);
-      console.log(this.tnc);
+    ...mapActions(useLoginRegisterStore, ["register"]),
+    submit() {
+      this.register(
+        this.nama,
+        this.email,
+        this.alamat,
+        this.telepon,
+        this.password,
+        this.password_confirmation,
+        this.role,
+        this.tnc
+      );
     },
+  },
+  computed: {
+    ...mapState(useLoginRegisterStore, ["result"]),
   },
 };
 </script>
