@@ -5,37 +5,46 @@
     </div>
 
     <div class="flex-1 container">
-      <div class="border-solid border-2 rounded-md m-8 p-4">
+      <div class="border-solid border-2 rounded-lg m-8 p-4">
         <div class="text-3xl m-2">Summary</div>
         <div class="divider"></div>
-        <div
-          class="border-solid border-2 rounded-md my-2 py-4 text-center text-2xl"
-        >
-          <div class="font-bold">Registered Munch Accounts</div>
-          <div v-if="customers && providers">
-            <div>{{ customers.length + providers.length }}</div>
-          </div>
-        </div>
-        <div class="grid grid-cols-3 gap-4 mb-8 text-center text-xl">
-          <div class="border-solid border-2 rounded-md py-4">
-            <div class="font-bold">Customers</div>
-            <div v-if="customers">
-              <div>{{ customers.length }}</div>
-            </div>
-          </div>
-          <div class="border-solid border-2 rounded-md py-4">
-            <div class="font-bold">Verified Providers</div>
-            <div v-if="providers">
-              <div>{{ providers.length - providerWaiting().length }}</div>
-            </div>
-          </div>
-          <div class="border-solid border-2 rounded-md py-4">
-            <div class="font-bold">Unverified Providers</div>
-            <div v-if="providers">
-              <div>{{ providerWaiting().length }}</div>
+        <div class="stats shadow w-full">
+          <div class="stat place-items-center">
+            <div class="stat-title">Registered Accounts</div>
+            <div class="stat-value">
+              <div v-if="customers && providers">
+                <div>{{ customers.length + providers.length }}</div>
+              </div>
             </div>
           </div>
         </div>
+        <div class="grid grid-cols-3 shadow w-full rounded-lg my-4">
+          <div class="stat place-items-center">
+            <div class="stat-title">Customers</div>
+            <div class="stat-value">
+              <div v-if="customers">
+                <div>{{ customers.length }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="stat place-items-center">
+            <div class="stat-title">Verified Providers</div>
+            <div class="stat-value">
+              <div v-if="providers">
+                <div>{{ providers.length - providerWaiting().length }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="stat place-items-center">
+            <div class="stat-title">Unverified Providers</div>
+            <div class="stat-value">
+              <div v-if="providers">
+                <div>{{ providerWaiting().length }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="text-2xl mb-2">Recent Provider Registration</div>
         <div class="overflow-x-auto">
           <table class="table table-compact w-full text-center">
