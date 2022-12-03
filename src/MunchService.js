@@ -17,6 +17,24 @@ class MunchService {
     },
   });
 
+  // COMMON
+  static login() {
+    return this.http.get("/login");
+  }
+
+  static register() {
+    return this.http.get("/register");
+  }
+
+  static getUser() {
+    return this.http.get("/user");
+  }
+
+  static logout() {
+    return this.http.post("/logout");
+  }
+
+  // ADMIN
   static getAllCustomers() {
     return this.http.get("/admin/users/getAllCustomers");
   }
@@ -35,6 +53,15 @@ class MunchService {
 
   static approveProvider(id) {
     return this.http.get("/admin/users/approveProvider/" + id);
+  }
+
+  // PROVIDER
+  static menu() {
+    return this.http.get("provider/menu");
+  }
+
+  static getPesananProvider() {
+    return this.http.get("/pesanan/getPesananProvider");
   }
 }
 
