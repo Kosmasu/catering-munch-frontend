@@ -14,14 +14,23 @@
         <RouterLink to="/admin/history">History</RouterLink>
       </li>
       <li>
-        <RouterLink to="/" class="btn btn-primary">Logout</RouterLink>
+        <button @click="btnLogout" class="btn btn-primary">Logout</button>
       </li>
     </ul>
   </div>
 </template>
 <script>
+import { mapActions, mapState } from "pinia";
+import { useLoginRegisterStore } from "@/stores/LoginRegisterStore";
+
 export default {
+  name: "NavbarAdmin",
+  components: {},
+  data() {
+    return {};
+  },
   methods: {
+    ...mapActions(useLoginRegisterStore, ["logout"]),
     isThisPage(name) {
       return this.$route.name == name;
     },
@@ -30,7 +39,14 @@ export default {
         "bordered font-semibold text-primary": this.isThisPage(name),
       };
     },
+    btnLogout() {
+      this.logout();
+    },
   },
+  computed: {
+    ...mapState(useLoginRegisterStore, ["result"]),
+  },
+  created() {},
 };
 </script>
 <style></style>

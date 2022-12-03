@@ -69,4 +69,15 @@ export const useLoginRegisterStore = defineStore("LoginRegisterStore", {
         });
     },
   },
+  async logout() {
+    await MunchService.logout().then((response) => {
+      this.result = response.data;
+      console.log("this.result:", this.result);
+      if (this.result.status == "success") {
+        router.push({ name: "landing-page" });
+      } else {
+        console.log(this.result.status);
+      }
+    });
+  },
 });

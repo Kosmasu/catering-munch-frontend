@@ -24,8 +24,8 @@ export const useAdminStore = defineStore("AdminStore", {
       await MunchService.getAllCustomers()
         .then((response) => {
           this.result = response.data;
-          if (result.status == "success") {
-            this.customers = result.data;
+          if (this.result.status == "success") {
+            this.customers = this.result.data;
             console.log("this.customers:", this.customers);
           }
         })
@@ -37,8 +37,8 @@ export const useAdminStore = defineStore("AdminStore", {
       await MunchService.getAllProviders()
         .then((response) => {
           this.result = response.data;
-          if (result.status == "success") {
-            this.providers = result.data;
+          if (this.result.status == "success") {
+            this.providers = this.result.data;
             console.log("this.providers:", this.providers);
           }
         })
@@ -109,7 +109,6 @@ export const useAdminStore = defineStore("AdminStore", {
         }
       }
     },
-
     providerWaiting() {
       if (this.providers) {
         return this.providers.filter((provider) => {
