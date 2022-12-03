@@ -1,11 +1,7 @@
 <template>
-  <div class="flex">
-    <div class="flex-initial w-1/5">
-      <navbar />
-    </div>
-
-    <div class="flex-1 container">
-      <div class="border-solid border-2 rounded-md m-8 p-4">
+  <admin-layout>
+    <div class="">
+      <div class="border-solid border-2 rounded-md m-12 p-4">
         <div class="flex justify-between mb-8">
           <div class="text-3xl m-2">List of Customer</div>
           <div class="flex space-x-8">
@@ -29,7 +25,7 @@
           </div>
         </div>
         <div class="overflow-x-auto">
-          <table class="table table-compact w-full text-center">
+          <table class="table table-compact text-center w-full">
             <thead>
               <tr>
                 <th class="bg-primary">ID</th>
@@ -84,17 +80,17 @@
         </div>
       </div>
     </div>
-  </div>
+  </admin-layout>
 </template>
 <script>
 import { mapActions, mapState } from "pinia";
 import { useAdminStore } from "@/stores/AdminStore";
-import Navbar from "@/components/AdminNavbar.vue";
+import AdminLayout from "@/views/Admin/Layout.vue";
 
 export default {
   name: "AdminCustomers",
   components: {
-    Navbar,
+    AdminLayout,
   },
   data() {
     return {

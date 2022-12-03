@@ -1,9 +1,5 @@
 <template>
-  <div class="flex">
-    <div class="flex-initial w-1/5">
-      <navbar />
-    </div>
-
+  <admin-layout>
     <div class="flex-1 container">
       <div class="border-solid border-2 rounded-md m-8 p-4">
         <div class="flex justify-between mb-8">
@@ -84,17 +80,19 @@
         </div>
       </div>
     </div>
-  </div>
+  </admin-layout>
 </template>
 <script>
 import { mapActions, mapState } from "pinia";
 import { useAdminStore } from "@/stores/AdminStore";
 import Navbar from "@/components/AdminNavbar.vue";
+import AdminLayout from '@/views/Admin/Layout.vue'
 
 export default {
   name: "AdminProviders",
   components: {
     Navbar,
+    AdminLayout
   },
   data() {
     return {

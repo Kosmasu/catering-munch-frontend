@@ -1,10 +1,6 @@
 <template>
-  <div class="flex">
-    <div class="flex-initial w-1/5">
-      <navbar />
-    </div>
-
-    <div class="flex-1 container">
+  <admin-layout>
+    <div class="">
       <div class="border-solid border-2 rounded-lg m-8 p-4">
         <div class="text-3xl m-2">Summary</div>
         <div class="divider"></div>
@@ -44,7 +40,7 @@
             </div>
           </div>
         </div>
-
+  
         <div class="text-2xl mb-2">Recent Provider Registration</div>
         <div class="overflow-x-auto">
           <table class="table table-compact w-full text-center">
@@ -91,18 +87,18 @@
         </div>
       </div>
     </div>
-  </div>
+  </admin-layout>
 </template>
 
 <script>
 import { mapActions, mapState } from "pinia";
 import { useAdminStore } from "@/stores/AdminStore";
-import Navbar from "@/components/AdminNavbar.vue";
+import AdminLayout from "@/views/Admin/Layout.vue";
 
 export default {
   name: "AdminHome",
   components: {
-    Navbar,
+    AdminLayout,
   },
   data() {
     return {};
