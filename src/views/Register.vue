@@ -1,17 +1,17 @@
 <template>
   <div class="hero min-h-screen bg-base-200">
     <div class="hero-content flex-col lg:flex-row-reverse w-full">
-      <div class="text-center lg:text-left">
+      <div class="flex flex-col items-center text-center lg:text-left">
         <img
           src="@/assets/munch.png"
           alt=""
-          class="hidden rounded-lg xl:block"
+          class="hidden rounded-lg xl:block py-4 w-96"
         />
-        <h1 class="text-5xl font-bold">REGISTER</h1>
-        <p class="text-lg py-6">Explore new home cookings through catering</p>
+        <p class="text-center text-lg py-2">Explore new home cookings through catering.</p>
       </div>
-      <div class="card flex-shrink w-full max-w-2xl shadow-2xl bg-base-100">
+      <div class="card flex-shrink w-full max-w-xl shadow-2xl bg-base-100">
         <div class="card-body">
+          <h1 class="text-4xl font-bold mb-4 text-primary">Register</h1>
           <form @submit.prevent="register" class="form-control">
             <!-- NAMA -->
             <label class="label">
