@@ -21,11 +21,12 @@ module.exports = {
     themes: [
       {
         munch: {
-          primary: "#73853F",
+          primary: "#92A649",
+          "primary-content": "FFF",
           secondary: "#EF9FBC",
           accent: "#EEAF3A",
           neutral: "#291334",
-          "base-100": "#FAF7F5",
+          "base-100": "#FFF",
           info: "#3ABFF8",
           success: "#36D399",
           warning: "#FBBD23",
