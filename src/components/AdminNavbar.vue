@@ -1,8 +1,8 @@
 <template>
   <div class="bg-base-100 drop-shadow-md w-48 min-h-screen">
     <ul class="menu flex flex-col w-full pt-6 space-y-4">
-      <RouterLink to="/admin" class="btn btn-ghost">
-        <img src="@/assets/munch.png" alt="" class="h-12" />
+      <RouterLink to="/admin" class="btn btn-ghost h-fit">
+        <img src="@/assets/munch.png" alt="" class="h-16" />
       </RouterLink>
       <li v-bind:class="getPage('admin-customers')">
         <RouterLink to="/admin/customers">Customers</RouterLink>
