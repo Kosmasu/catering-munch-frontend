@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import LandingPage from "../views/LandingPage.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
+import AdminLayout from "../views/Admin/Layout.vue";
 import AdminHome from "../views/Admin/Home.vue";
 import AdminCustomers from "../views/Admin/Customers.vue";
 import AdminProviders from "../views/Admin/Providers.vue";
@@ -39,25 +40,32 @@ const router = createRouter({
       name: "register",
       component: Register,
     },
+    // Admin
     {
       path: "/admin",
-      name: "admin",
-      component: AdminHome,
-    },
-    {
-      path: "/admin/customers",
-      name: "admin-customers",
-      component: AdminCustomers,
-    },
-    {
-      path: "/admin/providers",
-      name: "admin-providers",
-      component: AdminProviders,
-    },
-    {
-      path: "/admin/history",
-      name: "admin-history",
-      component: AdminHistory,
+      component: AdminLayout,
+      children: [
+        {
+          path: "",
+          name: "admin",
+          component: AdminHome,
+        },
+        {
+          path: "customers",
+          name: "admin-customers",
+          component: AdminCustomers,
+        },
+        {
+          path: "providers",
+          name: "admin-providers",
+          component: AdminProviders,
+        },
+        {
+          path: "history",
+          name: "admin-history",
+          component: AdminHistory,
+        },
+      ],
     },
     {
       path: "/provider",

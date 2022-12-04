@@ -2,8 +2,7 @@
   <div class="flex w-full">
     <admin-navbar class="flex-none"/>
     <div class="flex-1">
-      <slot>
-      </slot>
+      <router-view></router-view>
     </div>
   </div>
 </template>
