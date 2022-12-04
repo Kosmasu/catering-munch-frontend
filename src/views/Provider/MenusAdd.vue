@@ -1,6 +1,4 @@
 <template>
-  <navbar />
-
   <div class="container">
     <div class="border-solid border-2 rounded-lg my-8 p-4">
       <div class="text-3xl">Add New Menu</div>
@@ -63,11 +61,9 @@
   </div>
 </template>
 <script>
-import Navbar from "@/components/ProviderNavbar.vue";
 export default {
   name: "ProviderMenusDetail",
   components: {
-    Navbar,
   },
   data() {
     return {

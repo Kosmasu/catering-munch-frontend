@@ -1,5 +1,4 @@
 <template>
-  <navbar />
   <div class="container">
     <div class="border-solid border-2 rounded-md p-4 my-4">
       <div class="text-3xl">Overview</div>
@@ -130,11 +129,9 @@
   </div>
 </template>
 <script>
-import Navbar from "@/components/ProviderNavbar.vue";
 export default {
   name: "ProviderHome",
   components: {
-    Navbar,
   },
   data() {
     return {

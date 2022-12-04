@@ -2,11 +2,14 @@ import { createRouter, createWebHistory } from "vue-router";
 import LandingPage from "../views/LandingPage.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
+
 import AdminLayout from "../views/Admin/Layout.vue";
 import AdminHome from "../views/Admin/Home.vue";
 import AdminCustomers from "../views/Admin/Customers.vue";
 import AdminProviders from "../views/Admin/Providers.vue";
 import AdminHistory from "../views/Admin/History.vue";
+
+import ProviderLayout from "../views/Provider/Layout.vue";
 import ProviderHome from "../views/Provider/Home.vue";
 import ProviderMenus from "../views/Provider/Menus.vue";
 import ProviderMenusDetail from "../views/Provider/MenusDetail.vue";
@@ -67,35 +70,49 @@ const router = createRouter({
         },
       ],
     },
+    // provider
     {
       path: "/provider",
-      name: "provider",
-      component: ProviderHome,
-    },
-    {
-      path: "/provider/menus",
-      name: "provider-menus",
-      component: ProviderMenus,
-    },
-    {
-      path: "/provider/menus/add",
-      name: "provider-menus-add",
-      component: ProviderMenusAdd,
-    },
-    {
-      path: "/provider/menus/detail/:id",
-      name: "provider-menus-detail",
-      component: ProviderMenusDetail,
-    },
-    {
-      path: "/provider/menus/edit/:id",
-      name: "provider-menus-edit",
-      component: ProviderMenusEdit,
-    },
-    {
-      path: "/provider/history",
-      name: "provider-history",
-      component: ProviderHistory,
+      component: ProviderLayout,
+      children: [
+        {
+          path: "",
+          name: "provider",
+          component: ProviderHome,
+        },
+        {
+          path: "menus",
+          // name: "provider-menus",
+          // component: ProviderMenus,
+          children: [
+            {
+              path: "",
+              name: "provider-menus",
+              component: ProviderMenus,
+            },
+            {
+              path: "add",
+              name: "provider-menus-add",
+              component: ProviderMenusAdd,
+            },
+            {
+              path: "detail/:id",
+              name: "provider-menus-detail",
+              component: ProviderMenusDetail,
+            },
+            {
+              path: "edit/:id",
+              name: "provider-menus-edit",
+              component: ProviderMenusEdit,
+            },
+          ],
+        },
+        {
+          path: "/provider/history",
+          name: "provider-history",
+          component: ProviderHistory,
+        },
+      ],
     },
     {
       path: "/customer",

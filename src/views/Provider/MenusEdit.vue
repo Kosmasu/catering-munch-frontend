@@ -1,5 +1,4 @@
 <template>
-  <navbar />
   <div class="border-solid border-2 rounded-lg w-1/2 mx-auto my-8 p-4">
     <div class="text-3xl">Edit Menu</div>
     <form
@@ -58,11 +57,9 @@
   </div>
 </template>
 <script>
-import Navbar from "@/components/ProviderNavbar.vue";
 export default {
   name: "ProviderMenusDetail",
   components: {
-    Navbar,
   },
   data() {
     return {

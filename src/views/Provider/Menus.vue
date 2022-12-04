@@ -1,5 +1,4 @@
 <template>
-  <navbar />
   <div class="container">
     <div class="border-solid border-2 rounded-lg p-4 my-4">
       <div class="flex justify-between">
@@ -66,12 +65,10 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import { useProviderStore } from "@/stores/ProviderStore";
-import Navbar from "@/components/ProviderNavbar.vue";
 
 export default {
   name: "ProviderMenus",
   components: {
-    Navbar,
   },
   data() {
     return {
