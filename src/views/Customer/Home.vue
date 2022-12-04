@@ -1,19 +1,13 @@
 <template>
-  <navbar />
-  <div>
-    Pesanan Anda
-    <div>Foto Detail Item</div>
-  </div>
-  <div>Detail Pesanan</div>
+  <div class="container"></div>
 </template>
 <script>
-import Navbar from "@/components/CustomerNavbar.vue";
 export default {
   name: "CustomerHome",
-  components: {
-    Navbar,
+  components: {},
+  data() {
+    return {};
   },
-  data() {},
   methods: {},
 };
 </script>

@@ -1,14 +1,14 @@
 <template>
-  <provider-navbar />
+  <customer-navbar />
   <router-view></router-view>
 </template>
 
 <script>
-import ProviderNavbar from "../../components/ProviderNavbar.vue";
+import CustomerNavbar from "../../components/CustomerNavbar.vue";
 
 export default {
   components: {
-    ProviderNavbar,
+    CustomerNavbar,
   },
 };
 </script>

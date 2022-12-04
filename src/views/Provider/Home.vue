@@ -131,8 +131,7 @@
 <script>
 export default {
   name: "ProviderHome",
-  components: {
-  },
+  components: {},
   data() {
     return {
       currentCustomer: 1,

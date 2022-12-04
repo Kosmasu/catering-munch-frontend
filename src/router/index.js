@@ -16,7 +16,13 @@ import ProviderMenusDetail from "../views/Provider/MenusDetail.vue";
 import ProviderMenusAdd from "../views/Provider/MenusAdd.vue";
 import ProviderMenusEdit from "../views/Provider/MenusEdit.vue";
 import ProviderHistory from "../views/Provider/History.vue";
+
+import CustomerLayout from "../views/Customer/Layout.vue";
 import CustomerHome from "../views/Customer/Home.vue";
+import CustomerSearch from "../views/Customer/Search.vue";
+import CustomerHistory from "../views/Customer/History.vue";
+import CustomerProfile from "../views/Customer/Profile.vue";
+import CustomerTopup from "../views/Customer/Topup.vue";
 
 import CobaAxios from "../views/CobaAxios.vue";
 
@@ -29,8 +35,8 @@ const router = createRouter({
       component: CobaAxios,
     },
     {
-      path: "/",
-      name: "landing-page",
+      path: "",
+      name: "/landing-page",
       component: LandingPage,
     },
     {
@@ -82,8 +88,6 @@ const router = createRouter({
         },
         {
           path: "menus",
-          // name: "provider-menus",
-          // component: ProviderMenus,
           children: [
             {
               path: "",
@@ -108,16 +112,53 @@ const router = createRouter({
           ],
         },
         {
-          path: "/provider/history",
+          path: "history",
           name: "provider-history",
           component: ProviderHistory,
         },
       ],
     },
+    // customer
     {
       path: "/customer",
-      name: "customer",
-      component: CustomerHome,
+      component: CustomerLayout,
+      children: [
+        {
+          path: "",
+          name: "customer",
+          component: CustomerHome,
+        },
+        {
+          path: "search",
+          name: "customer-search",
+          component: CustomerSearch,
+        },
+        {
+          path: "history",
+          children: [
+            {
+              path: "",
+              name: "customer-history",
+              component: CustomerHistory,
+            },
+            {
+              path: ":id",
+              name: "customer-history-detail",
+              component: CustomerHistory,
+            },
+          ],
+        },
+        {
+          path: "profile",
+          name: "customer-profile",
+          component: CustomerProfile,
+        },
+        {
+          path: "topup",
+          name: "customer-topup",
+          component: CustomerTopup,
+        },
+      ],
     },
   ],
 });

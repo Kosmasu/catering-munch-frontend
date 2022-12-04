@@ -42,8 +42,10 @@
             <td>{{ log.log_desc }}</td>
             <td>{{ log.log_datetime }}</td>
           </tr>
-          <tr v-if="(!historyLog || historyLog.length == 0)">
-            <td colspan="4" class="text-lg font-semibold text-center">Kosong...</td>
+          <tr v-if="!historyLog || historyLog.length == 0">
+            <td colspan="4" class="text-lg font-semibold text-center">
+              Kosong...
+            </td>
           </tr>
         </tbody>
       </table>
