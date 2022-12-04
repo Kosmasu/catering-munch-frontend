@@ -27,12 +27,10 @@ export const useLoginRegisterStore = defineStore("LoginRegisterStore", {
             } else {
               router.push({ name: "provider" });
             }
-          } else {
-            console.log(this.result.status);
           }
         })
         .catch((error) => {
-          console.error(error);
+          this.result = error.response.data;
         });
     },
     async register(

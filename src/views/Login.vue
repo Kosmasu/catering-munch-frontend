@@ -25,6 +25,18 @@
               placeholder="Email"
               class="input input-bordered"
             />
+            <label v-if="this.result" class="label">
+              <span
+                v-if="
+                  this.result.status != 'failed to login' &&
+                  this.result.errors.users_email
+                "
+                class="label-text text-error"
+              >
+                Email is required!
+              </span>
+              <span v-else></span>
+            </label>
             <!-- PASSWORD -->
             <label class="label">
               <span class="label-text">Password</span>
@@ -35,6 +47,24 @@
               placeholder="Password"
               class="input input-bordered"
             />
+            <label v-if="this.result" class="label">
+              <span
+                v-if="
+                  this.result.status != 'failed to login' &&
+                  this.result.errors.password
+                "
+                class="label-text text-error"
+              >
+                Password is required!
+              </span>
+              <span
+                v-else-if="this.result.status"
+                class="label-text text-error"
+              >
+                Gagal Login! Cek kembali email / password!
+              </span>
+              <span v-else></span>
+            </label>
             <button class="btn btn-primary mt-4">Login</button>
           </form>
           <div>
@@ -68,8 +98,8 @@ export default {
   },
   methods: {
     ...mapActions(useLoginRegisterStore, ["login"]),
-    submit() {
-      this.login(this.email, this.password);
+    async submit() {
+      await this.login(this.email, this.password);
     },
   },
   computed: {
