@@ -44,13 +44,13 @@
       <table class="table table-compact w-full text-center">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Nama</th>
-            <th>Email</th>
-            <th>Alamat</th>
-            <th>Nomor Telepon</th>
-            <th>Status</th>
-            <th>Action</th>
+            <th class="bg-primary">ID</th>
+            <th class="bg-primary">Nama</th>
+            <th class="bg-primary">Email</th>
+            <th class="bg-primary">Alamat</th>
+            <th class="bg-primary">Nomor Telepon</th>
+            <th class="bg-primary">Status</th>
+            <th class="bg-primary">Action</th>
           </tr>
         </thead>
         <tbody v-if="providers">
