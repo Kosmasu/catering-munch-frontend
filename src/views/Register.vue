@@ -126,7 +126,7 @@
 </template>
 <script>
 import { mapActions, mapState } from "pinia";
-import { useLoginRegisterStore } from "@/stores/LoginRegisterStore";
+import { useAuthStore } from "@/stores/AuthStore.js";
 
 export default {
   name: "Register",
@@ -144,7 +144,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useLoginRegisterStore, ["register"]),
+    ...mapActions(useAuthStore, ["register"]),
     submit() {
       this.register(
         this.nama,
@@ -159,7 +159,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(useLoginRegisterStore, ["result"]),
+    ...mapState(useAuthStore, ["result"]),
   },
 };
 </script>

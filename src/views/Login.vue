@@ -16,43 +16,24 @@
           <h1 class="text-4xl font-bold mb-4 text-primary">Login</h1>
           <form @submit.prevent="submit" class="form-control">
             <!-- EMAIL -->
-            <label class="label">
-              <span class="label-text">Email</span>
-            </label>
-            <input
+            <input-vue
+              v-model="form.users_email"
+              name="users_email"
               type="email"
-              v-model="email"
-              placeholder="Email"
-              class="input input-bordered"
+              label="Email"
+              :errorMessages="this.errorMessages"
             />
-            <label v-if="this.result" class="label">
-              <span
-                v-if="
-                  this.result.status != 'failed to login' &&
-                  this.result.errors.users_email
-                "
-                class="label-text text-error"
-              >
-                Email is required!
-              </span>
-              <span v-else></span>
-            </label>
             <!-- PASSWORD -->
-            <label class="label">
-              <span class="label-text">Password</span>
-            </label>
-            <input
+            <input-vue
+              v-model="form.password"
+              name="password"
               type="password"
-              v-model="password"
-              placeholder="Password"
-              class="input input-bordered"
+              label="Password"
+              :errorMessages="this.errorMessages"
             />
-            <label v-if="this.result" class="label">
+            <!-- <label v-if="this.result" class="label">
               <span
-                v-if="
-                  this.result.status != 'failed to login' &&
-                  this.result.errors.password
-                "
+              v-if="this.errorMessages['password']"
                 class="label-text text-error"
               >
                 Password is required!
@@ -64,7 +45,7 @@
                 Gagal Login! Cek kembali email / password!
               </span>
               <span v-else></span>
-            </label>
+            </label> -->
             <button class="btn btn-primary mt-4">Login</button>
           </form>
           <div>
@@ -85,25 +66,50 @@
 </template>
 <script>
 import { mapActions, mapState } from "pinia";
-import { useLoginRegisterStore } from "@/stores/LoginRegisterStore";
+import { useAuthStore } from "@/stores/AuthStore.js";
+import InputVue from "@/components/Inputs/Input.vue";
 
 export default {
   name: "Login",
-  components: {},
+  components: {
+    InputVue
+  },
   data() {
     return {
-      email: "",
-      password: "",
+      form: {
+        users_email: undefined,
+        password: undefined,
+      },
+      errorMessages: undefined,
     };
   },
-  methods: {
-    ...mapActions(useLoginRegisterStore, ["login"]),
-    async submit() {
-      await this.login(this.email, this.password);
-    },
-  },
   computed: {
-    ...mapState(useLoginRegisterStore, ["result"]),
+    ...mapState(useAuthStore, ["result"]),
+  },
+  methods: {
+    ...mapActions(useAuthStore, ["login"]),
+    async submit() {
+      await this.login(this.email, this.password).then(response=>{
+        console.log('response:',response);
+        if (response instanceof Error) {
+          this.errorMessages = response.response.data.errors  
+          console.log('this.errorMessages:',this.errorMessages);
+          console.log('this.errorMessages["users_email"]:',this.errorMessages["users_email"]);
+          console.log('this.errorMessages["users_email"][0]:',this.errorMessages["users_email"][0]);
+          if (this.errorMessages) {
+            console.log("1");
+            console.log('this.errorMessages:',this.errorMessages);
+            console.log('Object.hasOwn(this.errorMessages, "users_email"):',Object.hasOwn(this.errorMessages, "users_email"));
+            if (Object.hasOwn(this.errorMessages, 'users_email')) {
+              console.log("2")
+            }
+          }
+          if (this.errorMessages && Object.hasOwn(this.errorMessages, 'users_email')) {
+            console.log("3");
+          }
+        }
+      })
+    },
   },
 };
 </script>

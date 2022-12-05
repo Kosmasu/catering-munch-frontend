@@ -5,7 +5,7 @@ import router from "@/router";
 
 // composition sama option
 // ini option api
-export const useLoginRegisterStore = defineStore("LoginRegisterStore", {
+export const useAuthStore = defineStore("AuthStore", {
   // state itu data
   state: () => ({
     result: undefined,
@@ -15,10 +15,8 @@ export const useLoginRegisterStore = defineStore("LoginRegisterStore", {
   // actions itu method
   actions: {
     async login(email, password) {
-      await MunchService.login(email, password)
+      return await MunchService.login(email, password)
         .then((response) => {
-          this.result = response.data;
-          console.log("this.result:", this.result);
           if (this.result.status == "success") {
             if (this.result.user.users_role == "admin") {
               router.push({ name: "admin" });
@@ -28,9 +26,10 @@ export const useLoginRegisterStore = defineStore("LoginRegisterStore", {
               router.push({ name: "provider" });
             }
           }
+          return response
         })
         .catch((error) => {
-          this.result = error.response.data;
+          return error
         });
     },
     async register(

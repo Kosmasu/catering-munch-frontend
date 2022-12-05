@@ -21,7 +21,7 @@
 </template>
 <script>
 import { mapActions, mapState } from "pinia";
-import { useLoginRegisterStore } from "@/stores/LoginRegisterStore";
+import { useAuthStore } from "@/stores/AuthStore.js";
 
 export default {
   name: "NavbarAdmin",
@@ -30,7 +30,7 @@ export default {
     return {};
   },
   methods: {
-    ...mapActions(useLoginRegisterStore, ["logout"]),
+    ...mapActions(useAuthStore, ["logout"]),
     isThisPage(name) {
       return this.$route.name == name;
     },
@@ -44,7 +44,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(useLoginRegisterStore, ["result"]),
+    ...mapState(useAuthStore, ["result"]),
   },
   created() {},
 };
