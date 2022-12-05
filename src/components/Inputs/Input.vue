@@ -8,9 +8,10 @@
     @input="$emit('update:modelValue', $event.target.value)"
     :placeholder="this.label"
     class="input input-bordered"
+    :class="{'input-bordered': !this.isError, 'input-error': this.isError}"
   />
-  <label v-if="this.errorMessages && Object.hasOwn(this.errorMessages, this.name)" class="label">
-    <span v-for="(item, index) in this.errorMessages[this.name]" :key="index" class="label-text text-error">
+  <label v-if="this.errors && Object.hasOwn(this.errors, this.name)" class="label">
+    <span v-for="(item, index) in this.errors[this.name]" :key="index" class="label-text text-error">
       {{ item }}
     </span>
   </label>
@@ -39,7 +40,7 @@ export default {
       required: true,
       default: "No Name Passed",
     },
-    errorMessages: {
+    errors: {
       required: true,
       default: null,
     },
@@ -47,6 +48,11 @@ export default {
   emits: [
     "update:modelValue",
   ],
+  computed: {
+    isError() {
+      return this.errors && Object.hasOwn(this.errors, this.name)
+    }
+  }
 }
 </script>
 

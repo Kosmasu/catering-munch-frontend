@@ -16,80 +16,69 @@
           <h1 class="text-4xl font-bold mb-4 text-primary">Register</h1>
           <form @submit.prevent="submit" class="form-control">
             <!-- NAMA -->
-            <label class="label">
-              <span class="label-text">Nama</span>
-            </label>
-            <input
+            <input-vue
+              v-model="form.users_nama"
+              name="users_nama"
               type="text"
-              v-model="nama"
-              placeholder="Nama"
-              class="input input-bordered"
+              label="Nama"
+              :errors="this.errorData.errors"
             />
             <!-- EMAIL -->
-            <label class="label">
-              <span class="label-text">Email</span>
-            </label>
-            <input
+            <input-vue
+              v-model="form.users_email"
+              name="users_email"
               type="email"
-              v-model="email"
-              placeholder="Email"
-              class="input input-bordered"
+              label="Email"
+              :errors="this.errorData.errors"
             />
             <!-- ALAMAT -->
-            <label class="label">
-              <span class="label-text">Alamat</span>
-            </label>
-            <input
+            <input-vue
+              v-model="form.users_alamat"
+              name="users_alamat"
               type="text"
-              v-model="alamat"
-              placeholder="Alamat"
-              class="input input-bordered"
+              label="Alamat"
+              :errors="this.errorData.errors"
             />
             <!-- TELEPON -->
-            <label class="label">
-              <span class="label-text">Nomor Telepon</span>
-            </label>
-            <input
+            <input-vue
+              v-model="form.users_telepon"
+              name="users_telepon"
               type="text"
-              v-model="telepon"
-              placeholder="Nomor Telepon"
-              class="input input-bordered"
+              label="Telepon"
+              :errors="this.errorData.errors"
             />
             <!-- PASSWORD -->
-            <label class="label">
-              <span class="label-text">Password</span>
-            </label>
-            <input
+            <input-vue
+              v-model="form.users_password"
+              name="users_password"
               type="password"
-              v-model="password"
-              placeholder="Password"
-              class="input input-bordered"
+              label="Password"
+              :errors="this.errorData.errors"
             />
             <!-- CONFIRM PASSWORD -->
-            <label class="label">
-              <span class="label-text">Confirm Password</span>
-            </label>
-            <input
+            <input-vue
+              v-model="form.users_password_confirmed"
+              name="users_password_confirmed"
               type="password"
-              v-model="password_confirmation"
-              placeholder="Confirm Password"
-              class="input input-bordered"
+              label="Confirm Password"
+              :errors="this.errorData.errors"
             />
             <!-- ROLE -->
             <div class="flex justify-center space-x-12 mt-2">
               <label class="label cursor-pointer space-x-2">
                 <input
                   type="radio"
-                  v-model="role"
+                  v-model="form.users_role"
                   value="customer"
                   class="radio"
+                  checked
                 />
                 <span class="label-text">Customer</span>
               </label>
               <label class="label cursor-pointer space-x-2">
                 <input
                   type="radio"
-                  v-model="role"
+                  v-model="form.users_role"
                   value="provider"
                   class="radio"
                 />
@@ -98,12 +87,17 @@
             </div>
             <!-- T&C -->
             <label class="flex justify-start space-x-4 label cursor-pointer">
-              <input type="checkbox" v-model="tnc" class="checkbox-primary" />
+              <input type="checkbox" v-model="form.tnc" class="checkbox-primary" />
               <span>
                 I agree to the
                 <a href="#" class="link link-hover text-primary-focus">
                   Terms &amp; Conditions
                 </a>
+              </span>
+            </label>
+            <label v-if="this.errorData" class="label">
+              <span class="label-text text-error">
+                {{ this.errorData.message }}
               </span>
             </label>
             <button class="btn btn-primary w-full mt-4">Register</button>
@@ -125,41 +119,30 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from "pinia";
-import { useAuthStore } from "@/stores/AuthStore.js";
+import { mapActions, mapWritableState } from "pinia";
+import { useRegisterStore } from "@/stores/Auth/RegisterStore.js";
+import InputVue from "@/components/Inputs/Input.vue";
 
 export default {
   name: "Register",
-  components: {},
-  data() {
-    return {
-      nama: "",
-      email: "",
-      alamat: "",
-      telepon: "",
-      password: "",
-      password_confirmation: "",
-      role: "customer",
-      tnc: "false",
-    };
+  components: {
+    InputVue,
   },
   methods: {
-    ...mapActions(useAuthStore, ["register"]),
-    submit() {
-      this.register(
-        this.nama,
-        this.email,
-        this.alamat,
-        this.telepon,
-        this.password,
-        this.password_confirmation,
-        this.role,
-        this.tnc
-      );
+    ...mapActions(useRegisterStore, ["register"]),
+    async submit() {
+      await this.register() 
+        .then(response=>{
+        console.log('response register:',response);
+        if (response instanceof Error) {
+          this.errorData = response.response.data
+          console.log('this.errorData:',this.errorData);
+        }
+      })
     },
   },
   computed: {
-    ...mapState(useAuthStore, ["result"]),
+    ...mapWritableState(useRegisterStore, ["form", "errorData"]),
   },
 };
 </script>
