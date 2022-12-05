@@ -1,19 +1,5 @@
 <template>
   <div class="container">
-    <div class="flex flex-col items-center font-semibold text-xl space-y-4">
-      <div class="flex flex-col items-center">
-        <div>Rate</div>
-        <div>Pesanan Anda</div>
-      </div>
-      <div class="rating rating-lg">
-        <input type="radio" name="rating" class="mask mask-star-2 bg-primary" />
-        <input type="radio" name="rating" class="mask mask-star-2 bg-primary" />
-        <input type="radio" name="rating" class="mask mask-star-2 bg-primary" />
-        <input type="radio" name="rating" class="mask mask-star-2 bg-primary" />
-        <input type="radio" name="rating" class="mask mask-star-2 bg-primary" />
-      </div>
-      <div class="btn btn-primary">Submit Rating</div>
-    </div>
     <div class="rounded-lg border-2 p-4 m-4">
       <div class="font-semibold text-xl">Pesanan Anda</div>
       <div class="overflow-x-auto">
@@ -33,6 +19,7 @@
                 <div class="flex flex-col">
                   <div>Total: Rp.0</div>
                   <div>Jumlah Pesanan: 1</div>
+                  <button class="btn btn-primary">Checkout</button>
                 </div>
               </td>
             </tr>

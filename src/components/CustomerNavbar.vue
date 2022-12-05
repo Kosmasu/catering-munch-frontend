@@ -34,25 +34,29 @@
           <button
             class="btn btn-ghost normal-case text-xl text-accent-content hover:btn-accent-focus"
           >
-            <RouterLink to="/provider">
+            <RouterLink :to="{ name: 'customer' }">
               <img src="@/assets/munch.png" alt="" class="h-12" />
             </RouterLink>
           </button>
           <div class="hidden lg:flex">
             <ul class="menu menu-horizontal rounded-box p-2 space-x-2">
               <li v-bind:class="getPage('customer-search')">
-                <RouterLink to="/customer/search">Search</RouterLink>
+                <RouterLink :to="{ name: 'customer-search' }">
+                  Search
+                </RouterLink>
               </li>
               <li v-bind:class="getPage('customer-history')">
-                <RouterLink to="/customer/history">History</RouterLink>
+                <RouterLink :to="{ name: 'customer-history' }">
+                  History
+                </RouterLink>
               </li>
             </ul>
           </div>
         </div>
         <div class="navbar-end">
-          <div>
-            Saldo: Rp 0,00
-          </div>
+          <RouterLink :to="{ name: 'customer-topup' }" class="link">
+            <div class="mr-2">Saldo: Rp 0,00</div>
+          </RouterLink>
           <div class="dropdown dropdown-hover">
             <label tabindex="0" class="btn btn-primary">
               Welcome, Customer
@@ -76,6 +80,11 @@
               tabindex="0"
               class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
             >
+              <li>
+                <RouterLink :to="{ name: 'customer-profile' }"
+                  >Profile</RouterLink
+                >
+              </li>
               <li><RouterLink to="/">Logout</RouterLink></li>
             </ul>
           </div>

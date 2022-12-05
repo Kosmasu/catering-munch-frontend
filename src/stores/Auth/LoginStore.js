@@ -18,11 +18,9 @@ export const useLoginStore = defineStore("LoginStore", {
   getters: {},
   actions: {
     async login() {
-      return await MunchService.login(
-        this.form.users_email, 
-        this.form.password)
+      return await MunchService.login(this.form.users_email, this.form.password)
         .then((response) => {
-          console.log('response login:',response);
+          console.log("response login:", response);
           if (response.data.status == "success") {
             if (response.data.user.users_role == "admin") {
               router.push({ name: "admin" });
@@ -32,10 +30,10 @@ export const useLoginStore = defineStore("LoginStore", {
               router.push({ name: "provider" });
             }
           }
-          return response
+          return response;
         })
         .catch((error) => {
-          return error
+          return error;
         });
     },
   },

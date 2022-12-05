@@ -21,7 +21,7 @@
 </template>
 <script>
 import { mapActions, mapState } from "pinia";
-import { useAuthStore } from "@/stores/AuthStore.js";
+import { useAuthStore } from "@/stores/Auth/AuthStore.js";
 
 export default {
   name: "NavbarAdmin",

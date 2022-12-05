@@ -21,8 +21,10 @@ import CustomerLayout from "../views/Customer/Layout.vue";
 import CustomerHome from "../views/Customer/Home.vue";
 import CustomerSearch from "../views/Customer/Search.vue";
 import CustomerHistory from "../views/Customer/History.vue";
+import CustomerDetailHistory from "../views/Customer/DetailHistory.vue";
 import CustomerProfile from "../views/Customer/Profile.vue";
 import CustomerTopup from "../views/Customer/Topup.vue";
+import CustomerCheckout from "../views/Customer/Checkout.vue";
 
 import CobaAxios from "../views/CobaAxios.vue";
 
@@ -144,7 +146,7 @@ const router = createRouter({
             {
               path: ":id",
               name: "customer-history-detail",
-              component: CustomerHistory,
+              component: CustomerDetailHistory,
             },
           ],
         },
@@ -157,6 +159,11 @@ const router = createRouter({
           path: "topup",
           name: "customer-topup",
           component: CustomerTopup,
+        },
+        {
+          path: "checkout",
+          name: "customer-checkout",
+          component: CustomerCheckout,
         },
       ],
     },

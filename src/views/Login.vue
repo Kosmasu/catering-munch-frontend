@@ -62,22 +62,21 @@ import InputVue from "@/components/Inputs/Input.vue";
 export default {
   name: "Login",
   components: {
-    InputVue
+    InputVue,
   },
   computed: {
-    ...mapWritableState(useLoginStore, ["form", "errorData"])
+    ...mapWritableState(useLoginStore, ["form", "errorData"]),
   },
   methods: {
     ...mapActions(useLoginStore, ["login"]),
     async submit() {
-      await this.login()
-        .then(response=>{
-        console.log('response:',response);
+      await this.login().then((response) => {
+        console.log("response:", response);
         if (response instanceof Error) {
-          this.errorData = response.response.data
-          console.log('this.errorData:',this.errorData);
+          this.errorData = response.response.data;
+          console.log("this.errorData:", this.errorData);
         }
-      })
+      });
     },
   },
 };

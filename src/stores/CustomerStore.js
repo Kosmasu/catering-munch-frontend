@@ -2,13 +2,28 @@ import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import MunchService from "@/MunchService";
 
-// composition sama option
-// ini option api
 export const useCustomerStore = defineStore("CustomerStore", {
-  // state itu data
-  state: () => ({}),
-  // getters itu computed properties (tidak boleh ada parameter)
+  state: () => ({
+    topup: {
+      nominal: undefined,
+      password: undefined,
+    },
+    errorData: {
+      status: undefined,
+      message: undefined,
+      errors: undefined,
+    },
+  }),
   getters: {},
-  // actions itu method
-  actions: {},
+  actions: {
+    async topup() {
+      return await MunchService.topup()
+        .then((response) => {
+          return response;
+        })
+        .catch((error) => {
+          return error;
+        });
+    },
+  },
 });
