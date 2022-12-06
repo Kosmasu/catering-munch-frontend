@@ -11,7 +11,11 @@ export const useAuthStore = defineStore("AuthStore", {
       saldo: null,
     }
   }),
-  getters: {},
+  getters: {
+    firstName() {
+      return this.user.nama.split(" ")[0]
+    }
+  },
   actions: {
     async me() {
       await MunchService.me()

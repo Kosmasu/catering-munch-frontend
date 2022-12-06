@@ -59,7 +59,7 @@
           </RouterLink>
           <div class="dropdown dropdown-hover">
             <label tabindex="0" class="btn btn-primary">
-              Welcome, Customer
+              Welcome, {{ this.firstName }}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="ml-4 h-8 w-8"
@@ -98,10 +98,13 @@
   </div>
 </template>
 <script>
-import { useAuthStore } from '../stores/Auth/AuthStore';
-import { mapActions } from 'pinia';
+import { useAuthStore } from '@/stores/Auth/AuthStore';
+import { mapActions, mapState } from 'pinia';
 
 export default {
+  computed: {
+    ...mapState(useAuthStore, ['firstName'])
+  },
   methods: {
     ...mapActions(useAuthStore, ['logout']),
     isThisPage(name) {

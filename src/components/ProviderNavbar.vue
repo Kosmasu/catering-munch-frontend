@@ -60,7 +60,7 @@
         <div class="navbar-end">
           <div class="dropdown dropdown-hover">
             <label tabindex="0" class="btn btn-primary">
-              Welcome, Provider
+              Welcome, {{ this.firstName }}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="ml-4 h-8 w-8"
@@ -81,7 +81,7 @@
               tabindex="0"
               class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
             >
-              <li><RouterLink to="/">Logout</RouterLink></li>
+              <li><RouterLink @click="logout" to="">Logout</RouterLink></li>
             </ul>
           </div>
         </div>
@@ -90,8 +90,15 @@
   </div>
 </template>
 <script>
+import { useAuthStore } from '../stores/Auth/AuthStore';
+import { mapActions, mapState } from 'pinia';
+
 export default {
+  computed: {
+    ...mapState(useAuthStore, ['firstName'])
+  },
   methods: {
+    ...mapActions(useAuthStore, ['logout']),
     isThisPage(name) {
       return this.$route.name == name;
     },
