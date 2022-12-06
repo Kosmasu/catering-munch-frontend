@@ -14,7 +14,7 @@
         <RouterLink to="/admin/history">History</RouterLink>
       </li>
       <li>
-        <button @click="btnLogout" class="btn btn-primary">Logout</button>
+        <button @click="this.logout" class="btn btn-primary">Logout</button>
       </li>
     </ul>
   </div>
@@ -38,9 +38,6 @@ export default {
       return {
         "bordered font-semibold text-primary": this.isThisPage(name),
       };
-    },
-    btnLogout() {
-      this.logout();
     },
   },
   computed: {

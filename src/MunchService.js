@@ -11,17 +11,35 @@ class MunchService {
 
   static http = axios.create({
     // baseURL ini sesuaikan dengan url backend Anda
-    baseURL: "http://127.0.0.1:8000/api",
+    baseURL: "http://localhost:8000/api",
     headers: {
       "Content-type": "application/json",
     },
+    withCredentials: true
   });
 
-  // COMMON
+  // AUTH
+  static sanctum() {
+    return axios.create({
+      headers: {
+        "Content-type": "application/json"
+      },
+    }).get("http://localhost:8000/sanctum/csrf-cookie", {
+      withCredentials: true,
+    })
+    .then(response=>{
+      console.log('response sanctum:',response);
+      return response
+    }).catch(error=>{
+      console.log('error sanctum:',error);
+      return error
+    }) 
+  }
+
   static login(email, password) {
     return this.http.post("/login", {
       users_email: email,
-      password,
+      password: password,
     });
   }
 
@@ -47,8 +65,8 @@ class MunchService {
     });
   }
 
-  static getUser() {
-    return this.http.get("/user");
+  static me() {
+    return this.http.get("/me");
   }
 
   static logout() {

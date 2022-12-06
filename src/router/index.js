@@ -37,8 +37,8 @@ const router = createRouter({
       component: CobaAxios,
     },
     {
-      path: "",
-      name: "/landing-page",
+      path: "/landing-page",
+      name: "landing-page",
       component: LandingPage,
     },
     {

@@ -14,7 +14,7 @@
       <div class="card flex-shrink w-full max-w-xl shadow-2xl bg-base-100">
         <div class="card-body">
           <h1 class="text-4xl font-bold mb-4 text-primary">Login</h1>
-          <form @submit.prevent="submit" class="form-control">
+          <form @submit.prevent="this.login" class="form-control">
             <!-- EMAIL -->
             <input-vue
               v-model="form.users_email"
@@ -69,15 +69,6 @@ export default {
   },
   methods: {
     ...mapActions(useLoginStore, ["login"]),
-    async submit() {
-      await this.login().then((response) => {
-        console.log("response:", response);
-        if (response instanceof Error) {
-          this.errorData = response.response.data;
-          console.log("this.errorData:", this.errorData);
-        }
-      });
-    },
   },
 };
 </script>

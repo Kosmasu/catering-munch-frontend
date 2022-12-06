@@ -2,6 +2,7 @@ import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import MunchService from "@/MunchService";
 import router from "@/router";
+import { useAuthStore } from "./AuthStore";
 
 export const useLoginStore = defineStore("LoginStore", {
   state: () => ({
@@ -18,8 +19,21 @@ export const useLoginStore = defineStore("LoginStore", {
   getters: {},
   actions: {
     async login() {
-      return await MunchService.login(this.form.users_email, this.form.password)
+      await MunchService.sanctum()
+      await MunchService.login(this.form.users_email, this.form.password)
         .then((response) => {
+          MunchService.me()
+            .then(response => {
+              const authStore = useAuthStore()
+              authStore.setUser(
+                response.data.data.users_nama,
+                response.data.data.users_saldo,
+                response.data.data.users_role,
+              )
+            })
+            .catch(error => {
+              console.log('error me:', error);
+            })
           console.log("response login:", response);
           if (response.data.status == "success") {
             if (response.data.user.users_role == "admin") {
@@ -33,6 +47,8 @@ export const useLoginStore = defineStore("LoginStore", {
           return response;
         })
         .catch((error) => {
+          console.log('error:', error);
+          this.errorData = error.response.data;
           return error;
         });
     },
