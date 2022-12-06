@@ -40,14 +40,14 @@
           </form>
           <div>
             Don't have an account?
-            <a href="/register" class="link link-hover text-primary">
+            <route-link :to="{ name: 'register' }" class="link link-hover text-primary">
               Register Now!
-            </a>
+            </route-link>
           </div>
           <label class="label">
-            <a href="/" class="link link-hover text-error">
+            <route-link :to="{ name: 'landing-page' }" class="link link-hover text-error">
               &lt; Back to Home
-            </a>
+            </route-link>
           </label>
         </div>
       </div>

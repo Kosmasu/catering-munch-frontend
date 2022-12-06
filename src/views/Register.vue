@@ -117,14 +117,14 @@
           </form>
           <div>
             Already have an account?
-            <a href="/login" class="link link-hover text-primary-focus">
+            <route-link :to="{ name: 'login' }" class="link link-hover text-primary">
               Login Now!
-            </a>
+            </route-link>
           </div>
           <label class="label">
-            <a href="/" class="link link-hover text-secondary-focus">
+            <route-link :to="{ name: 'landing-page' }" class="link link-hover text-error">
               &lt; Back to Home
-            </a>
+            </route-link>
           </label>
         </div>
       </div>
