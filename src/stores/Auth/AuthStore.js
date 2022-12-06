@@ -13,7 +13,7 @@ export const useAuthStore = defineStore("AuthStore", {
   }),
   getters: {},
   actions: {
-    async refreshData() {
+    async me() {
       await MunchService.me()
         .then(response => {
           this.setUser(
