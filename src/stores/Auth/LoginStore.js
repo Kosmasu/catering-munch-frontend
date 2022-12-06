@@ -21,14 +21,14 @@ export const useLoginStore = defineStore("LoginStore", {
     async login() {
       await MunchService.sanctum()
       await MunchService.login(this.form.users_email, this.form.password)
-        .then((response) => {
-          MunchService.me()
+        .then(async (response) => { 
+          await MunchService.me()
             .then(response => {
               const authStore = useAuthStore()
               authStore.setUser(
                 response.data.data.users_nama,
-                response.data.data.users_saldo,
                 response.data.data.users_role,
+                response.data.data.users_saldo,
               )
             })
             .catch(error => {

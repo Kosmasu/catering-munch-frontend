@@ -34,38 +34,39 @@ const router = createRouter({
   routes: [
     //guest
     {
+      path: "/coba-axios",
+      name: "coba-axios",
+      component: CobaAxios,
+    },
+    {
       path: "",
-      meta: { 
+      name: "landing-page",
+      component: LandingPage,
+      meta: {
         role: "guest"
       },
-      children: [
-        {
-          path: "/coba-axios",
-          name: "coba-axios",
-          component: CobaAxios,
-        },
-        {
-          path: "",
-          name: "landing-page",
-          component: LandingPage,
-        },
-        {
-          path: "/login",
-          name: "login",
-          component: Login,
-        },
-        {
-          path: "/register",
-          name: "register",
-          component: Register,
-        },
-      ],
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: Login,
+      meta: {
+        role: "guest"
+      },
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: Register,
+      meta: {
+        role: "guest"
+      },
     },
     // Admin
     {
       path: "/admin",
       component: AdminLayout,
-      meta: { 
+      meta: {
         role: "admin"
       },
       children: [
@@ -95,7 +96,7 @@ const router = createRouter({
     {
       path: "/provider",
       component: ProviderLayout,
-      meta: { 
+      meta: {
         role: "provider"
       },
       children: [
@@ -140,7 +141,7 @@ const router = createRouter({
     {
       path: "/customer",
       component: CustomerLayout,
-      meta: { 
+      meta: {
         role: "customer"
       },
       children: [
@@ -214,8 +215,11 @@ router.beforeEach((to, from) => {
   const authStore = useAuthStore()
   const role = authStore.user.role
   const metaRole = to.meta.role
+  console.log('role:',role);
+  console.log('metaRole:',metaRole);
   // 2.
   if (role == "guest" && metaRole != "guest") {
+    console.log("2");
     return { name: "login" }
   }
   else if (
@@ -223,7 +227,8 @@ router.beforeEach((to, from) => {
     role != "guest" && metaRole == "guest"
     // 4.
     || (role != "guest" && role != metaRole)
-  ) {
+    ) {
+    console.log("3, 4");
     if (role == "customer") return { name: "customer" }
     else if (role == "provider") return { name: "provider" }
     else if (role == "admin") return { name: "admin" }
