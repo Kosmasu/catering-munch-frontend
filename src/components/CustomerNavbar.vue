@@ -85,7 +85,11 @@
                   >Profile</RouterLink
                 >
               </li>
-              <li><RouterLink to="/">Logout</RouterLink></li>
+              <li @click="this.logout">
+                <RouterLink to=""
+                  >Logout</RouterLink
+                >
+              </li>
             </ul>
           </div>
         </div>
@@ -94,8 +98,12 @@
   </div>
 </template>
 <script>
+import { useAuthStore } from '../stores/Auth/AuthStore';
+import { mapActions } from 'pinia';
+
 export default {
   methods: {
+    ...mapActions(useAuthStore, ['logout']),
     isThisPage(name) {
       return this.$route.name == name;
     },
