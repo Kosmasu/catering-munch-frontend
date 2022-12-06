@@ -27,34 +27,47 @@ import CustomerTopup from "../views/Customer/Topup.vue";
 import CustomerCheckout from "../views/Customer/Checkout.vue";
 
 import CobaAxios from "../views/CobaAxios.vue";
+import { useAuthStore } from "../stores/Auth/AuthStore";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    //guest
     {
-      path: "/coba-axios",
-      name: "coba-axios",
-      component: CobaAxios,
-    },
-    {
-      path: "/landing-page",
-      name: "landing-page",
-      component: LandingPage,
-    },
-    {
-      path: "/login",
-      name: "login",
-      component: Login,
-    },
-    {
-      path: "/register",
-      name: "register",
-      component: Register,
+      path: "",
+      meta: { 
+        role: "guest"
+      },
+      children: [
+        {
+          path: "/coba-axios",
+          name: "coba-axios",
+          component: CobaAxios,
+        },
+        {
+          path: "",
+          name: "landing-page",
+          component: LandingPage,
+        },
+        {
+          path: "/login",
+          name: "login",
+          component: Login,
+        },
+        {
+          path: "/register",
+          name: "register",
+          component: Register,
+        },
+      ],
     },
     // Admin
     {
       path: "/admin",
       component: AdminLayout,
+      meta: { 
+        role: "admin"
+      },
       children: [
         {
           path: "",
@@ -82,6 +95,9 @@ const router = createRouter({
     {
       path: "/provider",
       component: ProviderLayout,
+      meta: { 
+        role: "provider"
+      },
       children: [
         {
           path: "",
@@ -124,6 +140,9 @@ const router = createRouter({
     {
       path: "/customer",
       component: CustomerLayout,
+      meta: { 
+        role: "customer"
+      },
       children: [
         {
           path: "",
@@ -169,5 +188,46 @@ const router = createRouter({
     },
   ],
 });
+
+router.beforeEach((to, from) => {
+  /**
+   * Ada beberapa kemungkinan:
+   * 1. User adalah guest dan mengakses route dengan meta role: 'guest'
+   *    pass
+   * 2. User adalah guest dan mengakses route dengan meta role bukan 'guest'
+   *    Maka redirect user ke { name:'login' }
+   * 3. User bukan guest dan mengakses route dengan meta role: 'guest'
+   *    Maka redirect ke masing-masing home user tersebut
+   *    3.1. User adalah customer
+   *         Maka redirect ke home customer
+   *    3.2. User adalah provider
+   *         Maka redirect ke home provider
+   *    3.3. User adalah admin
+   *         Maka redirect ke home admin
+   * 4. User bukan guest dan mengakses route dengan meta role bukan role user
+   *    Maka redirect ke home user. Sama seperti nomor 3
+   * 5. User bukan guest dan mengakses route sesuai dengan meta role
+   *    do nothing
+   * 5 dan 1 bisa di gabung
+   * 3 dan 4 bisa di gabung
+   */
+  const authStore = useAuthStore()
+  const role = authStore.user.role
+  const metaRole = to.meta.role
+  // 2.
+  if (role == "guest" && metaRole != "guest") {
+    return { name: "login" }
+  }
+  else if (
+    // 3.
+    role != "guest" && metaRole == "guest"
+    // 4.
+    || (role != "guest" && role != metaRole)
+  ) {
+    if (role == "customer") return { name: "customer" }
+    else if (role == "provider") return { name: "provider" }
+    else if (role == "admin") return { name: "admin" }
+  }
+})
 
 export default router;

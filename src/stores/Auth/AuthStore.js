@@ -6,9 +6,9 @@ import router from "@/router";
 export const useAuthStore = defineStore("AuthStore", {
   state: () => ({
     user: {
-      nama: undefined,
-      role: undefined,
-      saldo: undefined,
+      nama: "guest",
+      role: "guest",
+      saldo: null,
     }
   }),
   getters: {},
