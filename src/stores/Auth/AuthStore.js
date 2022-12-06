@@ -21,6 +21,7 @@ export const useAuthStore = defineStore("AuthStore", {
             response.data.data.users_role,
             response.data.data.users_saldo,
           )
+          localStorage.setItem("user", JSON.stringify(this.user))
         })
         .catch(error => {
           console.log('error me:', error);
@@ -28,9 +29,9 @@ export const useAuthStore = defineStore("AuthStore", {
     },
     async logout() {
       await MunchService.logout().then((response) => {
-        this.$reset()
-        console.log('response logout:', response)
         if (response.data.status == "success") {
+          this.$reset()
+          localStorage.removeItem("user")
           router.push({ name: "landing-page" })
         } else {
           console.log(response.data.status)
@@ -41,6 +42,13 @@ export const useAuthStore = defineStore("AuthStore", {
       this.user.nama = nama
       this.user.role = role
       this.user.saldo = saldo
+    },
+    getUserFromLocalStorage() {
+      this.user = JSON.parse(localStorage.getItem("user"))
+      if (!this.user) {
+        this.$reset()
+      }
+      return this.user
     }
   },
 });
