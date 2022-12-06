@@ -213,26 +213,28 @@ router.beforeEach((to, from) => {
    * 3 dan 4 bisa di gabung
    */
   const authStore = useAuthStore()
-  const role = authStore.user.role
-  const metaRole = to.meta.role
-  console.log('role:',role);
-  console.log('metaRole:',metaRole);
-  // 2.
-  if (role == "guest" && metaRole != "guest") {
-    console.log("2");
-    return { name: "login" }
-  }
-  else if (
-    // 3.
-    role != "guest" && metaRole == "guest"
-    // 4.
-    || (role != "guest" && role != metaRole)
-    ) {
-    console.log("3, 4");
-    if (role == "customer") return { name: "customer" }
-    else if (role == "provider") return { name: "provider" }
-    else if (role == "admin") return { name: "admin" }
-  }
+  return authStore.refreshData().then(response=>{
+    const role = authStore.user.role
+    const metaRole = to.meta.role
+    console.log('role:',role);
+    console.log('metaRole:',metaRole);
+    // 2.
+    if (role == "guest" && metaRole != "guest") {
+      console.log("2");
+      return { name: "login" }
+    }
+    else if (
+      // 3.
+      role != "guest" && metaRole == "guest"
+      // 4.
+      || (role != "guest" && role != metaRole)
+      ) {
+      console.log("3, 4");
+      if (role == "customer") return { name: "customer" }
+      else if (role == "provider") return { name: "provider" }
+      else if (role == "admin") return { name: "admin" }
+    }
+  })
 })
 
 export default router;

@@ -22,18 +22,8 @@ export const useLoginStore = defineStore("LoginStore", {
       await MunchService.sanctum()
       await MunchService.login(this.form.users_email, this.form.password)
         .then(async (response) => { 
-          await MunchService.me()
-            .then(response => {
-              const authStore = useAuthStore()
-              authStore.setUser(
-                response.data.data.users_nama,
-                response.data.data.users_role,
-                response.data.data.users_saldo,
-              )
-            })
-            .catch(error => {
-              console.log('error me:', error);
-            })
+          const authStore = useAuthStore()
+          await authStore.refreshData()
           console.log("response login:", response);
           if (response.data.status == "success") {
             if (response.data.user.users_role == "admin") {
