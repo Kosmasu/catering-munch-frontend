@@ -55,7 +55,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapWritableState } from "pinia";
+import { mapState, mapActions, mapWritableState} from "pinia";
 import { useLoginStore } from "@/stores/Auth/LoginStore.js";
 import InputVue from "@/components/Inputs/Input.vue";
 
@@ -65,7 +65,8 @@ export default {
     InputVue,
   },
   computed: {
-    ...mapWritableState(useLoginStore, ["form", "errorData"]),
+    ...mapWritableState(useLoginStore, ["form"]),
+    ...mapState(useLoginStore, ["errorData"]),
   },
   methods: {
     ...mapActions(useLoginStore, ["login"]),

@@ -61,7 +61,7 @@ class MunchService {
       users_password: password,
       users_password_confirmation: password_confirmation,
       users_role: role,
-      users_tnc: tnc,
+      tnc: tnc,
     });
   }
 

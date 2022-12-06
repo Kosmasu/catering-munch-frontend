@@ -14,7 +14,7 @@
       <div class="card flex-shrink w-full max-w-xl shadow-2xl bg-base-100">
         <div class="card-body">
           <h1 class="text-4xl font-bold mb-4 text-primary">Register</h1>
-          <form @submit.prevent="submit" class="form-control">
+          <form @submit.prevent="this.register" class="form-control">
             <!-- NAMA -->
             <input-vue
               v-model="form.users_nama"
@@ -57,7 +57,7 @@
             />
             <!-- CONFIRM PASSWORD -->
             <input-vue
-              v-model="form.users_password_confirmed"
+              v-model="form.users_password_confirmation"
               name="users_password_confirmed"
               type="password"
               label="Confirm Password"
@@ -71,7 +71,6 @@
                   v-model="form.users_role"
                   value="customer"
                   class="radio"
-                  checked
                 />
                 <span class="label-text">Customer</span>
               </label>
@@ -85,6 +84,13 @@
                 <span class="label-text">Provider</span>
               </label>
             </div>
+            <template v-if="this.errorData">
+              <label v-if="this.errorData.errors && Object.hasOwn(this.errorData.errors, 'users_role')" class="label">
+                <span v-for="(item, index) in this.errorData.errors['users_role']" :key="index" class="label-text text-error">
+                  {{ item }}
+                </span>
+              </label>
+            </template>
             <!-- T&C -->
             <label class="flex justify-start space-x-4 label cursor-pointer">
               <input type="checkbox" v-model="form.tnc" class="checkbox-primary" />
@@ -95,6 +101,13 @@
                 </a>
               </span>
             </label>
+            <template v-if="this.errorData">
+              <label v-if="this.errorData.errors && Object.hasOwn(this.errorData.errors, 'tnc')" class="label">
+                <span v-for="(item, index) in this.errorData.errors['tnc']" :key="index" class="label-text text-error">
+                  {{ item }}
+                </span>
+              </label>
+            </template>
             <label v-if="this.errorData" class="label">
               <span class="label-text text-error">
                 {{ this.errorData.message }}
@@ -119,7 +132,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapWritableState } from "pinia";
+import { mapState, mapActions, mapWritableState} from "pinia";
 import { useRegisterStore } from "@/stores/Auth/RegisterStore.js";
 import InputVue from "@/components/Inputs/Input.vue";
 
@@ -128,21 +141,12 @@ export default {
   components: {
     InputVue,
   },
+  computed: {
+    ...mapWritableState(useRegisterStore, ["form"]),
+    ...mapState(useRegisterStore, ["errorData"]),
+  },
   methods: {
     ...mapActions(useRegisterStore, ["register"]),
-    async submit() {
-      await this.register() 
-        .then(response=>{
-        console.log('response register:',response);
-        if (response instanceof Error) {
-          this.errorData = response.response.data
-          console.log('this.errorData:',this.errorData);
-        }
-      })
-    },
-  },
-  computed: {
-    ...mapWritableState(useRegisterStore, ["form", "errorData"]),
   },
 };
 </script>
