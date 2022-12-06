@@ -20,6 +20,7 @@ import ProviderHistory from "../views/Provider/History.vue";
 import CustomerLayout from "../views/Customer/Layout.vue";
 import CustomerHome from "../views/Customer/Home.vue";
 import CustomerSearch from "../views/Customer/Search.vue";
+import CustomerPesan from "../views/Customer/Pesan.vue";
 import CustomerHistory from "../views/Customer/History.vue";
 import CustomerDetailHistory from "../views/Customer/DetailHistory.vue";
 import CustomerProfile from "../views/Customer/Profile.vue";
@@ -34,6 +35,20 @@ const router = createRouter({
   routes: [
     //guest
     {
+      path: "/pesan",
+      component: CustomerLayout,
+      meta: {
+        role: "guest",
+      },
+      children: [
+        {
+          path: "",
+          name: "customer-pesan",
+          component: CustomerPesan,
+        },
+      ],
+    },
+    {
       path: "/coba-axios",
       name: "coba-axios",
       component: CobaAxios,
@@ -43,7 +58,7 @@ const router = createRouter({
       name: "landing-page",
       component: LandingPage,
       meta: {
-        role: "guest"
+        role: "guest",
       },
     },
     {
@@ -51,7 +66,7 @@ const router = createRouter({
       name: "login",
       component: Login,
       meta: {
-        role: "guest"
+        role: "guest",
       },
     },
     {
@@ -59,7 +74,7 @@ const router = createRouter({
       name: "register",
       component: Register,
       meta: {
-        role: "guest"
+        role: "guest",
       },
     },
     // Admin
@@ -67,7 +82,7 @@ const router = createRouter({
       path: "/admin",
       component: AdminLayout,
       meta: {
-        role: "admin"
+        role: "admin",
       },
       children: [
         {
@@ -97,7 +112,7 @@ const router = createRouter({
       path: "/provider",
       component: ProviderLayout,
       meta: {
-        role: "provider"
+        role: "provider",
       },
       children: [
         {
@@ -142,7 +157,7 @@ const router = createRouter({
       path: "/customer",
       component: CustomerLayout,
       meta: {
-        role: "customer"
+        role: "customer",
       },
       children: [
         {
@@ -155,6 +170,11 @@ const router = createRouter({
           name: "customer-search",
           component: CustomerSearch,
         },
+        // {
+        //   path: "pesan",
+        //   name: "customer-pesan",
+        //   component: CustomerPesan,
+        // },
         {
           path: "history",
           children: [
@@ -212,24 +232,23 @@ router.beforeEach((to, from) => {
    * 5 dan 1 bisa di gabung
    * 3 dan 4 bisa di gabung
    */
-  const authStore = useAuthStore()
-  const role = authStore.getUserFromLocalStorage().role
-  const metaRole = to.meta.role
+  const authStore = useAuthStore();
+  const role = authStore.getUserFromLocalStorage().role;
+  const metaRole = to.meta.role;
 
   // 2.
   if (role == "guest" && metaRole != "guest") {
-    return { name: "login" }
-  }
-  else if (
+    return { name: "login" };
+  } else if (
     // 3.
-    role != "guest" && metaRole == "guest"
+    (role != "guest" && metaRole == "guest") ||
     // 4.
-    || (role != "guest" && role != metaRole)
+    (role != "guest" && role != metaRole)
   ) {
-    if (role == "customer") return { name: "customer" }
-    else if (role == "provider") return { name: "provider" }
-    else if (role == "admin") return { name: "admin" }
+    if (role == "customer") return { name: "customer" };
+    else if (role == "provider") return { name: "provider" };
+    else if (role == "admin") return { name: "admin" };
   }
-})
+});
 
 export default router;
