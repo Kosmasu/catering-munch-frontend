@@ -19,10 +19,10 @@ export const useLoginStore = defineStore("LoginStore", {
   getters: {},
   actions: {
     async login() {
-      await MunchService.sanctum()
+      const authStore = useAuthStore()
+      await authStore.sanctum()
       await MunchService.login(this.form.users_email, this.form.password)
         .then(async (response) => {
-          const authStore = useAuthStore()
           await authStore.me()
           const role = authStore.getUserFromLocalStorage().role
           console.log("response login:", response);

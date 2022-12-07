@@ -17,6 +17,9 @@ export const useAuthStore = defineStore("AuthStore", {
     }
   },
   actions: {
+    async sanctum() {
+      await MunchService.sanctum()
+    },
     async me() {
       await MunchService.me()
         .then(response => {
@@ -34,8 +37,7 @@ export const useAuthStore = defineStore("AuthStore", {
     async logout() {
       await MunchService.logout().then((response) => {
         if (response.data.status == "success") {
-          this.$reset()
-          localStorage.removeItem("user")
+          this.removeUserFromLocalStorage()
           router.push({ name: "landing-page" })
         } else {
           console.log(response.data.status)
@@ -53,6 +55,10 @@ export const useAuthStore = defineStore("AuthStore", {
         this.$reset()
       }
       return this.user
+    },
+    removeUserFromLocalStorage() {
+      this.$reset()
+      localStorage.removeItem("user")
     }
   },
 });

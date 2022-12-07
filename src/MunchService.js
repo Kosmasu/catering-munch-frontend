@@ -16,7 +16,7 @@ class MunchService {
       "Content-type": "application/json",
     },
     withCredentials: true
-  });
+  })
 
   // AUTH
   static sanctum() {
