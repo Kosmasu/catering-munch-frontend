@@ -27,22 +27,22 @@ app.mount('#app')
 
 // https://axios-http.com/docs/interceptors
 MunchService.http.interceptors.request.use(async response => {
-  console.log('response request interceptor:',response);
+  // console.log('response request interceptor:',response);
   if (response.method != "get") {
     const authStore = useAuthStore()
     await authStore.sanctum()
   }
   return response;
 }, error => {
-  console.log('error request interceptor:',error);
+  // console.log('error request interceptor:',error); 
   return Promise.reject(error);
 });
 
 MunchService.http.interceptors.response.use(async response => {
-  console.log('response response interceptor:',response);
+  // console.log('response response interceptor:',response);
   return response;
 }, error => {
-  console.log('error response interceptor:',error);
+  // console.log('error response interceptor:',error);
   if (error.response.status == 401 || error.response.status == 419) {
     const authStore = useAuthStore()
     authStore.removeUserFromLocalStorage()
