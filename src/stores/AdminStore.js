@@ -1,11 +1,7 @@
-import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import MunchService from "@/MunchService";
 
-// composition sama option
-// ini option api
 export const useAdminStore = defineStore("AdminStore", {
-  // state itu data
   state: () => ({
     customers: undefined,
     providers: undefined,
@@ -16,12 +12,10 @@ export const useAdminStore = defineStore("AdminStore", {
     historyTopup: undefined,
     result: undefined,
   }),
-  // getters itu computed properties (tidak boleh ada parameter)
   getters: {},
-  // actions itu method
   actions: {
-    async fetchCustomers() {
-      await MunchService.getAllCustomers()
+    async fetchCustomers(batch_size = 20, currentPage = 1) {
+      await MunchService.getCustomers(batch_size, currentPage)
         .then((response) => {
           this.result = response.data;
           if (this.result.status == "success") {
@@ -33,8 +27,8 @@ export const useAdminStore = defineStore("AdminStore", {
           console.error(error);
         });
     },
-    async fetchProviders() {
-      await MunchService.getAllProviders()
+    async fetchProviders(batch_size = 20, currentPage = 1) {
+      await MunchService.getProviders(batch_size, currentPage)
         .then((response) => {
           this.result = response.data;
           if (this.result.status == "success") {
@@ -47,6 +41,12 @@ export const useAdminStore = defineStore("AdminStore", {
         });
     },
     async fetchHistoryLog() {},
+    searchCustomer(query) {
+      
+    },
+    searchProvider(query) {
+
+    },
     async banUser(role, id) {
       await MunchService.banUser(id)
         .then((response) => {

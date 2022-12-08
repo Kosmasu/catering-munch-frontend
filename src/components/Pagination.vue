@@ -22,51 +22,41 @@ export default {
       type: Number,
       required: true,
     },
-    currentPage: {
+    modelValue: {
       type: Number,
       required: true,
     }
   },
   emits: [
-    "update:currentPage",
+    "update:modelValue",
   ],
   computed: {
     lowerPageBoundary() {
       if (
-        this.currentPage <= Math.floor(this.PAGE_SHOWN / 2)
+        this.modelValue <= Math.floor(this.PAGE_SHOWN / 2)
       ) { 
         return 1
       }
       else if (
-        this.currentPage <= this.maxPage - Math.floor(this.PAGE_SHOWN / 2)
+        this.modelValue <= this.maxPage - Math.floor(this.PAGE_SHOWN / 2)
       ) {
-        return this.currentPage - Math.floor(this.PAGE_SHOWN / 2)
+        return this.modelValue - Math.floor(this.PAGE_SHOWN / 2)
       }
       else  {
         return this.maxPage - this.PAGE_SHOWN + 1
       }
     },
-    upperPageBoundary() {
-      if (this.currentPage < this.maxPage - Math.floor(this.PAGE_SHOWN / 2)) {
-        return this.currentPage + Math.floor(this.PAGE_SHOWN / 2)
-      }
-      else 
-       return this.maxPage
-    }
   },
   methods: {
     getPageRender(index) {
       let page = this.lowerPageBoundary + (index - 1)
-      // if (page >= this.maxPage - Math.floor(this.PAGE_SHOWN/2)) {
-      //   page = this.maxPage - index
-      // }
       return page
     },
     isCurrentPage(page) {
-      return this.currentPage == page
+      return this.modelValue == page
     },
     updateCurrentPage(page) {
-      this.$emit('update:currentPage', page)
+      this.$emit('update:modelValue', page)
     },
     goTo(page) {
       this.updateCurrentPage(page)
@@ -75,17 +65,26 @@ export default {
       this.updateCurrentPage(1)
     },
     decrementPage() {
-      if (this.currentPage > 1) {
-        this.updateCurrentPage(this.currentPage - 1)
+      if (this.modelValue > 1) {
+        this.updateCurrentPage(this.modelValue - 1)
       }
     },
     incrementPage() {
-      if (this.currentPage < this.maxPage) {
-        this.updateCurrentPage(this.currentPage + 1)
+      if (this.modelValue < this.maxPage) {
+        this.updateCurrentPage(this.modelValue + 1)
       }
     },
     goToLastPage() {
       this.updateCurrentPage(this.maxPage)
+    }
+  },
+  created() {
+    let page = this.$route.params.page
+    if (page == undefined) {
+      throw Error("To include pagination, the page must have an optional param named \"page\"")
+    }
+    if (page <= 0 || page > this.maxPage) {
+      page = 1
     }
   }
 };

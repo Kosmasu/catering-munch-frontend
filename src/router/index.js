@@ -91,7 +91,7 @@ const router = createRouter({
           component: AdminHome,
         },
         {
-          path: "customers",
+          path: "customers/:page?",
           name: "admin-customers",
           component: AdminCustomers,
         },

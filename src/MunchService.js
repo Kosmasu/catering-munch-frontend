@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { Axios } from "axios";
 
 class MunchService {
   constructor() {
@@ -17,6 +17,11 @@ class MunchService {
     },
     withCredentials: true
   })
+
+  static paginate(axios) {
+    if (typeof axios != Axios) throw Error("axios have to be an instance of Axios")
+    
+  }
 
   // AUTH
   static sanctum() {
@@ -66,7 +71,7 @@ class MunchService {
   }
 
   static me() {
-    return this.http.get("/me");
+    return this.http.get("/mini-me");
   }
 
   static logout() {
@@ -74,12 +79,26 @@ class MunchService {
   }
 
   // ADMIN
-  static getAllCustomers() {
-    return this.http.get("/admin/users/getAllCustomers");
+  static getCustomers(batch_size, currentPage = 1) {
+    return this.http.get(`/admin/users?page=${currentPage}`, {
+      "users_role" : "customer",
+      "batch_size" : batch_size,
+      "sort" : {
+          "column" : "users_id",
+          "type" : "asc"
+      }
+    });
   }
 
-  static getAllProviders() {
-    return this.http.get("/admin/users/getAllProviders");
+  static getProviders(batch_size, currentPage = 1) {
+    return this.http.get(`/admin/users?page=${currentPage}`, {
+      "users_role" : "provider",
+      "batch_size" : batch_size,
+      "sort" : {
+          "column" : "users_id",
+          "type" : "asc"
+      }
+    });
   }
 
   static banUser(id) {

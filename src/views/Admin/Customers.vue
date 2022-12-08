@@ -6,11 +6,11 @@
         <div>
           <div>Showing :</div>
           <div v-if="customers">
-            <div v-if="usersSearch('customer', query).length <= 1">
-              {{ usersSearch("customer", query).length }} Customer
+            <div v-if="this.customers.length <= 1">
+              {{ this.customers.length }} Customer
             </div>
             <div v-else>
-              {{ usersSearch("customer", query).length }} Customers
+              {{ this.customers.length }} Customers
             </div>
           </div>
         </div>
@@ -36,7 +36,7 @@
           </tr>
         </thead>
         <tbody v-if="customers">
-          <tr v-for="customer in usersSearch('customer', query)" class="hover">
+          <tr v-for="customer in (this.customers.data)" class="hover">
             <td>{{ customer.users_id }}</td>
             <td>{{ customer.users_nama }}</td>
             <td>{{ customer.users_email }}</td>
@@ -72,8 +72,8 @@
           </tr>
         </tbody>
       </table>
-      <div class="w-full flex justify-center">
-        <pagination-vue :maxPage="10" v-model:currentPage="currentPage" />
+      <div v-if="this.customers" class="w-full flex justify-center">
+        <pagination-vue :maxPage="this.customers.last_page" v-model="currentPage" />
       </div>
     </div>
   </div>
@@ -114,8 +114,13 @@ export default {
     ...mapState(useAdminStore, ["result", "customers"]),
   },
   created() {
-    this.fetchCustomers();
+    this.fetchCustomers()
   },
+  watch: {
+    currentPage(newCurrentPage, oldCurrentPage) {
+      this.fetchCustomers(20, newCurrentPage)
+    }
+  }
 };
 </script>
 <style></style>
