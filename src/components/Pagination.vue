@@ -3,7 +3,7 @@
     <div class="btn-group">
       <button class="btn" @click="goToFirstPage">&lt;&lt;</button>
       <button class="btn" @click="decrementPage">&lt;</button>
-      <button v-for="page in PAGE_SHOWN" class="btn" :class="{'btn-primary': isCurrentPage(getPageRender(page))}" @click="goTo(page)">{{ getPageRender(page) }}</button>
+      <button v-for="page in this.loop" class="btn" :class="{'btn-primary': isCurrentPage(getPageRender(page))}" @click="goTo(page)">{{ getPageRender(page) }}</button>
       <button class="btn" @click="incrementPage">&gt;</button>
       <button class="btn" @click="goToLastPage">&gt;&gt;</button>
     </div>
@@ -31,6 +31,9 @@ export default {
     "update:modelValue",
   ],
   computed: {
+    loop() {
+      return (this.maxPage < this.PAGE_SHOWN ? this.maxPage: this.PAGE_SHOWN)
+    },
     lowerPageBoundary() {
       if (
         this.modelValue <= Math.floor(this.PAGE_SHOWN / 2)

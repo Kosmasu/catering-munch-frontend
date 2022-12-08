@@ -80,12 +80,16 @@ class MunchService {
 
   // ADMIN
   static getCustomers(batch_size, currentPage = 1) {
-    return this.http.get(`/admin/users?page=${currentPage}`, {
-      "users_role" : "customer",
-      "batch_size" : batch_size,
-      "sort" : {
-          "column" : "users_id",
-          "type" : "asc"
+    return this.http.get(`/admin/users`, 
+    {
+      params: {
+        "page": currentPage,
+        "users_role" : "customer",
+        "batch_size" : batch_size,
+        "sort" : {
+            "column" : "users_id",
+            "type" : "asc"
+        }
       }
     });
   }

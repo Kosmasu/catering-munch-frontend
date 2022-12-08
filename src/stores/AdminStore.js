@@ -10,18 +10,13 @@ export const useAdminStore = defineStore("AdminStore", {
     historyPemesanan: undefined,
     historyRating: undefined,
     historyTopup: undefined,
-    result: undefined,
   }),
   getters: {},
   actions: {
     async fetchCustomers(batch_size = 20, currentPage = 1) {
       await MunchService.getCustomers(batch_size, currentPage)
         .then((response) => {
-          this.result = response.data;
-          if (this.result.status == "success") {
-            this.customers = this.result.data;
-            console.log("this.customers:", this.customers);
-          }
+          this.customers = response.data.data;
         })
         .catch((error) => {
           console.error(error);
@@ -30,11 +25,7 @@ export const useAdminStore = defineStore("AdminStore", {
     async fetchProviders(batch_size = 20, currentPage = 1) {
       await MunchService.getProviders(batch_size, currentPage)
         .then((response) => {
-          this.result = response.data;
-          if (this.result.status == "success") {
-            this.providers = this.result.data;
-            console.log("this.providers:", this.providers);
-          }
+          this.providers = response.data.data;
         })
         .catch((error) => {
           console.error(error);
