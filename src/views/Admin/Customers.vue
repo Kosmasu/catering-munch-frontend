@@ -4,7 +4,7 @@
       <div class="text-3xl m-2">List Customer</div>
       <div class="flex space-x-8 items-center">
         <div>
-          <select-batch-size @on-batch-size-change="this.fetchCustomers()"/>
+          <select-batch-size @on-batch-size-change="this.fetchCustomers()" />
         </div>
         <input type="text" v-model="this.query" placeholder="Search…" class="input input-bordered" />
       </div>
@@ -57,14 +57,12 @@
 import { mapActions, mapState, mapWritableState } from "pinia";
 import { useAdminStore } from "@/stores/AdminStore";
 import { useSettingStore } from "@/stores/SettingStore";
-import AdminLayout from "@/views/Admin/Layout.vue";
 import PaginationVue from "@/components/Pagination.vue";
 import SelectBatchSize from "@/components/SelectBatchSize.vue";
 
 export default {
   name: "AdminCustomers",
   components: {
-    AdminLayout,
     PaginationVue,
     SelectBatchSize,
   },

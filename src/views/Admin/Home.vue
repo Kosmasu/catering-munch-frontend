@@ -62,10 +62,7 @@
             <td>{{ provider.users_telepon }}</td>
             <td>{{ provider.users_status.toUpperCase() }}</td>
             <td>
-              <button
-                @click="approve(provider.users_id)"
-                class="btn btn-primary rounded-lg"
-              >
+              <button @click="approve(provider.users_id)" class="btn btn-primary rounded-lg">
                 Approve
               </button>
             </td>
@@ -74,10 +71,7 @@
         <tbody v-else>
           <tr>
             <td class="text-center" colspan="7">
-              <font-awesome-icon
-                icon="fa-solid fa-spinner"
-                class="text-6xl animate-spin"
-              />
+              <font-awesome-icon icon="fa-solid fa-spinner" class="text-6xl animate-spin" />
             </td>
           </tr>
         </tbody>
@@ -89,12 +83,10 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import { useAdminStore } from "@/stores/AdminStore";
-import AdminLayout from "@/views/Admin/Layout.vue";
 
 export default {
   name: "AdminHome",
   components: {
-    AdminLayout,
   },
   data() {
     return {};
@@ -119,4 +111,6 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+
+</style>

@@ -55,19 +55,19 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import { useAdminStore } from "@/stores/AdminStore";
-import AdminLayout from "@/views/Admin/Layout.vue";
 
 export default {
   name: "AdminHistory",
   components: {
-    AdminLayout,
   },
   data() {
     return {};
   },
   computed: {},
   methods: {},
-  created() {},
+  created() { },
 };
 </script>
-<style></style>
+<style>
+
+</style>
