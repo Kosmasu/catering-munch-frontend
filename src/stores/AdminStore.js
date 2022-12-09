@@ -13,8 +13,8 @@ export const useAdminStore = defineStore("AdminStore", {
   }),
   getters: {},
   actions: {
-    async fetchCustomers(batch_size = 20, currentPage = 1) {
-      await MunchService.getCustomers(batch_size, currentPage)
+    async fetchCustomers(batch_size = 20, currentPage = 1, users_nama = "") {
+      await MunchService.getCustomers(batch_size, currentPage, users_nama)
         .then((response) => {
           this.customers = response.data.data;
         })
@@ -22,8 +22,8 @@ export const useAdminStore = defineStore("AdminStore", {
           console.error(error);
         });
     },
-    async fetchProviders(batch_size = 20, currentPage = 1) {
-      await MunchService.getProviders(batch_size, currentPage)
+    async fetchProviders(batch_size = 20, currentPage = 1, users_nama = "") {
+      await MunchService.getProviders(batch_size, currentPage, users_nama)
         .then((response) => {
           this.providers = response.data.data;
         })
@@ -32,12 +32,6 @@ export const useAdminStore = defineStore("AdminStore", {
         });
     },
     async fetchHistoryLog() {},
-    searchCustomer(query) {
-      
-    },
-    searchProvider(query) {
-
-    },
     async banUser(role, id) {
       await MunchService.banUser(id)
         .then((response) => {
@@ -78,27 +72,6 @@ export const useAdminStore = defineStore("AdminStore", {
         .catch((error) => {
           console.error(error);
         });
-    },
-    usersSearch(role, query) {
-      if (role == "provider") {
-        if (this.providers) {
-          return this.providers.filter((provider) => {
-            return (
-              provider.users_nama.toLowerCase().indexOf(query.toLowerCase()) >
-                -1 && provider.users_status != "menunggu"
-            );
-          });
-        }
-      } else {
-        if (this.customers) {
-          return this.customers.filter((customer) => {
-            return (
-              customer.users_nama.toLowerCase().indexOf(query.toLowerCase()) >
-              -1
-            );
-          });
-        }
-      }
     },
     providerWaiting() {
       if (this.providers) {

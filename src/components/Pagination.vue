@@ -1,5 +1,14 @@
 <template>
-  <div class="w-full flex justify-center">
+  <div class="w-full flex justify-between">
+    <div class="flex items-center whitespace-pre">
+      Showing 
+      <span class="font-bold"> {{ this.lowerItemBoundary }} </span> 
+       to 
+      <span class="font-bold"> {{ this.upperItemBoundary }} </span> 
+       of 
+       <span class="font-bold"> {{ this.paginatedData.total }} </span>
+       results
+    </div>
     <div class="btn-group">
       <button class="btn" @click="goToFirstPage">&lt;&lt;</button>
       <button class="btn" @click="decrementPage">&lt;</button>
@@ -18,12 +27,12 @@ export default {
     };
   },
   props: {
-    maxPage: {
+    modelValue: {
       type: Number,
       required: true,
     },
-    modelValue: {
-      type: Number,
+    paginatedData: {
+      type: Object,
       required: true,
     }
   },
@@ -32,7 +41,7 @@ export default {
   ],
   computed: {
     loop() {
-      return (this.maxPage < this.PAGE_SHOWN ? this.maxPage: this.PAGE_SHOWN)
+      return (this.paginatedData.last_page < this.PAGE_SHOWN ? this.paginatedData.last_page: this.PAGE_SHOWN)
     },
     lowerPageBoundary() {
       if (
@@ -41,14 +50,21 @@ export default {
         return 1
       }
       else if (
-        this.modelValue <= this.maxPage - Math.floor(this.PAGE_SHOWN / 2)
+        this.modelValue <= this.paginatedData.last_page - Math.floor(this.PAGE_SHOWN / 2)
       ) {
         return this.modelValue - Math.floor(this.PAGE_SHOWN / 2)
       }
       else  {
-        return this.maxPage - this.PAGE_SHOWN + 1
+        return this.paginatedData.last_page - this.PAGE_SHOWN + 1
       }
     },
+    lowerItemBoundary() {
+      return ((this.modelValue - 1) * 5) + 1
+    },
+    upperItemBoundary() {
+      let temp = this.lowerItemBoundary + this.paginatedData.per_page - 1
+      return (temp < this.paginatedData.total ? temp : this.paginatedData.total)
+    }
   },
   methods: {
     getPageRender(index) {
@@ -73,12 +89,12 @@ export default {
       }
     },
     incrementPage() {
-      if (this.modelValue < this.maxPage) {
+      if (this.modelValue < this.paginatedData.last_page) {
         this.updateCurrentPage(this.modelValue + 1)
       }
     },
     goToLastPage() {
-      this.updateCurrentPage(this.maxPage)
+      this.updateCurrentPage(this.paginatedData.last_page)
     }
   },
   created() {
@@ -86,7 +102,7 @@ export default {
     if (page == undefined) {
       throw Error("To include pagination, the page must have an optional param named \"page\"")
     }
-    if (page <= 0 || page > this.maxPage) {
+    if (page <= 0 || page > this.paginatedData.last_page) {
       page = 1
     }
   }

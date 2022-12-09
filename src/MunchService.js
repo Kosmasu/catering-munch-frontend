@@ -79,28 +79,34 @@ class MunchService {
   }
 
   // ADMIN
-  static getCustomers(batch_size, currentPage = 1) {
+  static getCustomers(batch_size, currentPage = 1, users_nama = "") {
     return this.http.get(`/admin/users`, 
     {
       params: {
         "page": currentPage,
-        "users_role" : "customer",
-        "batch_size" : batch_size,
-        "sort" : {
-            "column" : "users_id",
-            "type" : "asc"
+        "users_role": "customer",
+        "users_nama": users_nama,
+        "batch_size": batch_size,
+        "sort": {
+            "column": "users_id",
+            "type": "asc"
         }
       }
     });
   }
 
-  static getProviders(batch_size, currentPage = 1) {
-    return this.http.get(`/admin/users?page=${currentPage}`, {
-      "users_role" : "provider",
-      "batch_size" : batch_size,
-      "sort" : {
-          "column" : "users_id",
-          "type" : "asc"
+  static getProviders(batch_size, currentPage = 1, users_nama = "") {
+    return this.http.get(`/admin/users`, 
+    {
+      params: {
+        "page": currentPage,
+        "users_role": "provider",
+        "users_nama": users_nama,
+        "batch_size": batch_size,
+        "sort": {
+            "column": "users_id",
+            "type": "asc"
+        }
       }
     });
   }

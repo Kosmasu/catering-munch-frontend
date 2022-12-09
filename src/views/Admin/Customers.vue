@@ -2,21 +2,10 @@
   <div class="border-solid border-2 rounded-lg m-12 p-4">
     <div class="flex justify-between mb-8">
       <div class="text-3xl m-2">List of Customers</div>
-      <div class="flex space-x-8">
-        <div>
-          <div>Showing :</div>
-          <div v-if="customers">
-            <div v-if="this.customers.length <= 1">
-              {{ this.customers.length }} Customer
-            </div>
-            <div v-else>
-              {{ this.customers.length }} Customers
-            </div>
-          </div>
-        </div>
+      <div class="flex space-x-8 whitespace-nowrap">
         <input
           type="text"
-          v-model="query"
+          v-model="this.query"
           placeholder="Search…"
           class="input input-primary input-bordered"
         />
@@ -38,11 +27,11 @@
         <tbody v-if="customers">
           <tr v-for="customer in (this.customers.data)" class="hover">
             <td>{{ customer.users_id }}</td>
-            <td>{{ customer.users_nama }}</td>
+            <td class="capitalize">{{ customer.users_nama }}</td>
             <td>{{ customer.users_email }}</td>
             <td>{{ customer.users_alamat }}</td>
             <td>{{ customer.users_telepon }}</td>
-            <td>{{ customer.users_status.toUpperCase() }}</td>
+            <td class="capitalize">{{ customer.users_status }}</td>
             <td>
               <button
                 v-if="customer.users_status == 'aktif'"
@@ -73,7 +62,10 @@
         </tbody>
       </table>
       <div v-if="this.customers" class="w-full flex justify-center">
-        <pagination-vue :maxPage="this.customers.last_page" v-model="currentPage" />
+        <pagination-vue 
+          v-model="currentPage" 
+          :paginatedData="this.customers"
+        />
       </div>
     </div>
   </div>
@@ -99,7 +91,6 @@ export default {
   methods: {
     ...mapActions(useAdminStore, [
       "fetchCustomers",
-      "usersSearch",
       "banUser",
       "unbanUser",
     ]),
@@ -114,12 +105,18 @@ export default {
     ...mapState(useAdminStore, ["result", "customers"]),
   },
   created() {
-    this.fetchCustomers()
+    this.fetchCustomers(5, 1).then(response=>{
+      console.log('this.customers:',this.customers);
+    })
   },
   watch: {
     currentPage(newCurrentPage, oldCurrentPage) {
-      this.fetchCustomers(20, newCurrentPage)
-    }
+      this.fetchCustomers(5, newCurrentPage)
+    },
+    query(newQuery, oldQuery) {
+      this.currentPage = 1
+      this.fetchCustomers(5, this.currentPage, newQuery)
+    },
   }
 };
 </script>
