@@ -8,7 +8,6 @@ export const useProviderStore = defineStore("ProviderStore", {
   state: () => ({
     menus: undefined,
     listPesanan: undefined,
-    result: undefined,
     form: {
       menu_foto: undefined,
       menu_nama: undefined,
@@ -38,6 +37,16 @@ export const useProviderStore = defineStore("ProviderStore", {
           console.error(error);
         });
     },
+    async fetchDetail(menu_id) {
+      await MunchService.getDetailMenu(menu_id)
+        .then((response) => {
+          this.menus = response.data.data;
+          console.log("this.menus", this.menus);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     async addMenu() {
       const formData = new FormData();
       formData.append("menu_foto", this.form.menu_foto);
@@ -57,7 +66,25 @@ export const useProviderStore = defineStore("ProviderStore", {
           console.log("error add menu:", error);
         });
     },
-
+    async editMenu() {},
+    async deleteMenu() {
+      return await MunchService.deleteMenu(this.menus.menu_id)
+        .then((response) => {
+          if (response.data.status == "success") {
+            router.push({
+              name: "provider-menus",
+              replace: true,
+              params: { page: 1 },
+            });
+          } else {
+            console.log(this.result.status);
+          }
+        })
+        .catch((error) => {
+          this.errorData = error.response.data;
+          console.log("error delete menu:", error);
+        });
+    },
     async fetchListPesanan() {
       await MunchService.getPesananProvider()
         .then((response) => {

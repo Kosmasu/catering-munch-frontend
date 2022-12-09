@@ -155,8 +155,8 @@ class MunchService {
     });
   }
 
-  static detailMenu(id) {
-    return this.http.get("/menu/" + id);
+  static getDetailMenu(menu_id) {
+    return this.http.get("/menu/" + menu_id);
   }
 
   static addMenu(formData) {

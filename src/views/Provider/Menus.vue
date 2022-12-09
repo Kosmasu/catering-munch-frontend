@@ -65,6 +65,7 @@ import { mapActions, mapState } from "pinia";
 import { useProviderStore } from "@/stores/ProviderStore";
 import PaginationVue from "@/components/Pagination.vue";
 import SelectBatchSize from "@/components/SelectBatchSize.vue";
+import router from "@/router";
 
 export default {
   name: "ProviderMenus",
@@ -79,13 +80,13 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useProviderStore, ["fetchMenus", "menusSearch"]),
+    ...mapActions(useProviderStore, ["fetchMenus"]),
     detail(id) {
-      console.log("detail menu", id);
+      router.push({ name: "provider-menus-detail", params: { id } });
     },
   },
   computed: {
-    ...mapState(useProviderStore, ["result", "menus"]),
+    ...mapState(useProviderStore, ["menus"]),
   },
   created() {
     this.fetchMenus().then((response) => {
