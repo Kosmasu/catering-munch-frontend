@@ -15,30 +15,33 @@ class MunchService {
     headers: {
       "Content-type": "application/json",
     },
-    withCredentials: true
-  })
+    withCredentials: true,
+  });
 
   static paginate(axios) {
-    if (typeof axios != Axios) throw Error("axios have to be an instance of Axios")
-    
+    if (typeof axios != Axios)
+      throw Error("axios have to be an instance of Axios");
   }
 
   // AUTH
   static sanctum() {
-    return axios.create({
-      headers: {
-        "Content-type": "application/json"
-      },
-    }).get("http://localhost:8000/sanctum/csrf-cookie", {
-      withCredentials: true,
-    })
-    .then(response=>{
-      console.log('response sanctum:',response);
-      return response
-    }).catch(error=>{
-      console.log('error sanctum:',error);
-      return error
-    }) 
+    return axios
+      .create({
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
+      .get("http://localhost:8000/sanctum/csrf-cookie", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log("response sanctum:", response);
+        return response;
+      })
+      .catch((error) => {
+        console.log("error sanctum:", error);
+        return error;
+      });
   }
 
   static login(email, password) {
@@ -80,34 +83,32 @@ class MunchService {
 
   // ADMIN
   static getCustomers(batch_size, currentPage = 1, users_nama = "") {
-    return this.http.get(`/admin/users`, 
-    {
+    return this.http.get(`/admin/users`, {
       params: {
-        "page": currentPage,
-        "users_role": "customer",
-        "users_nama": users_nama,
-        "batch_size": batch_size,
-        "sort": {
-            "column": "users_id",
-            "type": "asc"
-        }
-      }
+        page: currentPage,
+        users_role: "customer",
+        users_nama: users_nama,
+        batch_size: batch_size,
+        sort: {
+          column: "users_id",
+          type: "asc",
+        },
+      },
     });
   }
 
   static getProviders(batch_size, currentPage = 1, users_nama = "") {
-    return this.http.get(`/admin/users`, 
-    {
+    return this.http.get(`/admin/users`, {
       params: {
-        "page": currentPage,
-        "users_role": "provider",
-        "users_nama": users_nama,
-        "batch_size": batch_size,
-        "sort": {
-            "column": "users_id",
-            "type": "asc"
-        }
-      }
+        page: currentPage,
+        users_role: "provider",
+        users_nama: users_nama,
+        batch_size: batch_size,
+        sort: {
+          column: "users_id",
+          type: "asc",
+        },
+      },
     });
   }
 
@@ -124,12 +125,34 @@ class MunchService {
   }
 
   // PROVIDER
-  static menu() {
-    return this.http.get("/provider/menu");
+  static menu(batch_size, currentPage = 1, id) {
+    return this.http.get("/menu", {
+      params: {
+        page: currentPage,
+        provider_id: id,
+        batch_size: batch_size,
+        sort: {
+          column: "menu_nama",
+          type: "asc",
+        },
+      },
+    });
+  }
+
+  static detailMenu(id) {
+    return this.http.get("/menu/" + id);
   }
 
   static addMenu() {
-    return this.http.post("/provider/menu");
+    return this.http.post("/menu");
+  }
+
+  static editMenu() {
+    return this.http.patch("/menu/");
+  }
+
+  static deleteMenu(id) {
+    return this.http.delete("/menu/" + id);
   }
 
   static getPesananProvider() {
