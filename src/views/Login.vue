@@ -40,14 +40,20 @@
           </form>
           <div>
             Don't have an account?
-            <route-link :to="{ name: 'register' }" class="link link-hover text-primary">
+            <RouterLink
+              :to="{ name: 'register' }"
+              class="link link-hover text-primary"
+            >
               Register Now!
-            </route-link>
+            </RouterLink>
           </div>
           <label class="label">
-            <route-link :to="{ name: 'landing-page' }" class="link link-hover text-error">
+            <RouterLink
+              :to="{ name: 'landing-page' }"
+              class="link link-hover text-error"
+            >
               &lt; Back to Home
-            </route-link>
+            </RouterLink>
           </label>
         </div>
       </div>
@@ -55,7 +61,7 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions, mapWritableState} from "pinia";
+import { mapState, mapActions, mapWritableState } from "pinia";
 import { useLoginStore } from "@/stores/Auth/LoginStore.js";
 import InputVue from "@/components/Inputs/Input.vue";
 

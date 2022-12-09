@@ -35,20 +35,6 @@ const router = createRouter({
   routes: [
     //guest
     {
-      path: "/pesan",
-      component: CustomerLayout,
-      meta: {
-        role: "guest",
-      },
-      children: [
-        {
-          path: "",
-          name: "customer-pesan",
-          component: CustomerPesan,
-        },
-      ],
-    },
-    {
       path: "/coba-axios",
       name: "coba-axios",
       component: CobaAxios,
@@ -170,11 +156,11 @@ const router = createRouter({
           name: "customer-search",
           component: CustomerSearch,
         },
-        // {
-        //   path: "pesan",
-        //   name: "customer-pesan",
-        //   component: CustomerPesan,
-        // },
+        {
+          path: "pesan",
+          name: "customer-pesan",
+          component: CustomerPesan,
+        },
         {
           path: "history",
           children: [

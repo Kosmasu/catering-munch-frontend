@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import ProviderNavbar from "../../components/ProviderNavbar.vue";
+import ProviderNavbar from "@/components/ProviderNavbar.vue";
 
 export default {
   components: {
