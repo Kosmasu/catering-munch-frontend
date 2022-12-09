@@ -3,6 +3,9 @@
     <div class="flex justify-between mb-8">
       <div class="text-3xl m-2">List Provider</div>
       <div class="flex space-x-8 items-center">
+        <div>
+          <select-batch-size @on-batch-size-change="this.fetchProviders()"/>
+        </div>
         <input type="text" v-model="this.query" placeholder="Search…" class="input input-bordered" />
       </div>
     </div>
@@ -53,16 +56,17 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import { useAdminStore } from "@/stores/AdminStore";
-import Navbar from "@/components/AdminNavbar.vue";
+import { useSettingStore } from "@/stores/SettingStore";
 import AdminLayout from "@/views/Admin/Layout.vue";
 import PaginationVue from "@/components/Pagination.vue";
+import SelectBatchSize from "@/components/SelectBatchSize.vue";
 
 export default {
   name: "AdminProviders",
   components: {
-    Navbar,
     AdminLayout,
     PaginationVue,
+    SelectBatchSize,
   },
   data() {
     return {
@@ -88,17 +92,17 @@ export default {
     ...mapState(useAdminStore, ["result", "providers"]),
   },
   created() {
-    this.fetchProviders(5, 1).then(response => {
+    this.fetchProviders().then(response => {
       console.log('this.providers:', this.providers);
     })
   },
   watch: {
     currentPage(newCurrentPage, oldCurrentPage) {
-      this.fetchProviders(5, newCurrentPage)
+      this.fetchProviders(newCurrentPage)
     },
     query(newQuery, oldQuery) {
       this.currentPage = 1
-      this.fetchProviders(5, this.currentPage, newQuery)
+      this.fetchProviders(this.currentPage, newQuery)
     },
   }
 };

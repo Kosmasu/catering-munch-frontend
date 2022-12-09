@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import MunchService from "@/MunchService";
+import { useSettingStore } from "@/stores/SettingStore";
 
 export const useAdminStore = defineStore("AdminStore", {
   state: () => ({
@@ -13,8 +14,8 @@ export const useAdminStore = defineStore("AdminStore", {
   }),
   getters: {},
   actions: {
-    async fetchCustomers(batch_size = 20, currentPage = 1, users_nama = "") {
-      await MunchService.getCustomers(batch_size, currentPage, users_nama)
+    async fetchCustomers(currentPage = 1, users_nama = "") {
+      await MunchService.getCustomers(useSettingStore().batch_size, currentPage, users_nama)
         .then((response) => {
           this.customers = response.data.data;
         })
@@ -22,8 +23,8 @@ export const useAdminStore = defineStore("AdminStore", {
           console.error(error);
         });
     },
-    async fetchProviders(batch_size = 20, currentPage = 1, users_nama = "") {
-      await MunchService.getProviders(batch_size, currentPage, users_nama)
+    async fetchProviders(currentPage = 1, users_nama = "") {
+      await MunchService.getProviders(useSettingStore().batch_size, currentPage, users_nama)
         .then((response) => {
           this.providers = response.data.data;
         })
