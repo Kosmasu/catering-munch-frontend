@@ -51,13 +51,18 @@
           </tbody>
           <tbody v-else>
             <tr>
-              <font-awesome-icon
-                icon="fa-solid fa-spinner"
-                class="text-6xl animate-spin"
-              />
+              <td class="text-center" colspan="5">
+                <font-awesome-icon
+                  icon="fa-solid fa-spinner"
+                  class="text-6xl animate-spin"
+                />
+              </td>
             </tr>
           </tbody>
         </table>
+        <div v-if="this.menus" class="p-2">
+          <pagination-vue v-model="currentPage" :paginatedData="this.menus" />
+        </div>
       </div>
     </div>
   </div>
@@ -65,14 +70,18 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import { useProviderStore } from "@/stores/ProviderStore";
+import { useAuthStore } from "@/stores/Auth/AuthStore";
+import PaginationVue from "@/components/Pagination.vue";
 
 export default {
   name: "ProviderMenus",
   components: {
+    PaginationVue,
   },
   data() {
     return {
       query: "",
+      currentPage: 1,
     };
   },
   methods: {
@@ -82,10 +91,22 @@ export default {
     },
   },
   computed: {
-    ...mapState(useProviderStore, ["status", "menus"]),
+    ...mapState(useProviderStore, ["result", "menus"]),
+    ...mapState(useAuthStore, ["id"]),
   },
   created() {
-    this.fetchMenus();
+    this.fetchMenus(5, 1, this.id).then((response) => {
+      console.log("this.id:", this.id);
+    });
+  },
+  watch: {
+    currentPage(newCurrentPage, oldCurrentPage) {
+      this.fetchMenus(5, newCurrentPage);
+    },
+    query(newQuery, oldQuery) {
+      this.currentPage = 1;
+      this.fetchMenus(5, this.currentPage, newQuery);
+    },
   },
 };
 </script>

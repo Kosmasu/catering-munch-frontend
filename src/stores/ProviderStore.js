@@ -2,23 +2,18 @@ import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import MunchService from "@/MunchService";
 
-// composition sama option
-// ini option api
 export const useProviderStore = defineStore("ProviderStore", {
-  // state itu data
   state: () => ({
     menus: undefined,
     listPesanan: undefined,
     result: undefined,
   }),
-  // getters itu computed properties (tidak boleh ada parameter)
   getters: {},
-  // actions itu method
   actions: {
-    async fetchMenus() {
-      await MunchService.menu()
+    async fetchMenus(batch_size = 20, currentPage = 1, provider_id) {
+      await MunchService.menu(batch_size, (currentPage = 1), provider_id)
         .then((response) => {
-          this.menus = response.data;
+          this.menus = response.data.data.data;
           console.log("this.menus:", this.menus);
         })
         .catch((error) => {

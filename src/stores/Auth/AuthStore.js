@@ -15,6 +15,9 @@ export const useAuthStore = defineStore("AuthStore", {
     firstName() {
       return this.user.nama.split(" ")[0];
     },
+    id() {
+      return this.user.id;
+    },
   },
   actions: {
     async sanctum() {
