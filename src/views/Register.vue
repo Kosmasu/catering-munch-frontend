@@ -85,15 +85,29 @@
               </label>
             </div>
             <template v-if="this.errorData">
-              <label v-if="this.errorData.errors && Object.hasOwn(this.errorData.errors, 'users_role')" class="label">
-                <span v-for="(item, index) in this.errorData.errors['users_role']" :key="index" class="label-text text-error">
+              <label
+                v-if="
+                  this.errorData.errors &&
+                  Object.hasOwn(this.errorData.errors, 'users_role')
+                "
+                class="label"
+              >
+                <span
+                  v-for="(item, index) in this.errorData.errors['users_role']"
+                  :key="index"
+                  class="label-text text-error"
+                >
                   {{ item }}
                 </span>
               </label>
             </template>
             <!-- T&C -->
             <label class="flex justify-start space-x-4 label cursor-pointer">
-              <input type="checkbox" v-model="form.tnc" class="checkbox-primary" />
+              <input
+                type="checkbox"
+                v-model="form.tnc"
+                class="checkbox-primary"
+              />
               <span>
                 I agree to the
                 <a href="#" class="link link-hover text-primary-focus">
@@ -102,8 +116,18 @@
               </span>
             </label>
             <template v-if="this.errorData">
-              <label v-if="this.errorData.errors && Object.hasOwn(this.errorData.errors, 'tnc')" class="label">
-                <span v-for="(item, index) in this.errorData.errors['tnc']" :key="index" class="label-text text-error">
+              <label
+                v-if="
+                  this.errorData.errors &&
+                  Object.hasOwn(this.errorData.errors, 'tnc')
+                "
+                class="label"
+              >
+                <span
+                  v-for="(item, index) in this.errorData.errors['tnc']"
+                  :key="index"
+                  class="label-text text-error"
+                >
                   {{ item }}
                 </span>
               </label>
@@ -117,14 +141,20 @@
           </form>
           <div>
             Already have an account?
-            <route-link :to="{ name: 'login' }" class="link link-hover text-primary">
+            <RouterLink
+              :to="{ name: 'login' }"
+              class="link link-hover text-primary"
+            >
               Login Now!
-            </route-link>
+            </RouterLink>
           </div>
           <label class="label">
-            <route-link :to="{ name: 'landing-page' }" class="link link-hover text-error">
+            <RouterLink
+              :to="{ name: 'landing-page' }"
+              class="link link-hover text-error"
+            >
               &lt; Back to Home
-            </route-link>
+            </RouterLink>
           </label>
         </div>
       </div>
@@ -132,7 +162,7 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions, mapWritableState} from "pinia";
+import { mapState, mapActions, mapWritableState } from "pinia";
 import { useRegisterStore } from "@/stores/Auth/RegisterStore.js";
 import InputVue from "@/components/Inputs/Input.vue";
 
