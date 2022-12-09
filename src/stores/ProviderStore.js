@@ -2,12 +2,24 @@ import { defineStore } from "pinia";
 import MunchService from "@/MunchService";
 import { useSettingStore } from "@/stores/SettingStore";
 import { useAuthStore } from "@/stores/Auth/AuthStore";
+import router from "@/router";
 
 export const useProviderStore = defineStore("ProviderStore", {
   state: () => ({
     menus: undefined,
     listPesanan: undefined,
     result: undefined,
+    form: {
+      menu_foto: undefined,
+      menu_nama: undefined,
+      menu_harga: undefined,
+      menu_status: undefined,
+    },
+    errorData: {
+      status: undefined,
+      message: undefined,
+      errors: undefined,
+    },
   }),
   getters: {},
   actions: {
@@ -26,6 +38,26 @@ export const useProviderStore = defineStore("ProviderStore", {
           console.error(error);
         });
     },
+    async addMenu() {
+      const formData = new FormData();
+      formData.append("menu_foto", this.form.menu_foto);
+      formData.append("menu_nama", this.form.menu_nama);
+      formData.append("menu_harga", this.form.menu_harga);
+      formData.append("menu_status", this.form.menu_status);
+      return await MunchService.addMenu(formData)
+        .then((response) => {
+          if (response.data.status == "success") {
+            router.push({ name: "provider-menus", params: { page: 1 } });
+          } else {
+            console.log(this.result.status);
+          }
+        })
+        .catch((error) => {
+          this.errorData = error.response.data;
+          console.log("error add menu:", error);
+        });
+    },
+
     async fetchListPesanan() {
       await MunchService.getPesananProvider()
         .then((response) => {
@@ -35,13 +67,6 @@ export const useProviderStore = defineStore("ProviderStore", {
         .catch((error) => {
           console.error(error);
         });
-    },
-    menusSearch(query) {
-      if (this.menus) {
-        return this.menus.filter((menu) => {
-          return menu.menu_nama.toLowerCase().indexOf(query.toLowerCase()) > -1;
-        });
-      }
     },
   },
 });

@@ -159,8 +159,12 @@ class MunchService {
     return this.http.get("/menu/" + id);
   }
 
-  static addMenu() {
-    return this.http.post("/menu");
+  static addMenu(formData) {
+    return this.http.post("/menu", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   }
 
   static editMenu() {

@@ -32,6 +32,7 @@
             </td>
             <td>{{ menu.menu_nama }}</td>
             <td>Rp. {{ menu.menu_harga.toLocaleString("id-ID") }},00</td>
+            <td class="capitalize">{{ menu.menu_status }}</td>
             <td>
               <button
                 @click="detail(menu.menu_id)"
