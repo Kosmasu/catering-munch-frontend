@@ -35,7 +35,6 @@ export const useAdminStore = defineStore("AdminStore", {
     async banUser(role, id) {
       await MunchService.banUser(id)
         .then((response) => {
-          this.result = response.data;
           console.log("user id", id, "banned");
           if (role == "customer") {
             this.fetchCustomers();
@@ -50,7 +49,6 @@ export const useAdminStore = defineStore("AdminStore", {
     async unbanUser(role, id) {
       await MunchService.unbanUser(id)
         .then((response) => {
-          this.result = response.data;
           console.log("user id", id, "unbanned");
           if (role == "customer") {
             this.fetchCustomers();

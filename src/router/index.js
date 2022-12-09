@@ -96,12 +96,12 @@ const router = createRouter({
           component: AdminCustomers,
         },
         {
-          path: "providers",
+          path: "providers/:page?",
           name: "admin-providers",
           component: AdminProviders,
         },
         {
-          path: "history",
+          path: "history/:page?",
           name: "admin-history",
           component: AdminHistory,
         },

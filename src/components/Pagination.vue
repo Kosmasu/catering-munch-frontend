@@ -1,20 +1,33 @@
 <template>
   <div class="w-full flex justify-between">
     <div class="flex items-center whitespace-pre">
-      Showing 
-      <span class="font-bold"> {{ this.lowerItemBoundary }} </span> 
-       to 
-      <span class="font-bold"> {{ this.upperItemBoundary }} </span> 
-       of 
-       <span class="font-bold"> {{ this.paginatedData.total }} </span>
-       results
+      Showing
+      <span class="font-bold"> {{ this.lowerItemBoundary }} </span>
+      to
+      <span class="font-bold"> {{ this.upperItemBoundary }} </span>
+      of
+      <span class="font-bold"> {{ this.paginatedData.total }} </span>
+      results
     </div>
     <div class="btn-group">
-      <button class="btn" @click="goToFirstPage">&lt;&lt;</button>
-      <button class="btn" @click="decrementPage">&lt;</button>
-      <button v-for="page in this.loop" class="btn" :class="{'btn-primary': isCurrentPage(getPageRender(page))}" @click="goTo(page)">{{ getPageRender(page) }}</button>
-      <button class="btn" @click="incrementPage">&gt;</button>
-      <button class="btn" @click="goToLastPage">&gt;&gt;</button>
+      <button
+        class="btn bg-base-100 font-normal text-base-content border-0 text-lg text-lg hover:bg-base-200 hover:font-semibold"
+        @click="goToFirstPage">&lt;&lt;</button>
+      <button
+        class="btn bg-base-100 font-normal text-base-content border-0 text-lg text-lg hover:bg-base-200 hover:font-semibold"
+        @click="decrementPage">&lt;</button>
+      <button v-for="page in this.loop" class="btn bg-base-100 text-base-content border-0 text-lg text-lg relative"
+        :class="{ 'font-normal hover:bg-base-200 hover:font-semibold': !isCurrentPage(getPageRender(page)), 'font-bold hover:cursor-default hover:bg-base-100 hover:font-bold': isCurrentPage(getPageRender(page)) }"
+        @click="goTo(page)">
+        {{ getPageRender(page) }}
+        <div v-if="isCurrentPage(getPageRender(page))" class="absolute w-full h-1 top-0 bg-primary"></div>
+      </button>
+      <button
+        class="btn bg-base-100 font-normal text-base-content border-0 text-lg text-lg hover:bg-base-200 hover:font-semibold"
+        @click="incrementPage">&gt;</button>
+      <button
+        class="btn bg-base-100 font-normal text-base-content border-0 text-lg text-lg hover:bg-base-200 hover:font-semibold"
+        @click="goToLastPage">&gt;&gt;</button>
     </div>
   </div>
 </template>
@@ -41,12 +54,12 @@ export default {
   ],
   computed: {
     loop() {
-      return (this.paginatedData.last_page < this.PAGE_SHOWN ? this.paginatedData.last_page: this.PAGE_SHOWN)
+      return (this.paginatedData.last_page < this.PAGE_SHOWN ? this.paginatedData.last_page : this.PAGE_SHOWN)
     },
     lowerPageBoundary() {
       if (
         this.modelValue <= Math.floor(this.PAGE_SHOWN / 2)
-      ) { 
+      ) {
         return 1
       }
       else if (
@@ -54,7 +67,7 @@ export default {
       ) {
         return this.modelValue - Math.floor(this.PAGE_SHOWN / 2)
       }
-      else  {
+      else {
         return this.paginatedData.last_page - this.PAGE_SHOWN + 1
       }
     },
@@ -110,4 +123,5 @@ export default {
 </script>
 
 <style>
+
 </style>
