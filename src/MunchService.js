@@ -112,6 +112,21 @@ class MunchService {
     });
   }
 
+  static getWaitingProviders(batch_size, currentPage = 1) {
+    return this.http.get(`/admin/users`, {
+      params: {
+        page: currentPage,
+        users_role: "provider",
+        users_status: "menunggu",
+        batch_size: batch_size,
+        sort: {
+          column: "users_id",
+          type: "asc",
+        },
+      },
+    });
+  }
+
   static banUser(id) {
     return this.http.patch("/admin/users/banUser/" + id);
   }

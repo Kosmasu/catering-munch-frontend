@@ -33,6 +33,9 @@
 </template>
 
 <script>
+import { mapState, mapWritableState } from "pinia";
+import { useSettingStore } from "@/stores/SettingStore";
+
 export default {
   data() {
     return {
@@ -40,7 +43,7 @@ export default {
     };
   },
   props: {
-    modelValue: {
+    modelValue: { 
       type: Number,
       required: true,
     },
@@ -53,26 +56,31 @@ export default {
     "update:modelValue",
   ],
   computed: {
+    ...mapState(useSettingStore, ["batch_size"]),
     loop() {
       return (this.paginatedData.last_page < this.PAGE_SHOWN ? this.paginatedData.last_page : this.PAGE_SHOWN)
     },
     lowerPageBoundary() {
       if (
         this.modelValue <= Math.floor(this.PAGE_SHOWN / 2)
+        || this.paginatedData.last_page <= this.PAGE_SHOWN
       ) {
+        console.log("1");
         return 1
       }
       else if (
-        this.modelValue <= this.paginatedData.last_page - Math.floor(this.PAGE_SHOWN / 2)
+        this.modelValue <= this.paginatedData.last_page - Math.floor(this.PAGE_SHOWN / 2) 
       ) {
+        console.log("2");
         return this.modelValue - Math.floor(this.PAGE_SHOWN / 2)
       }
       else {
+        console.log("3");
         return this.paginatedData.last_page - this.PAGE_SHOWN + 1
       }
     },
     lowerItemBoundary() {
-      return ((this.modelValue - 1) * 5) + 1
+      return ((this.modelValue - 1) * this.batch_size) + 1
     },
     upperItemBoundary() {
       let temp = this.lowerItemBoundary + this.paginatedData.per_page - 1

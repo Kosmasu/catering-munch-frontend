@@ -6,6 +6,7 @@ export const useAdminStore = defineStore("AdminStore", {
   state: () => ({
     customers: undefined,
     providers: undefined,
+    waitingProviders: undefined,
     historyLog: undefined,
     historyMenu: undefined,
     historyPemesanan: undefined,
@@ -27,6 +28,17 @@ export const useAdminStore = defineStore("AdminStore", {
       await MunchService.getProviders(useSettingStore().batch_size, currentPage, users_nama)
         .then((response) => {
           this.providers = response.data.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    async fetchWaitingProviders(currentPage = 1) {
+      await MunchService.getWaitingProviders(useSettingStore().batch_size, currentPage)
+        .then((response) => {
+          console.log('response:',response);
+          this.waitingProviders = response.data.data;
+          console.log('this.waitingProviders:',this.waitingProviders);
         })
         .catch((error) => {
           console.error(error);
@@ -71,13 +83,6 @@ export const useAdminStore = defineStore("AdminStore", {
         .catch((error) => {
           console.error(error);
         });
-    },
-    providerWaiting() {
-      if (this.providers) {
-        return this.providers.filter((provider) => {
-          return provider.users_status == "menunggu";
-        });
-      }
     },
   },
 });

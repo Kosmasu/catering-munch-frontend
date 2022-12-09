@@ -72,7 +72,8 @@ const router = createRouter({
       },
       children: [
         {
-          path: "",
+          path: ":page?",
+          alias: "home/:page?",
           name: "admin",
           component: AdminHome,
         },
