@@ -111,7 +111,7 @@ const router = createRouter({
           path: "menus",
           children: [
             {
-              path: "",
+              path: ":page?",
               name: "provider-menus",
               component: ProviderMenus,
             },

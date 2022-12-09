@@ -1,6 +1,7 @@
-import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import MunchService from "@/MunchService";
+import { useSettingStore } from "@/stores/SettingStore";
+import { useAuthStore } from "@/stores/Auth/AuthStore";
 
 export const useProviderStore = defineStore("ProviderStore", {
   state: () => ({
@@ -10,10 +11,15 @@ export const useProviderStore = defineStore("ProviderStore", {
   }),
   getters: {},
   actions: {
-    async fetchMenus(batch_size = 20, currentPage = 1, provider_id) {
-      await MunchService.menu(batch_size, (currentPage = 1), provider_id)
+    async fetchMenus(currentPage = 1, menu_nama = "") {
+      await MunchService.getMenus(
+        useSettingStore().batch_size,
+        currentPage,
+        useAuthStore().user.id,
+        menu_nama
+      )
         .then((response) => {
-          this.menus = response.data.data.data;
+          this.menus = response.data.data;
           console.log("this.menus:", this.menus);
         })
         .catch((error) => {
