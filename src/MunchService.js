@@ -167,8 +167,12 @@ class MunchService {
     });
   }
 
-  static editMenu() {
-    return this.http.patch("/menu/");
+  static editMenu(formData, menu_id) {
+    return this.http.post("/menu/" + menu_id + "?_method=PATCH", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   }
 
   static deleteMenu(id) {

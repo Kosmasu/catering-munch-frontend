@@ -66,7 +66,25 @@ export const useProviderStore = defineStore("ProviderStore", {
           console.log("error add menu:", error);
         });
     },
-    async editMenu() {},
+    async editMenu() {
+      const formData = new FormData();
+      formData.append("menu_foto", this.form.menu_foto);
+      formData.append("menu_nama", this.form.menu_nama);
+      formData.append("menu_harga", this.form.menu_harga);
+      formData.append("menu_status", this.form.menu_status);
+      return await MunchService.editMenu(formData, this.menus.menu_id)
+        .then((response) => {
+          if (response.data.status == "success") {
+            router.push({ name: "provider-menus", params: { page: 1 } });
+          } else {
+            console.log(this.result.status);
+          }
+        })
+        .catch((error) => {
+          this.errorData = error.response.data;
+          console.log("error edit menu:", error);
+        });
+    },
     async deleteMenu() {
       return await MunchService.deleteMenu(this.menus.menu_id)
         .then((response) => {
@@ -94,6 +112,13 @@ export const useProviderStore = defineStore("ProviderStore", {
         .catch((error) => {
           console.error(error);
         });
+    },
+    fillForm() {
+      console.log(this.menus);
+      // this.form.menu_foto = this.menus.menu_foto;
+      this.form.menu_nama = this.menus.menu_nama;
+      this.form.menu_harga = this.menus.menu_harga;
+      this.form.menu_status = this.menus.menu_status;
     },
   },
 });
