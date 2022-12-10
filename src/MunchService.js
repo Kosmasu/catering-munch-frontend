@@ -182,6 +182,19 @@ class MunchService {
   static getPesananProvider() {
     return this.http.get("/provider/pesanan/getPesananProvider");
   }
+
+  static getHistoryProvider(batch_size, currentPage) {
+    return this.http.get("/pesanan", {
+      params: {
+        page: currentPage,
+        batch_size: batch_size,
+        sort: {
+          column: "pemesanan_id",
+          type: "asc",
+        },
+      },
+    });
+  }
 }
 
 export default MunchService;

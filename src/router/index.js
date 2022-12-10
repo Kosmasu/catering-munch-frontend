@@ -133,7 +133,7 @@ const router = createRouter({
           ],
         },
         {
-          path: "history",
+          path: "history/:page?",
           name: "provider-history",
           component: ProviderHistory,
         },
