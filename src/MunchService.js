@@ -140,11 +140,12 @@ class MunchService {
   }
 
   // PROVIDER
-  static menu(batch_size, currentPage = 1, id) {
+  static getMenus(batch_size, currentPage, provider_id, menu_nama) {
     return this.http.get("/menu", {
       params: {
         page: currentPage,
-        provider_id: id,
+        provider_id: provider_id,
+        menu_nama: menu_nama,
         batch_size: batch_size,
         sort: {
           column: "menu_nama",
@@ -154,12 +155,16 @@ class MunchService {
     });
   }
 
-  static detailMenu(id) {
-    return this.http.get("/menu/" + id);
+  static getDetailMenu(menu_id) {
+    return this.http.get("/menu/" + menu_id);
   }
 
-  static addMenu() {
-    return this.http.post("/menu");
+  static addMenu(formData) {
+    return this.http.post("/menu", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   }
 
   static editMenu() {

@@ -2,29 +2,37 @@
   <div class="container">
     <div class="border-solid border-2 rounded-lg my-8 p-4">
       <div class="text-3xl">Add New Menu</div>
-      <form @submit.prevent="submit" class="flex flex-col lg:flex-row mt-4 p-8">
+      <form @submit.prevent="this.addMenu" class="flex flex-col lg:flex-row mt-4 p-8 form-control">
         <!-- FOTO -->
         <div class="flex-initial w-1/3">
           <div class="flex bg-base-200 w-1/2 h-36">
             <img v-if="foto" :src="foto" class="m-auto w-24" />
             <div v-else class="m-auto">Foto</div>
           </div>
-          <input type="file" @change="uploadFoto" />
+          <input
+            v-on:change="uploadFoto"
+            name="menu_foto"
+            type="file"
+            label="Foto"
+            :errors="this.errorData.errors"
+          />
         </div>
         <div class="flex flex-col flex-1">
           <!-- NAMA -->
-          <input
+          <input-vue
+            v-model="form.menu_nama"
+            name="menu_nama"
             type="text"
-            v-model="nama"
-            placeholder="Nama Menu"
-            class="input input-bordered"
+            label="Nama"
+            :errors="this.errorData.errors"
           />
           <!-- HARGA -->
-          <input
-            type="text"
-            v-model="harga"
-            placeholder="Harga Menu"
-            class="input input-bordered"
+          <input-vue
+            v-model="form.menu_harga"
+            name="menu_harga"
+            type="number"
+            label="Harga"
+            :errors="this.errorData.errors"
           />
           <!-- STATUS -->
           <div class="flex space-x-4">
@@ -34,7 +42,7 @@
             <label class="label cursor-pointer space-x-2">
               <input
                 type="radio"
-                v-model="status"
+                v-model="form.menu_status"
                 value="tersedia"
                 class="radio"
               />
@@ -43,54 +51,71 @@
             <label class="label cursor-pointer space-x-2">
               <input
                 type="radio"
-                v-model="status"
+                v-model="form.menu_status"
                 value="tidak tersedia"
                 class="radio"
               />
               <span class="label-text">Tidak tersedia</span>
             </label>
           </div>
+          <template v-if="this.errorData">
+            <label
+              v-if="
+                this.errorData.errors &&
+                Object.hasOwn(this.errorData.errors, 'menu_status')
+              "
+              class="label"
+            >
+              <span
+                v-for="(item, index) in this.errorData.errors['menu_status']"
+                :key="index"
+                class="label-text text-error"
+              >
+                {{ item }}
+              </span>
+            </label>
+          </template>
+          <label v-if="this.errorData" class="label">
+            <span class="label-text text-error">
+              {{ this.errorData.message }}
+            </span>
+          </label>
+          <button class="btn btn-primary mt-4">Submit</button>
         </div>
       </form>
-      <div class="flex justify-end bg-gray-200">
-        <button @click="btSubmit" class="btn btn-primary m-4 rounded-md">
-          Submit
-        </button>
-      </div>
     </div>
   </div>
 </template>
 <script>
+import { mapState, mapActions, mapWritableState } from "pinia";
+import { useProviderStore } from "@/stores/ProviderStore.js";
+import InputVue from "@/components/Inputs/Input.vue";
+
 export default {
   name: "ProviderMenusDetail",
   components: {
+    InputVue,
   },
   data() {
     return {
       foto: "",
-      nama: "",
-      harga: "",
-      status: "tersedia",
     };
   },
   methods: {
     uploadFoto(e) {
       const files = e.target.files;
       if (!files.length) return;
-      
+
+      this.form.menu_foto = files[0];
       const reader = new FileReader();
       reader.readAsDataURL(files[0]);
       reader.onload = () => (this.foto = reader.result);
     },
-    submit() {
-      console.log(this.foto);
-      console.log(this.nama);
-      console.log(this.harga);
-      console.log(this.status);
-    },
-    btSubmit() {
-      this.submit();
-    },
+    ...mapActions(useProviderStore, ["addMenu"]),
+  },
+  computed: {
+    ...mapWritableState(useProviderStore, ["form"]),
+    ...mapState(useProviderStore, ["errorData"]),
   },
 };
 </script>

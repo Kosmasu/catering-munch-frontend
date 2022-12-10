@@ -1,68 +1,61 @@
 <template>
   <div class="container">
     <div class="border-solid border-2 rounded-lg p-4 my-4">
-      <div class="flex justify-between">
-        <div class="text-3xl m-2">List of Menus</div>
-        <div class="flex space-x-8">
+      <div class="flex justify-between mb-8">
+        <div class="text-3xl m-2">List Menus</div>
+        <div class="flex space-x-8 items-center">
           <div>
-            <div>Showing :</div>
-            <div v-if="menus">
-              <div v-if="menusSearch(query).length <= 1">
-                {{ menusSearch(query).length }} Menu
-              </div>
-              <div v-else>{{ menusSearch(query).length }} Menus</div>
-            </div>
+            <select-batch-size @on-batch-size-change="this.fetchMenus()" />
           </div>
           <input
             type="text"
-            v-model="query"
+            v-model="this.query"
             placeholder="Search…"
             class="input input-bordered"
           />
         </div>
       </div>
-      <RouterLink to="/provider/menus/add">
+      <RouterLink :to="{ name: 'provider-menus-add' }">
         <button class="btn btn-primary rounded-lg m-4">Add New Menu</button>
       </RouterLink>
-      <div class="overflow-x-auto">
-        <table class="table table-compact w-full text-center">
-          <thead></thead>
-          <tbody v-if="menus">
-            <tr
-              v-for="(menu, index) in menusSearch(query)"
-              :key="index"
-              class="hover"
-            >
-              <td>{{ index + 1 }}</td>
-              <td>
-                <img src="@/assets/munch.png" class="w-24" />
-              </td>
-              <td>{{ menu.menu_nama }}</td>
-              <td>Rp. {{ menu.menu_harga.toLocaleString("id-ID") }},00</td>
-              <td>
-                <button
-                  @click="detail(menu.menu_id)"
-                  class="btn btn-primary rounded-lg"
-                >
-                  Detail
-                </button>
-              </td>
-            </tr>
-          </tbody>
-          <tbody v-else>
-            <tr>
-              <td class="text-center" colspan="5">
-                <font-awesome-icon
-                  icon="fa-solid fa-spinner"
-                  class="text-6xl animate-spin"
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div v-if="this.menus" class="p-2">
-          <pagination-vue v-model="currentPage" :paginatedData="this.menus" />
-        </div>
+      <table class="table table-compact w-full text-center">
+        <thead></thead>
+        <tbody v-if="menus">
+          <tr
+            v-for="(menu, index) in this.menus.data"
+            :key="index"
+            class="hover"
+          >
+            <td>{{ index + 1 }}</td>
+            <td>
+              <img src="@/assets/munch.png" class="w-24" />
+            </td>
+            <td>{{ menu.menu_nama }}</td>
+            <td>Rp. {{ menu.menu_harga.toLocaleString("id-ID") }},00</td>
+            <td class="capitalize">{{ menu.menu_status }}</td>
+            <td>
+              <button
+                @click="detail(menu.menu_id)"
+                class="btn btn-primary rounded-lg"
+              >
+                Detail
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tbody v-else>
+          <tr>
+            <td class="text-center" colspan="5">
+              <font-awesome-icon
+                icon="fa-solid fa-spinner"
+                class="text-6xl animate-spin"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-if="this.menus" class="p-2">
+        <pagination-vue v-model="currentPage" :paginatedData="this.menus" />
       </div>
     </div>
   </div>
@@ -70,13 +63,15 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import { useProviderStore } from "@/stores/ProviderStore";
-import { useAuthStore } from "@/stores/Auth/AuthStore";
 import PaginationVue from "@/components/Pagination.vue";
+import SelectBatchSize from "@/components/SelectBatchSize.vue";
+import router from "@/router";
 
 export default {
   name: "ProviderMenus",
   components: {
     PaginationVue,
+    SelectBatchSize,
   },
   data() {
     return {
@@ -85,27 +80,26 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useProviderStore, ["fetchMenus", "menusSearch"]),
+    ...mapActions(useProviderStore, ["fetchMenus"]),
     detail(id) {
-      console.log("detail menu", id);
+      router.push({ name: "provider-menus-detail", params: { id } });
     },
   },
   computed: {
-    ...mapState(useProviderStore, ["result", "menus"]),
-    ...mapState(useAuthStore, ["id"]),
+    ...mapState(useProviderStore, ["menus"]),
   },
   created() {
-    this.fetchMenus(5, 1, this.id).then((response) => {
-      console.log("this.id:", this.id);
+    this.fetchMenus().then((response) => {
+      console.log("this.menus:", this.menus);
     });
   },
   watch: {
     currentPage(newCurrentPage, oldCurrentPage) {
-      this.fetchMenus(5, newCurrentPage);
+      this.fetchMenus(newCurrentPage);
     },
     query(newQuery, oldQuery) {
       this.currentPage = 1;
-      this.fetchMenus(5, this.currentPage, newQuery);
+      this.fetchMenus(this.currentPage, newQuery);
     },
   },
 };
