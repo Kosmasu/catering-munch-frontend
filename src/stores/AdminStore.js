@@ -53,6 +53,7 @@ export const useAdminStore = defineStore("AdminStore", {
             this.fetchCustomers();
           } else {
             this.fetchProviders();
+            this.fetchWaitingProviders();
           }
         })
         .catch((error) => {
@@ -67,6 +68,7 @@ export const useAdminStore = defineStore("AdminStore", {
             this.fetchCustomers();
           } else {
             this.fetchProviders();
+            this.fetchWaitingProviders();
           }
         })
         .catch((error) => {
@@ -79,6 +81,7 @@ export const useAdminStore = defineStore("AdminStore", {
           this.result = response.data;
           console.log("user id", id, "approved");
           this.fetchProviders();
+          this.fetchWaitingProviders();
         })
         .catch((error) => {
           console.error(error);

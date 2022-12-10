@@ -9,6 +9,7 @@
           <div v-if="this.customers && this.providers">
             <div>{{ this.customers.data.length + this.providers.data.length }}</div>
           </div>
+          <div v-else class="animate-pulse bg-base-200 w-full h-8 rounded-lg"> </div>
         </div>
       </div>
     </div>
@@ -19,6 +20,7 @@
           <div v-if="this.customers">
             <div>{{ this.customers.data.length }}</div>
           </div>
+          <div v-else class="animate-pulse bg-base-200 w-full h-8 rounded-lg"></div>
         </div>
       </div>
       <div class="stat place-items-center">
@@ -27,6 +29,7 @@
           <div v-if="this.providers && this.waitingProviders">
             <div>{{ this.providers.data.length - this.waitingProviders.data.length }}</div>
           </div>
+          <div v-else class="animate-pulse bg-base-200 w-full h-8 rounded-lg"></div>
         </div>
       </div>
       <div class="stat place-items-center">
@@ -35,6 +38,7 @@
           <div v-if="this.waitingProviders">
             <div>{{ this.waitingProviders.data.length }}</div>
           </div>
+          <div v-else class="animate-pulse bg-base-200 w-full h-8 rounded-lg"></div>
         </div>
       </div>
     </div>
@@ -68,7 +72,7 @@
           <td>{{ provider.users_telepon }}</td>
           <td class="capitalize">{{ provider.users_status }}</td>
           <td>
-            <button @click="approve(provider.users_id)" class="btn btn-primary text-base-content rounded-lg">
+            <button @click="this.approveProvider(provider.users_id)" class="btn btn-primary text-base-content rounded-lg">
               Approve
             </button>
           </td>
@@ -113,9 +117,6 @@ export default {
       "providerWaiting",
       "approveProvider",
     ]),
-    approve(id) {
-      this.approveProvider(id);
-    },
   },
   computed: {
     ...mapState(useAdminStore, ["result", "customers", "providers", "waitingProviders"]),

@@ -34,8 +34,11 @@
               class="btn btn-primary rounded-lg text-base-content">
               Ban
             </button>
-            <button v-else @click="this.unbanUser('provider', provider.users_id)" class="btn btn-error rounded-lg">
+            <button v-else-if="provider.users_status == 'banned'" @click="this.unbanUser('provider', provider.users_id)" class="btn btn-error rounded-lg">
               Unban
+            </button>
+            <button v-else-if="provider.users_status == 'menunggu'" @click="this.approveProvider(provider.users_id)" class="btn btn-primary text-base-content rounded-lg">
+              Approve
             </button>
           </td>
         </tr>
@@ -78,13 +81,8 @@ export default {
       "usersSearch",
       "banUser",
       "unbanUser",
+      "approveProvider",
     ]),
-    ban(id) {
-      this.banUser("provider", id);
-    },
-    unban(id) {
-      this.unbanUser("provider", id);
-    },
   },
   computed: {
     ...mapState(useAdminStore, ["result", "providers"]),
