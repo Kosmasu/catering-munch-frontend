@@ -22,7 +22,7 @@ module.exports = {
       {
         munch: {
           primary: "#92A649",
-          "primary-content": "#FFF",
+          "primary-content": "#333",
           secondary: "#EF9FBC",
           accent: "#EEAF3A",
           neutral: "#291334",
