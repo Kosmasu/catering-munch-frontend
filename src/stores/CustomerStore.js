@@ -1,4 +1,3 @@
-import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import MunchService from "@/MunchService";
 
@@ -13,6 +12,9 @@ export const useCustomerStore = defineStore("CustomerStore", {
       message: undefined,
       errors: undefined,
     },
+    cateringAnda: undefined,
+    topCatering: undefined,
+    pesanLagi: undefined,
   }),
   getters: {},
   actions: {

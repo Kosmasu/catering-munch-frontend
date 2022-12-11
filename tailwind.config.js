@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     colors: {
       munch: "#73853f",
+      yellow: "#eab308",
     },
     extend: {},
     container: {

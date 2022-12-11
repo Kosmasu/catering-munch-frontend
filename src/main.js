@@ -7,7 +7,7 @@ import router from "./router";
 import "./assets/main.css";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faStar } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import MunchService from "./MunchService";
 import { useAuthStore } from "./stores/Auth/AuthStore";
@@ -17,6 +17,7 @@ import "v-calendar/dist/style.css";
 import VCalendar from "v-calendar";
 
 library.add(faSpinner);
+library.add(faStar);
 
 const app = createApp(App);
 
