@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="border-solid border-2 rounded-lg p-4 my-4">
+    <div class="border-solid border-2 rounded-lg m-12 p-4">
       <div class="flex justify-between mb-8">
         <div class="text-3xl m-2">List Menus</div>
         <div class="flex space-x-8 items-center">
@@ -36,7 +36,7 @@
             <td>
               <button
                 @click="detail(menu.menu_id)"
-                class="btn btn-primary rounded-lg"
+                class="btn btn-primary"
               >
                 Detail
               </button>

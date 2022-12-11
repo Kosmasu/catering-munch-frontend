@@ -148,14 +148,14 @@ class MunchService {
         menu_nama: menu_nama,
         batch_size: batch_size,
         sort: {
-          column: "menu_nama",
+          column: "menu_id",
           type: "asc",
         },
       },
     });
   }
 
-  static getDetailMenu(menu_id) {
+  static getMenuDetail(menu_id) {
     return this.http.get("/menu/" + menu_id);
   }
 
@@ -183,10 +183,12 @@ class MunchService {
     return this.http.get("/provider/pesanan/getPesananProvider");
   }
 
-  static getHistoryProvider(batch_size, currentPage) {
+  static getHistoryProvider(batch_size, currentPage, date_lower, date_upper) {
     return this.http.get("/pesanan", {
       params: {
         page: currentPage,
+        date_lower: date_lower,
+        date_upper: date_upper,
         batch_size: batch_size,
         sort: {
           column: "pemesanan_id",
@@ -194,6 +196,10 @@ class MunchService {
         },
       },
     });
+  }
+
+  static getHistoryProviderDetail(pemesanan_id) {
+    return this.http.get("/pesanan/" + pemesanan_id);
   }
 }
 

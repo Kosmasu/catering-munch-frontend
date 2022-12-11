@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="border-solid border-2 rounded-lg my-8 p-4">
+    <div class="border-solid border-2 rounded-lg m-12 p-4">
       <div class="text-3xl">Edit Menu</div>
       <form
         @submit.prevent="this.editMenu"

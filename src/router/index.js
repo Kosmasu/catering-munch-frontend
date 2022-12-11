@@ -16,6 +16,7 @@ import ProviderMenusDetail from "../views/Provider/MenusDetail.vue";
 import ProviderMenusAdd from "../views/Provider/MenusAdd.vue";
 import ProviderMenusEdit from "../views/Provider/MenusEdit.vue";
 import ProviderHistory from "../views/Provider/History.vue";
+import ProviderHistoryDetail from "../views/Provider/HistoryDetail.vue";
 
 import CustomerLayout from "../views/Customer/Layout.vue";
 import CustomerHome from "../views/Customer/Home.vue";
@@ -133,9 +134,19 @@ const router = createRouter({
           ],
         },
         {
-          path: "history/:page?",
-          name: "provider-history",
-          component: ProviderHistory,
+          path: "history",
+          children: [
+            {
+              path: ":page?",
+              name: "provider-history",
+              component: ProviderHistory,
+            },
+            {
+              path: "detail/:id",
+              name: "provider-history-detail",
+              component: ProviderHistoryDetail,
+            },
+          ],
         },
       ],
     },

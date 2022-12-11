@@ -38,8 +38,8 @@ export const useProviderStore = defineStore("ProviderStore", {
           console.error(error);
         });
     },
-    async fetchDetail(menu_id) {
-      await MunchService.getDetailMenu(menu_id)
+    async fetchMenuDetail(menu_id) {
+      await MunchService.getMenuDetail(menu_id)
         .then((response) => {
           this.menus = response.data.data;
           console.log("this.menus", this.menus);
@@ -48,14 +48,26 @@ export const useProviderStore = defineStore("ProviderStore", {
           console.error(error);
         });
     },
-    async fetchHistory(currentPage = 1) {
+    async fetchHistory(currentPage = 1, date_lower = "", date_upper = "") {
       await MunchService.getHistoryProvider(
         useSettingStore().batch_size,
-        currentPage
+        currentPage,
+        date_lower,
+        date_upper
       )
         .then((response) => {
           this.histories = response.data.data;
           console.log("this.histories:", this.histories);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    async fetchHistoryDetail(pemesanan_id) {
+      await MunchService.getHistoryProviderDetail(pemesanan_id)
+        .then((response) => {
+          this.histories = response.data.data;
+          console.log("this.histories", this.histories);
         })
         .catch((error) => {
           console.error(error);

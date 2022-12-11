@@ -1,30 +1,41 @@
 <template>
   <div class="container">
-    <div class="border-solid border-2 rounded-lg p-4 my-4">
+    <div class="border-solid border-2 rounded-lg m-12 p-4">
       <div class="flex justify-between mb-8">
         <div class="text-3xl m-2">History Pemesanan</div>
         <div class="flex space-x-8 items-center">
           <div>
             <select-batch-size @on-batch-size-change="this.fetchHistory()" />
           </div>
-          <input
-            type="text"
-            v-model="this.query"
-            placeholder="Search..."
-            class="input input-bordered"
-          />
+          <div>
+            <div>Min Date</div>
+            <input
+              type="date"
+              v-model="this.date_lower"
+              class="input input-bordered"
+            />
+          </div>
+          <div>
+            <div>Max Date</div>
+            <input
+              type="date"
+              v-model="this.date_upper"
+              class="input input-bordered"
+            />
+          </div>
         </div>
       </div>
       <table class="table table-compact w-full text-center">
         <thead>
           <tr>
             <th class="bg-primary">ID</th>
+            <th class="bg-primary">Customer</th>
+            <th class="bg-primary">Rating</th>
             <th class="bg-primary">Jumlah</th>
             <th class="bg-primary">Total</th>
-            <th class="bg-primary">Rating</th>
-            <th class="bg-primary">Status</th>
-            <th class="bg-primary">Customer</th>
             <th class="bg-primary">Tanggal</th>
+            <th class="bg-primary">Status</th>
+            <th class="bg-primary">Action</th>
           </tr>
         </thead>
         <tbody v-if="histories">
@@ -34,21 +45,29 @@
             class="hover"
           >
             <td>{{ history.pemesanan_id }}</td>
+            <td>{{ history.users_customer }}</td>
+            <td>{{ history.pemesanan_rating }}</td>
             <td>{{ history.pemesanan_jumlah }}</td>
             <td>
               Rp. {{ history.pemesanan_total.toLocaleString("id-ID") }},00
             </td>
-            <td>{{ history.pemesanan_rating }}</td>
-            <td class="capitalize">{{ history.pemesanan_status }}</td>
-            <td>{{ history.users_customer }}</td>
             <td>
-              {{ new Date(history.created_at).toLocaleDateString("id-ID") }}
+              {{ new Date(history.created_at).toLocaleDateString("en-EN") }}
+            </td>
+            <td class="capitalize">{{ history.pemesanan_status }}</td>
+            <td>
+              <button
+                @click="detail(history.pemesanan_id)"
+                class="btn btn-primary"
+              >
+                Detail
+              </button>
             </td>
           </tr>
         </tbody>
         <tbody v-else>
           <tr>
-            <td class="text-center" colspan="5">
+            <td class="text-center" colspan="8">
               <font-awesome-icon
                 icon="fa-solid fa-spinner"
                 class="text-6xl animate-spin"
@@ -68,6 +87,7 @@ import { mapActions, mapState } from "pinia";
 import { useProviderStore } from "@/stores/ProviderStore";
 import PaginationVue from "@/components/Pagination.vue";
 import SelectBatchSize from "@/components/SelectBatchSize.vue";
+import router from "@/router";
 
 export default {
   name: "ProviderHistory",
@@ -77,12 +97,16 @@ export default {
   },
   data() {
     return {
-      query: "",
+      date_lower: "",
+      date_upper: "",
       currentPage: 1,
     };
   },
   methods: {
     ...mapActions(useProviderStore, ["fetchHistory"]),
+    detail(id) {
+      router.push({ name: "provider-history-detail", params: { id } });
+    },
   },
   computed: {
     ...mapState(useProviderStore, ["histories"]),
@@ -91,6 +115,19 @@ export default {
     this.fetchHistory().then((response) => {
       console.log("this.histories", this.histories);
     });
+  },
+  watch: {
+    currentPage(newCurrentPage, oldCurrentPage) {
+      this.fetchHistory(newCurrentPage);
+    },
+    date_lower(newQuery, oldQuery) {
+      this.currentPage = 1;
+      this.fetchHistory(this.currentPage, newQuery, this.date_upper);
+    },
+    date_upper(newQuery, oldQuery) {
+      this.currentPage = 1;
+      this.fetchHistory(this.currentPage, this.date_lower, newQuery);
+    },
   },
 };
 </script>
