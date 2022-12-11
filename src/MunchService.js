@@ -168,7 +168,7 @@ class MunchService {
   }
 
   static editMenu(formData, menu_id) {
-    return this.http.post("/menu/" + menu_id + "?_method=PATCH", formData, {
+    return this.http.post(`/menu/${menu_id}?_method=PATCH`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -177,10 +177,6 @@ class MunchService {
 
   static deleteMenu(id) {
     return this.http.delete("/menu/" + id);
-  }
-
-  static getPesananProvider() {
-    return this.http.get("/provider/pesanan/getPesananProvider");
   }
 
   static getHistoryProvider(batch_size, currentPage, date_lower, date_upper) {
@@ -200,6 +196,32 @@ class MunchService {
 
   static getHistoryProviderDetail(pemesanan_id) {
     return this.http.get("/pesanan/" + pemesanan_id);
+  }
+
+  static getPesanan(month, year) {
+    return this.http.get("/pesanan/showDelivery", {
+      params: {
+        month: month,
+        year: year,
+      },
+    });
+  }
+
+  static acceptPesanan(detail_id) {
+    return this.http.post(`/pesanan/${detail_id}/accept`);
+  }
+
+  static rejectPesanan(detail_id) {
+    return this.http.post(`/pesanan/${detail_id}/reject`);
+  }
+
+  static kirimPesanan(detail_id) {
+    return this.http.post(`/pesanan/deliver/${detail_id}`);
+  }
+
+  // CUSTOMER
+  static terimaPesanan(detail_id) {
+    return this.http.post(`/pesanan/receive/${detail_id}`);
   }
 }
 

@@ -8,7 +8,7 @@ export const useProviderStore = defineStore("ProviderStore", {
   state: () => ({
     menus: undefined,
     histories: undefined,
-    listPesanan: undefined,
+    orders: undefined,
     form: {
       menu_foto: undefined,
       menu_nama: undefined,
@@ -32,7 +32,6 @@ export const useProviderStore = defineStore("ProviderStore", {
       )
         .then((response) => {
           this.menus = response.data.data;
-          console.log("this.menus:", this.menus);
         })
         .catch((error) => {
           console.error(error);
@@ -42,7 +41,6 @@ export const useProviderStore = defineStore("ProviderStore", {
       await MunchService.getMenuDetail(menu_id)
         .then((response) => {
           this.menus = response.data.data;
-          console.log("this.menus", this.menus);
         })
         .catch((error) => {
           console.error(error);
@@ -57,7 +55,6 @@ export const useProviderStore = defineStore("ProviderStore", {
       )
         .then((response) => {
           this.histories = response.data.data;
-          console.log("this.histories:", this.histories);
         })
         .catch((error) => {
           console.error(error);
@@ -67,7 +64,18 @@ export const useProviderStore = defineStore("ProviderStore", {
       await MunchService.getHistoryProviderDetail(pemesanan_id)
         .then((response) => {
           this.histories = response.data.data;
-          console.log("this.histories", this.histories);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    async fetchOrders() {
+      await MunchService.getPesanan(
+        new Date().getMonth(),
+        new Date().getFullYear()
+      )
+        .then((response) => {
+          this.orders = response.data.data;
         })
         .catch((error) => {
           console.error(error);
@@ -129,11 +137,28 @@ export const useProviderStore = defineStore("ProviderStore", {
           console.log("error delete menu:", error);
         });
     },
-    async fetchListPesanan() {
-      await MunchService.getPesananProvider()
+    async acceptPesanan(detail_id) {
+      await MunchService.acceptPesanan(detail_id)
         .then((response) => {
-          this.listPesanan = response.data;
-          console.log("this.listPesanan:", this.listPesanan);
+          this.fetchOrders();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    async rejectPesanan(detail_id) {
+      await MunchService.rejectPesanan(detail_id)
+        .then((response) => {
+          this.fetchOrders();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    async kirimPesanan(detail_id) {
+      await MunchService.kirimPesanan(detail_id)
+        .then((response) => {
+          this.fetchOrders();
         })
         .catch((error) => {
           console.error(error);

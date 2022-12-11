@@ -1,181 +1,118 @@
 <template>
   <div class="container">
-    <div class="border-solid border-2 rounded-md p-4 my-4">
+    <div class="border-solid border-2 rounded-lg m-12 p-4">
       <div class="text-3xl">Overview</div>
       <div class="text-stone-400">Monthly Review</div>
       <div class="divider" />
       <div class="grid grid-cols-3 gap-4 mb-8 text-center text-xl">
         <div class="border-solid border-2 rounded-md py-4">
           <div class="font-bold">Current Customer</div>
-          <div>{{ currentCustomer }}</div>
+          <div></div>
         </div>
         <div class="border-solid border-2 rounded-md py-4">
           <div class="font-bold">Total Pendapatan</div>
-          <div>Rp. {{ totalPendapatan.toLocaleString("id-ID") }},00</div>
+          <div>Rp. 0,00</div>
         </div>
         <div class="border-solid border-2 rounded-md py-4">
           <div class="font-bold">Made Deliveries</div>
-          <div>{{ madeDeliveries }}</div>
+          <div></div>
         </div>
       </div>
       <div class="text-2xl">New Notification</div>
-      <div class="overflow-x-auto mb-8">
-        <table class="table table-compact w-full text-center">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Nama</th>
-              <th>Alamat</th>
-              <th>Nomor Telepon</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody v-if="newNotification.length >= 1">
-            <tr
-              v-for="(notification, index) in newNotification"
-              :key="index"
-              class="hover"
-            >
-              <td>{{ index + 1 }}</td>
-              <td>{{ notification.users_nama }}</td>
-              <td>{{ notification.users_alamat }}</td>
-              <td>{{ notification.users_telepon }}</td>
-              <td>
-                <form
-                  @submit.prevent="order(id)"
-                  class="flex justify-center space-x-4"
-                >
-                  <button
-                    @click.prevent="order(notification.id)"
-                    class="btn btn-ghost rounded-lg"
-                  >
-                    Detail
-                  </button>
-                  <!-- <RouterLink to="/provider/order/detail">
-                    <button class="btn btn-ghost rounded-lg">Detail</button>
-                  </RouterLink> -->
-                  <button
-                    @click.prevent="acceptOrder(notification.id)"
-                    class="btn btn-success rounded-lg"
-                  >
-                    Accept
-                  </button>
-                  <button
-                    @click.prevent="declineOrder(notification.id)"
-                    class="btn btn-error rounded-lg"
-                  >
-                    Decline
-                  </button>
-                </form>
-              </td>
-            </tr>
-          </tbody>
-          <tbody v-else>
-            <tr>
-              <td colspan="5">Tidak ada notifikasi saat ini!</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <table class="table table-compact w-full text-center">
+        <thead>
+          <tr>
+            <th class="bg-primary">No</th>
+            <th class="bg-primary">Nama</th>
+            <th class="bg-primary">Alamat</th>
+            <th class="bg-primary">Nomor Telepon</th>
+            <th class="bg-primary">Action</th>
+          </tr>
+        </thead>
+        <tbody v-if="orders">
+          <tr v-for="(order, index) in this.orders" :key="index" class="hover">
+            <td>{{ index + 1 }}</td>
+          </tr>
+        </tbody>
+        <tbody v-else>
+          <tr>
+            <td class="text-center" colspan="5">
+              <font-awesome-icon
+                icon="fa-solid fa-spinner"
+                class="text-6xl animate-spin"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <div class="text-2xl">This Month's Delivery</div>
-      <div class="overflow-x-auto">
-        <table class="table table-compact w-full text-center">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Nama</th>
-              <th>Alamat</th>
-              <th>Nomor Telepon</th>
-              <th>Tanggal</th>
-              <th>Delivery Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody v-if="deliveries.length > 0">
-            <tr
-              v-for="(delivery, index) in deliveries"
-              :key="index"
-              class="hover"
-            >
-              <td>{{ index + 1 }}</td>
-              <td>{{ delivery.users_nama }}</td>
-              <td>{{ delivery.users_alamat }}</td>
-              <td>{{ delivery.users_telepon }}</td>
-              <td>{{ delivery.tanggal }}</td>
-              <td>{{ delivery.status }}</td>
-              <td>
-                <form
-                  @submit.prevent="submit(id)"
-                  class="flex justify-center space-x-4"
-                >
-                  <button
-                    @click.prevent="deliver(delivery.id)"
-                    class="btn btn-info rounded-lg"
-                  >
-                    Deliver
-                  </button>
-                </form>
-              </td>
-            </tr>
-          </tbody>
-          <tbody v-else>
-            <tr>
-              <td colspan="7">Tidak ada delivery saat ini!</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <table class="table table-compact w-full text-center">
+        <thead>
+          <tr>
+            <th class="bg-primary">No</th>
+            <th class="bg-primary">Tanggal</th>
+            <th class="bg-primary">Menu</th>
+            <th class="bg-primary">Alamat</th>
+            <th class="bg-primary">Status</th>
+            <th class="bg-primary">Action</th>
+          </tr>
+        </thead>
+        <tbody v-if="orders">
+          <tr v-for="(order, index) in this.orders" :key="index" class="hover">
+            <td>{{ index + 1 }}</td>
+            <td>{{ order.detail_tanggal.substring(0, 10) }}</td>
+            <td>{{ order.menu.menu_nama }}</td>
+            <td>{{ order.history_pemesanan.users_customer.users_alamat }}</td>
+            <td class="capitalize">{{ order.detail_status }}</td>
+            <td>
+              <button @click="deliver(order.detail_id)" class="btn btn-primary">
+                Deliver
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tbody v-else>
+          <tr>
+            <td class="text-center" colspan="7">
+              <font-awesome-icon
+                icon="fa-solid fa-spinner"
+                class="text-6xl animate-spin"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
 <script>
+import { mapActions, mapState } from "pinia";
+import { useProviderStore } from "@/stores/ProviderStore";
+
 export default {
   name: "ProviderHome",
   components: {},
   data() {
-    return {
-      currentCustomer: 1,
-      totalPendapatan: 250000,
-      madeDeliveries: 3,
-      newNotification: [
-        {
-          id: 2,
-          users_nama: "Customer2",
-          users_alamat: "Surabaya",
-          users_telepon: "0812345678",
-        },
-      ],
-      deliveries: [
-        {
-          id: 1,
-          users_nama: "Customer1",
-          users_alamat: "Surabaya",
-          users_telepon: "0812345678",
-          tanggal: "2022-11-30",
-          status: "Belum Diterima",
-        },
-      ],
-    };
+    return {};
   },
   methods: {
-    order(id, state = "detail") {
-      console.log(
-        this.newNotification.find((notification) => notification.id == id)
-      );
-      console.log(state);
+    ...mapActions(useProviderStore, [
+      "fetchOrders",
+      "acceptPesanan",
+      "rejectPesanan",
+      "kirimPesanan",
+    ]),
+    deliver(detail_id) {
+      this.kirimPesanan(detail_id);
     },
-    acceptOrder(id) {
-      this.order(id, "accept");
-    },
-    declineOrder(id) {
-      this.order(id, "decline");
-    },
-    submit(id) {
-      console.log(this.deliveries.find((delivery) => delivery.id == id));
-    },
-    deliver(id) {
-      this.submit(id);
-    },
+  },
+  computed: {
+    ...mapState(useProviderStore, ["orders"]),
+  },
+  created() {
+    this.fetchOrders().then((response) => {
+      console.log("this.orders:", this.orders);
+    });
   },
 };
 </script>
