@@ -7,6 +7,7 @@ import router from "@/router";
 export const useProviderStore = defineStore("ProviderStore", {
   state: () => ({
     menus: undefined,
+    histories: undefined,
     listPesanan: undefined,
     form: {
       menu_foto: undefined,
@@ -42,6 +43,19 @@ export const useProviderStore = defineStore("ProviderStore", {
         .then((response) => {
           this.menus = response.data.data;
           console.log("this.menus", this.menus);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    async fetchHistory(currentPage = 1) {
+      await MunchService.getHistoryProvider(
+        useSettingStore().batch_size,
+        currentPage
+      )
+        .then((response) => {
+          this.histories = response.data.data;
+          console.log("this.histories:", this.histories);
         })
         .catch((error) => {
           console.error(error);
