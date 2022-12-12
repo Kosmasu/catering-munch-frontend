@@ -45,14 +45,14 @@
             class="hover"
           >
             <td>{{ history.pemesanan_id }}</td>
-            <td>{{ history.users_customer }}</td>
+            <td>{{ history.users_customer.users_nama }}</td>
             <td>{{ history.pemesanan_rating }}</td>
             <td>{{ history.pemesanan_jumlah }}</td>
             <td>
               Rp. {{ history.pemesanan_total.toLocaleString("id-ID") }},00
             </td>
             <td>
-              {{ new Date(history.created_at).toLocaleDateString("en-EN") }}
+              {{ formatDate(new Date(history.created_at)) }}
             </td>
             <td class="capitalize">{{ history.pemesanan_status }}</td>
             <td>
@@ -106,6 +106,25 @@ export default {
     ...mapActions(useProviderStore, ["fetchHistory"]),
     detail(id) {
       router.push({ name: "provider-history-detail", params: { id } });
+    },
+    formatDate(date) {
+      const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      return `${date.getDate()} ${
+        months[date.getMonth()]
+      } ${date.getFullYear()}`;
     },
   },
   computed: {

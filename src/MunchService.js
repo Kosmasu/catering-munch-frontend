@@ -180,22 +180,30 @@ class MunchService {
   }
 
   static getHistoryProvider(batch_size, currentPage, date_lower, date_upper) {
-    return this.http.get("/pesanan", {
+    return this.http.get(
+      `/pesanan?date_lower=${date_lower}&date_upper=${date_upper}`,
+      {
+        params: {
+          page: currentPage,
+          batch_size: batch_size,
+          sort: {
+            column: "created_at",
+            type: "asc",
+          },
+        },
+      }
+    );
+  }
+
+  static getHistoryProviderDetail(pemesanan_id) {
+    return this.http.get("/pesanan/" + pemesanan_id, {
       params: {
-        page: currentPage,
-        date_lower: date_lower,
-        date_upper: date_upper,
-        batch_size: batch_size,
         sort: {
-          column: "pemesanan_id",
+          column: "detail_tanggal",
           type: "asc",
         },
       },
     });
-  }
-
-  static getHistoryProviderDetail(pemesanan_id) {
-    return this.http.get("/pesanan/" + pemesanan_id);
   }
 
   static getPesanan(month, year) {

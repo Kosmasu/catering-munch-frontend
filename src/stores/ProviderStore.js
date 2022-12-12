@@ -55,6 +55,7 @@ export const useProviderStore = defineStore("ProviderStore", {
       )
         .then((response) => {
           this.histories = response.data.data;
+          console.log(this.histories);
         })
         .catch((error) => {
           console.error(error);

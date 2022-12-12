@@ -5,7 +5,7 @@
       <div class="text-3xl">Detail History</div>
       <div v-if="histories" class="text-xl">
         <div class="font-bold">ID Pemesanan {{ histories.pemesanan_id }}</div>
-        <div>Customer : {{ histories.users_customer }}</div>
+        <div>Customer : {{ histories.users_customer.users_nama }}</div>
         <div>Rating : {{ histories.pemesanan_rating }}</div>
         <div>Jumlah : {{ histories.pemesanan_jumlah }}</div>
         <div>
@@ -13,17 +13,17 @@
         </div>
         <div>
           Tanggal :
-          <!-- {{ new Date(history.created_at).toLocaleDateString("en-EN") }} -->
+          {{ formatDate(new Date(histories.created_at)) }}
         </div>
         <div class="capitalize">Status : {{ histories.pemesanan_status }}</div>
         <table class="table table-compact w-full text-center">
           <thead>
             <tr>
               <th class="bg-primary">No</th>
+              <th class="bg-primary">Tanggal</th>
               <th class="bg-primary">Menu</th>
               <th class="bg-primary">Jumlah</th>
               <th class="bg-primary">Total</th>
-              <th class="bg-primary">Tanggal</th>
               <th class="bg-primary">Status</th>
             </tr>
           </thead>
@@ -34,14 +34,12 @@
               class="hover"
             >
               <td>{{ index + 1 }}</td>
-              <td>{{ history.menu_id }}</td>
+              <td>
+                {{ formatDate(new Date(history.detail_tanggal)) }}
+              </td>
+              <td>{{ history.menu.menu_nama }}</td>
               <td>{{ history.detail_jumlah }}</td>
               <td>Rp. {{ history.detail_total.toLocaleString("id-ID") }},00</td>
-              <td>
-                {{
-                  new Date(history.detail_tanggal).toLocaleDateString("en-EN")
-                }}
-              </td>
               <td class="capitalize">{{ history.detail_status }}</td>
             </tr>
           </tbody>
@@ -73,12 +71,33 @@ export default {
     back() {
       router.go(-1);
     },
+    formatDate(date) {
+      const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      return `${date.getDate()} ${
+        months[date.getMonth()]
+      } ${date.getFullYear()}`;
+    },
   },
   computed: {
     ...mapState(useProviderStore, ["histories"]),
   },
   created() {
-    this.fetchHistoryDetail(this.$route.params.id);
+    this.fetchHistoryDetail(this.$route.params.id).then((response) =>
+      console.log(this.histories)
+    );
   },
 };
 </script>
