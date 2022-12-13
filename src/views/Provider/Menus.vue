@@ -2,7 +2,7 @@
   <div class="container">
     <div class="border-solid border-2 rounded-lg m-12 p-4">
       <div
-        class="flex flex-col lg:flex-row lg:space-x-8 items-center justify-between"
+        class="flex flex-col md:flex-row md:space-x-8 items-center justify-between"
       >
         <div class="flex-1 text-3xl m-2">List Menus</div>
         <div>
