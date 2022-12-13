@@ -179,12 +179,13 @@ class MunchService {
     return this.http.delete("/menu/" + id);
   }
 
-  static getHistoryProvider(batch_size, currentPage, date_lower, date_upper) {
+  static getHistoryProvider(batch_size, currentPage, date_lower, date_upper, pemesanan_status) {
     return this.http.get(
       `/pesanan?date_lower=${date_lower}&date_upper=${date_upper}`,
       {
         params: {
           page: currentPage,
+          pemesanan_status: pemesanan_status,
           batch_size: batch_size,
           sort: {
             column: "created_at",
@@ -211,6 +212,11 @@ class MunchService {
       params: {
         month: month,
         year: year,
+        sort: {
+          column: "detail_tanggal",
+          type: "asc",
+        },
+        detail_status: "belum dikirim"
       },
     });
   }

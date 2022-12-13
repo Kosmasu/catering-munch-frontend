@@ -46,16 +46,21 @@ export const useProviderStore = defineStore("ProviderStore", {
           console.error(error);
         });
     },
-    async fetchHistory(currentPage = 1, date_lower = "", date_upper = "") {
+    async fetchHistory(
+      currentPage = 1,
+      date_lower = "",
+      date_upper = "",
+      pemesanan_status = ""
+    ) {
       await MunchService.getHistoryProvider(
         useSettingStore().batch_size,
         currentPage,
         date_lower,
-        date_upper
+        date_upper,
+        pemesanan_status
       )
         .then((response) => {
           this.histories = response.data.data;
-          console.log(this.histories);
         })
         .catch((error) => {
           console.error(error);
@@ -70,9 +75,18 @@ export const useProviderStore = defineStore("ProviderStore", {
           console.error(error);
         });
     },
+    async fetchWaiting() {
+      await MunchService.getHistoryProvider(10, 1, "", "", "menunggu")
+        .then((response) => {
+          this.histories = response.data.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     async fetchOrders() {
       await MunchService.getPesanan(
-        new Date().getMonth(),
+        new Date().getMonth() + 1,
         new Date().getFullYear()
       )
         .then((response) => {
@@ -141,6 +155,7 @@ export const useProviderStore = defineStore("ProviderStore", {
     async acceptPesanan(detail_id) {
       await MunchService.acceptPesanan(detail_id)
         .then((response) => {
+          this.fetchWaiting();
           this.fetchOrders();
         })
         .catch((error) => {
@@ -150,6 +165,7 @@ export const useProviderStore = defineStore("ProviderStore", {
     async rejectPesanan(detail_id) {
       await MunchService.rejectPesanan(detail_id)
         .then((response) => {
+          this.fetchWaiting();
           this.fetchOrders();
         })
         .catch((error) => {
