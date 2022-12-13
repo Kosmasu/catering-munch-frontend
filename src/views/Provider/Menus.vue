@@ -1,19 +1,19 @@
 <template>
   <div class="container">
     <div class="border-solid border-2 rounded-lg m-12 p-4">
-      <div class="flex justify-between mb-8">
-        <div class="text-3xl m-2">List Menus</div>
-        <div class="flex space-x-8 items-center">
-          <div>
-            <select-batch-size @on-batch-size-change="this.fetchMenus()" />
-          </div>
-          <input
-            type="text"
-            v-model="this.query"
-            placeholder="Search…"
-            class="input input-bordered"
-          />
+      <div
+        class="flex flex-col lg:flex-row lg:space-x-8 items-center justify-between"
+      >
+        <div class="flex-1 text-3xl m-2">List Menus</div>
+        <div>
+          <select-batch-size @on-batch-size-change="this.fetchMenus()" />
         </div>
+        <input
+          type="text"
+          v-model="this.query"
+          placeholder="Search…"
+          class="input input-bordered"
+        />
       </div>
       <RouterLink :to="{ name: 'provider-menus-add' }">
         <button class="btn btn-primary rounded-lg m-4">Add New Menu</button>
@@ -34,10 +34,7 @@
             <td>Rp. {{ menu.menu_harga.toLocaleString("id-ID") }},00</td>
             <td class="capitalize">{{ menu.menu_status }}</td>
             <td>
-              <button
-                @click="detail(menu.menu_id)"
-                class="btn btn-primary"
-              >
+              <button @click="detail(menu.menu_id)" class="btn btn-primary">
                 Detail
               </button>
             </td>
