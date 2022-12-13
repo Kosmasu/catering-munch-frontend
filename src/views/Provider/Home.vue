@@ -7,15 +7,15 @@
       <div class="grid grid-cols-3 gap-4 text-center text-xl">
         <div class="border-solid border-2 rounded-md py-4">
           <div class="font-bold">Current Customer</div>
-          <div></div>
+          <div>{{ stats }}</div>
         </div>
         <div class="border-solid border-2 rounded-md py-4">
           <div class="font-bold">Total Pendapatan</div>
-          <div>Rp. 0,00</div>
+          <div>Rp. {{ stats }},00</div>
         </div>
         <div class="border-solid border-2 rounded-md py-4">
           <div class="font-bold">Made Deliveries</div>
-          <div></div>
+          <div>{{ stats }}</div>
         </div>
       </div>
       <div class="text-2xl my-4">New Order</div>
@@ -135,6 +135,7 @@ export default {
   },
   methods: {
     ...mapActions(useProviderStore, [
+      "fetchStats",
       "fetchWaiting",
       "fetchOrders",
       "acceptPesanan",
@@ -177,9 +178,12 @@ export default {
     },
   },
   computed: {
-    ...mapState(useProviderStore, ["histories", "orders"]),
+    ...mapState(useProviderStore, ["stats", "histories", "orders"]),
   },
   created() {
+    this.fetchStats().then((response) => {
+      console.log("this.stats:", this.stats);
+    });
     this.fetchWaiting().then((response) => {
       console.log("this.histories:", this.histories);
     });

@@ -6,6 +6,7 @@ import router from "@/router";
 
 export const useProviderStore = defineStore("ProviderStore", {
   state: () => ({
+    stats: undefined,
     menus: undefined,
     histories: undefined,
     orders: undefined,
@@ -23,6 +24,15 @@ export const useProviderStore = defineStore("ProviderStore", {
   }),
   getters: {},
   actions: {
+    async fetchStats() {
+      await MunchService.mystat()
+        .then((response) => {
+          this.stats = response.data.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     async fetchMenus(currentPage = 1, menu_nama = "") {
       await MunchService.getMenus(
         useSettingStore().batch_size,
