@@ -6,7 +6,12 @@
         <div>
           <select-batch-size @on-batch-size-change="this.fetchProviders()" />
         </div>
-        <input type="text" v-model="this.query" placeholder="Search…" class="input input-bordered" />
+        <input
+          type="text"
+          v-model="this.query"
+          placeholder="Search…"
+          class="input input-bordered"
+        />
       </div>
     </div>
     <table class="table table-compact w-full text-center">
@@ -30,14 +35,25 @@
           <td>{{ provider.users_telepon }}</td>
           <td class="capitalize">{{ provider.users_status }}</td>
           <td>
-            <button v-if="provider.users_status == 'aktif'" @click="this.banUser('provider', provider.users_id)"
-              class="btn btn-primary rounded-lg text-base-content">
+            <button
+              v-if="provider.users_status == 'aktif'"
+              @click="this.banUser('provider', provider.users_id)"
+              class="btn btn-error rounded-lg text-base-content"
+            >
               Ban
             </button>
-            <button v-else-if="provider.users_status == 'banned'" @click="this.unbanUser('provider', provider.users_id)" class="btn btn-error rounded-lg">
+            <button
+              v-else-if="provider.users_status == 'banned'"
+              @click="this.unbanUser('provider', provider.users_id)"
+              class="btn btn-primary rounded-lg"
+            >
               Unban
             </button>
-            <button v-else-if="provider.users_status == 'menunggu'" @click="this.approveProvider(provider.users_id)" class="btn btn-primary text-base-content rounded-lg">
+            <button
+              v-else-if="provider.users_status == 'menunggu'"
+              @click="this.approveProvider(provider.users_id)"
+              class="btn btn-primary text-base-content rounded-lg"
+            >
               Approve
             </button>
           </td>
@@ -46,7 +62,10 @@
       <tbody v-else>
         <tr>
           <td class="text-center" colspan="7">
-            <font-awesome-icon icon="fa-solid fa-spinner" class="text-6xl animate-spin" />
+            <font-awesome-icon
+              icon="fa-solid fa-spinner"
+              class="text-6xl animate-spin"
+            />
           </td>
         </tr>
       </tbody>
@@ -59,7 +78,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import { useAdminStore } from "@/stores/AdminStore";
-import { useSettingStore } from "@/stores/SettingStore";
 import PaginationVue from "@/components/Pagination.vue";
 import SelectBatchSize from "@/components/SelectBatchSize.vue";
 
@@ -78,31 +96,28 @@ export default {
   methods: {
     ...mapActions(useAdminStore, [
       "fetchProviders",
-      "usersSearch",
       "banUser",
       "unbanUser",
       "approveProvider",
     ]),
   },
   computed: {
-    ...mapState(useAdminStore, ["result", "providers"]),
+    ...mapState(useAdminStore, ["providers"]),
   },
   created() {
-    this.fetchProviders().then(response => {
-      console.log('this.providers:', this.providers);
-    })
+    this.fetchProviders().then((response) => {
+      // console.log('this.providers:', this.providers);
+    });
   },
   watch: {
     currentPage(newCurrentPage, oldCurrentPage) {
-      this.fetchProviders(newCurrentPage)
+      this.fetchProviders(newCurrentPage);
     },
     query(newQuery, oldQuery) {
-      this.currentPage = 1
-      this.fetchProviders(this.currentPage, newQuery)
+      this.currentPage = 1;
+      this.fetchProviders(this.currentPage, newQuery);
     },
-  }
+  },
 };
 </script>
-<style>
-
-</style>
+<style></style>

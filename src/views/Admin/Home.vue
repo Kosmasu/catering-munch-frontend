@@ -6,10 +6,19 @@
       <div class="stat place-items-center">
         <div class="stat-title">Registered Accounts</div>
         <div class="stat-value">
-          <div v-if="this.customers && this.providers">
-            <div>{{ this.customers.data.length + this.providers.data.length }}</div>
+          <div v-if="stats">
+            <div>
+              {{
+                stats.customers_count +
+                stats.providers_count +
+                stats.unverified_count
+              }}
+            </div>
           </div>
-          <div v-else class="animate-pulse bg-base-200 w-full h-8 rounded-lg"> </div>
+          <div
+            v-else
+            class="animate-pulse bg-base-200 w-full h-8 rounded-lg"
+          ></div>
         </div>
       </div>
     </div>
@@ -17,28 +26,37 @@
       <div class="stat place-items-center">
         <div class="stat-title">Customers</div>
         <div class="stat-value">
-          <div v-if="this.customers">
-            <div>{{ this.customers.data.length }}</div>
+          <div v-if="stats">
+            <div>{{ stats.customers_count }}</div>
           </div>
-          <div v-else class="animate-pulse bg-base-200 w-full h-8 rounded-lg"></div>
+          <div
+            v-else
+            class="animate-pulse bg-base-200 w-full h-8 rounded-lg"
+          ></div>
         </div>
       </div>
       <div class="stat place-items-center">
         <div class="stat-title">Verified Providers</div>
         <div class="stat-value">
-          <div v-if="this.providers && this.waitingProviders">
-            <div>{{ this.providers.data.length - this.waitingProviders.data.length }}</div>
+          <div v-if="stats">
+            <div>{{ stats.providers_count }}</div>
           </div>
-          <div v-else class="animate-pulse bg-base-200 w-full h-8 rounded-lg"></div>
+          <div
+            v-else
+            class="animate-pulse bg-base-200 w-full h-8 rounded-lg"
+          ></div>
         </div>
       </div>
       <div class="stat place-items-center">
         <div class="stat-title">Unverified Providers</div>
         <div class="stat-value">
-          <div v-if="this.waitingProviders">
-            <div>{{ this.waitingProviders.data.length }}</div>
+          <div v-if="stats">
+            <div>{{ stats.unverified_count }}</div>
           </div>
-          <div v-else class="animate-pulse bg-base-200 w-full h-8 rounded-lg"></div>
+          <div
+            v-else
+            class="animate-pulse bg-base-200 w-full h-8 rounded-lg"
+          ></div>
         </div>
       </div>
     </div>
@@ -47,7 +65,12 @@
       <div class="text-3xl m-2">Recent Provider Registration</div>
       <div class="flex space-x-8 items-center">
         <div>
-          <select-batch-size @on-batch-size-change="this.fetchWaitingProviders(); this.currentPage = 1" />
+          <select-batch-size
+            @on-batch-size-change="
+              this.fetchWaitingProviders();
+              this.currentPage = 1;
+            "
+          />
         </div>
       </div>
     </div>
@@ -72,7 +95,10 @@
           <td>{{ provider.users_telepon }}</td>
           <td class="capitalize">{{ provider.users_status }}</td>
           <td>
-            <button @click="this.approveProvider(provider.users_id)" class="btn btn-primary text-base-content rounded-lg">
+            <button
+              @click="this.approveProvider(provider.users_id)"
+              class="btn btn-primary text-base-content rounded-lg"
+            >
               Approve
             </button>
           </td>
@@ -81,13 +107,19 @@
       <tbody v-else>
         <tr>
           <td class="text-center" colspan="7">
-            <font-awesome-icon icon="fa-solid fa-spinner" class="text-6xl animate-spin" />
+            <font-awesome-icon
+              icon="fa-solid fa-spinner"
+              class="text-6xl animate-spin"
+            />
           </td>
         </tr>
       </tbody>
     </table>
     <div v-if="this.waitingProviders" class="p-2">
-      <pagination-vue v-model="currentPage" :paginatedData="this.waitingProviders" />
+      <pagination-vue
+        v-model="currentPage"
+        :paginatedData="this.waitingProviders"
+      />
     </div>
   </div>
 </template>
@@ -111,28 +143,23 @@ export default {
   },
   methods: {
     ...mapActions(useAdminStore, [
-      "fetchCustomers",
-      "fetchProviders",
+      "fetchStats",
       "fetchWaitingProviders",
-      "providerWaiting",
       "approveProvider",
     ]),
   },
   computed: {
-    ...mapState(useAdminStore, ["result", "customers", "providers", "waitingProviders"]),
+    ...mapState(useAdminStore, ["stats", "waitingProviders"]),
   },
   created() {
-    this.fetchCustomers();
-    this.fetchProviders();
+    this.fetchStats();
     this.fetchWaitingProviders();
   },
   watch: {
     currentPage(newCurrentPage, oldCurrentPage) {
-      this.fetchWaitingProviders(newCurrentPage)
+      this.fetchWaitingProviders(newCurrentPage);
     },
-  }
+  },
 };
 </script>
-<style>
-
-</style>
+<style></style>

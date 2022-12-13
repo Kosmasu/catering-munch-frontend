@@ -6,7 +6,12 @@
         <div>
           <select-batch-size @on-batch-size-change="this.fetchCustomers()" />
         </div>
-        <input type="text" v-model="this.query" placeholder="Search…" class="input input-bordered" />
+        <input
+          type="text"
+          v-model="this.query"
+          placeholder="Search…"
+          class="input input-bordered"
+        />
       </div>
     </div>
     <table class="table table-compact text-center w-full">
@@ -30,11 +35,18 @@
           <td>{{ customer.users_telepon }}</td>
           <td class="capitalize">{{ customer.users_status }}</td>
           <td>
-            <button v-if="customer.users_status == 'aktif'" @click="this.banUser('customer', customer.users_id)"
-              class="btn btn-primary rounded-lg text-base-content">
+            <button
+              v-if="customer.users_status == 'aktif'"
+              @click="this.banUser('customer', customer.users_id)"
+              class="btn btn-error rounded-lg text-base-content"
+            >
               Ban
             </button>
-            <button v-else @click="this.unbanUser('customer', customer.users_id)" class="btn btn-error rounded-lg">
+            <button
+              v-else
+              @click="this.unbanUser('customer', customer.users_id)"
+              class="btn btn-primary rounded-lg"
+            >
               Unban
             </button>
           </td>
@@ -43,7 +55,10 @@
       <tbody v-else>
         <tr>
           <td class="text-center" colspan="7">
-            <font-awesome-icon icon="fa-solid fa-spinner" class="text-6xl animate-spin" />
+            <font-awesome-icon
+              icon="fa-solid fa-spinner"
+              class="text-6xl animate-spin"
+            />
           </td>
         </tr>
       </tbody>
@@ -54,9 +69,8 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState, mapWritableState } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useAdminStore } from "@/stores/AdminStore";
-import { useSettingStore } from "@/stores/SettingStore";
 import PaginationVue from "@/components/Pagination.vue";
 import SelectBatchSize from "@/components/SelectBatchSize.vue";
 
@@ -73,31 +87,25 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useAdminStore, [
-      "fetchCustomers",
-      "banUser",
-      "unbanUser",
-    ]),
+    ...mapActions(useAdminStore, ["fetchCustomers", "banUser", "unbanUser"]),
   },
   computed: {
-    ...mapState(useAdminStore, ["result", "customers"]),
+    ...mapState(useAdminStore, ["customers"]),
   },
   created() {
-    this.fetchCustomers().then(response => {
-      console.log('this.customers:', this.customers);
-    })
+    this.fetchCustomers().then((response) => {
+      // console.log("this.customers:", this.customers);
+    });
   },
   watch: {
     currentPage(newCurrentPage, oldCurrentPage) {
-      this.fetchCustomers(newCurrentPage)
+      this.fetchCustomers(newCurrentPage);
     },
     query(newQuery, oldQuery) {
-      this.currentPage = 1
-      this.fetchCustomers(this.currentPage, newQuery)
+      this.currentPage = 1;
+      this.fetchCustomers(this.currentPage, newQuery);
     },
-  }
+  },
 };
 </script>
-<style>
-
-</style>
+<style></style>

@@ -77,13 +77,17 @@ class MunchService {
     return this.http.get("/mini-me");
   }
 
+  static mystat() {
+    return this.http.get("/mystat");
+  }
+
   static logout() {
     return this.http.post("/logout");
   }
 
   // ADMIN
-  static getCustomers(batch_size, currentPage = 1, users_nama = "") {
-    return this.http.get(`/admin/users`, {
+  static getCustomers(batch_size, currentPage, users_nama) {
+    return this.http.get(`/users`, {
       params: {
         page: currentPage,
         users_role: "customer",
@@ -97,8 +101,8 @@ class MunchService {
     });
   }
 
-  static getProviders(batch_size, currentPage = 1, users_nama = "") {
-    return this.http.get(`/admin/users`, {
+  static getProviders(batch_size, currentPage, users_nama) {
+    return this.http.get(`/users`, {
       params: {
         page: currentPage,
         users_role: "provider",
@@ -112,8 +116,8 @@ class MunchService {
     });
   }
 
-  static getWaitingProviders(batch_size, currentPage = 1) {
-    return this.http.get(`/admin/users`, {
+  static getWaitingProviders(batch_size, currentPage) {
+    return this.http.get(`/users`, {
       params: {
         page: currentPage,
         users_role: "provider",
@@ -127,16 +131,36 @@ class MunchService {
     });
   }
 
+  static getHistoryLog(batch_size, currentPage, date_lower, date_upper) {
+    return this.http.get(`/log`, {
+      params: {
+        page: currentPage,
+        date_lower: date_lower,
+        date_upper: date_upper,
+        batch_size: batch_size,
+        sort: {
+          column: "log_timestamps",
+          type: "desc",
+        },
+      },
+    });
+  }
+
+  static getHistoryMenu(batch_size, currentPage) {}
+  static getHistoryPemesanan(batch_size, currentPage) {}
+  static getHistoryRating(batch_size, currentPage) {}
+  static getHistoryTopup(batch_size, currentPage) {}
+
   static banUser(id) {
-    return this.http.patch("/admin/users/banUser/" + id);
+    return this.http.patch(`/users/banUser/${id}`);
   }
 
   static unbanUser(id) {
-    return this.http.patch("/admin/users/unbanUser/" + id);
+    return this.http.patch(`/users/unbanUser/${id}`);
   }
 
   static approveProvider(id) {
-    return this.http.patch("/admin/users/approveProvider/" + id);
+    return this.http.patch(`/users/approveProvider/${id}`);
   }
 
   // PROVIDER
@@ -179,7 +203,13 @@ class MunchService {
     return this.http.delete("/menu/" + id);
   }
 
-  static getHistoryProvider(batch_size, currentPage, date_lower, date_upper, pemesanan_status) {
+  static getHistoryProvider(
+    batch_size,
+    currentPage,
+    date_lower,
+    date_upper,
+    pemesanan_status
+  ) {
     return this.http.get(
       `/pesanan?date_lower=${date_lower}&date_upper=${date_upper}`,
       {
@@ -216,7 +246,7 @@ class MunchService {
           column: "detail_tanggal",
           type: "asc",
         },
-        detail_status: "belum dikirim"
+        detail_status: "belum dikirim",
       },
     });
   }
