@@ -1,28 +1,28 @@
 <template>
   <div class="container">
     <div class="border-solid border-2 rounded-lg m-12 p-4">
-      <div class="flex justify-between mb-8">
-        <div class="text-3xl m-2">History Pemesanan</div>
-        <div class="flex space-x-8 items-center">
-          <div>
-            <select-batch-size @on-batch-size-change="this.fetchHistory()" />
-          </div>
-          <div>
-            <div>Min Date</div>
-            <input
-              type="date"
-              v-model="this.date_lower"
-              class="input input-bordered"
-            />
-          </div>
-          <div>
-            <div>Max Date</div>
-            <input
-              type="date"
-              v-model="this.date_upper"
-              class="input input-bordered"
-            />
-          </div>
+      <div
+        class="flex flex-col lg:flex-row lg:space-x-8 items-center justify-between mb-4"
+      >
+        <div class="flex-1 text-3xl m-2 lg:mt-6">History Pemesanan</div>
+        <div class="lg:mt-6">
+          <select-batch-size @on-batch-size-change="this.fetchHistory()" />
+        </div>
+        <div>
+          <div class="text-center lg:text-left">Min Date</div>
+          <input
+            type="date"
+            v-model="this.date_lower"
+            class="input input-bordered"
+          />
+        </div>
+        <div>
+          <div class="text-center lg:text-left">Max Date</div>
+          <input
+            type="date"
+            v-model="this.date_upper"
+            class="input input-bordered"
+          />
         </div>
       </div>
       <table class="table table-compact w-full text-center">
@@ -30,9 +30,6 @@
           <tr>
             <th class="bg-primary">ID</th>
             <th class="bg-primary">Customer</th>
-            <th class="bg-primary">Rating</th>
-            <th class="bg-primary">Jumlah</th>
-            <th class="bg-primary">Total</th>
             <th class="bg-primary">Tanggal</th>
             <th class="bg-primary">Status</th>
             <th class="bg-primary">Action</th>
@@ -46,11 +43,6 @@
           >
             <td>{{ history.pemesanan_id }}</td>
             <td>{{ history.users_customer.users_nama }}</td>
-            <td>{{ history.pemesanan_rating }}</td>
-            <td>{{ history.pemesanan_jumlah }}</td>
-            <td>
-              Rp. {{ history.pemesanan_total.toLocaleString("id-ID") }},00
-            </td>
             <td>
               {{ formatDate(new Date(history.created_at)) }}
             </td>

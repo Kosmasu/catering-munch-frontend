@@ -2,20 +2,55 @@
   <div class="container">
     <div class="border-solid border-2 rounded-lg m-12 p-4">
       <button @click="back" class="btn btn-primary">&lt; Back</button>
-      <div class="text-3xl">Detail History</div>
+      <div class="text-3xl my-4">Detail History</div>
       <div v-if="histories" class="text-xl">
         <div class="font-bold">ID Pemesanan {{ histories.pemesanan_id }}</div>
-        <div>Customer : {{ histories.users_customer.users_nama }}</div>
-        <div>Rating : {{ histories.pemesanan_rating }}</div>
-        <div>Jumlah : {{ histories.pemesanan_jumlah }}</div>
-        <div>
-          Total : Rp. {{ histories.pemesanan_total.toLocaleString("id-ID") }},00
-        </div>
-        <div>
-          Tanggal :
-          {{ formatDate(new Date(histories.created_at)) }}
-        </div>
-        <div class="capitalize">Status : {{ histories.pemesanan_status }}</div>
+        <table class="border-separate mb-4">
+          <tbody>
+            <tr>
+              <td>Customer</td>
+              <td>:</td>
+              <td>{{ histories.users_customer.users_nama }}</td>
+            </tr>
+            <tr>
+              <td>Tanggal</td>
+              <td>:</td>
+              <td>{{ formatDate(new Date(histories.created_at)) }}</td>
+            </tr>
+            <tr>
+              <td>Alamat</td>
+              <td>:</td>
+              <td>{{ histories.users_customer.users_alamat }}</td>
+            </tr>
+            <tr>
+              <td>Telepon</td>
+              <td>:</td>
+              <td>{{ histories.users_customer.users_telepon }}</td>
+            </tr>
+            <tr>
+              <td>Jumlah</td>
+              <td>:</td>
+              <td>{{ histories.pemesanan_jumlah }}</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td>:</td>
+              <td>
+                Rp. {{ histories.pemesanan_total.toLocaleString("id-ID") }},00
+              </td>
+            </tr>
+            <tr>
+              <td>Rating</td>
+              <td>:</td>
+              <td>{{ histories.pemesanan_rating }}</td>
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>:</td>
+              <td class="capitalize">{{ histories.pemesanan_status }}</td>
+            </tr>
+          </tbody>
+        </table>
         <table class="table table-compact w-full text-center">
           <thead>
             <tr>
