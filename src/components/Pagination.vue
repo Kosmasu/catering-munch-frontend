@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex justify-between">
+  <div class="w-full flex flex-col sm:flex-row justify-between">
     <div class="flex items-center whitespace-pre">
       Showing
       <span class="font-bold"> {{ this.lowerItemBoundary }} </span>
