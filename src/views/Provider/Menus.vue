@@ -12,7 +12,7 @@
           type="text"
           v-model="this.query"
           placeholder="Search…"
-          class="input input-bordered"
+          class="input input-bordered my-2 md:my-0"
         />
       </div>
       <RouterLink :to="{ name: 'provider-menus-add' }">
@@ -30,8 +30,10 @@
             <td>
               <img src="@/assets/munch.png" class="w-24" />
             </td>
-            <td>{{ menu.menu_nama }}</td>
-            <td>Rp. {{ menu.menu_harga.toLocaleString("id-ID") }},00</td>
+            <td class="whitespace-normal">{{ menu.menu_nama }}</td>
+            <td class="whitespace-normal">
+              Rp. {{ menu.menu_harga.toLocaleString("id-ID") }},00
+            </td>
             <td class="capitalize">{{ menu.menu_status }}</td>
             <td>
               <button @click="detail(menu.menu_id)" class="btn btn-primary">

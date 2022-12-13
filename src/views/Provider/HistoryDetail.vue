@@ -54,7 +54,6 @@
         <table class="table table-compact w-full text-center">
           <thead>
             <tr>
-              <th class="bg-primary">No</th>
               <th class="bg-primary">Tanggal</th>
               <th class="bg-primary">Menu</th>
               <th class="bg-primary">Jumlah</th>
@@ -68,13 +67,14 @@
               :key="index"
               class="hover"
             >
-              <td>{{ index + 1 }}</td>
-              <td>
+              <td class="whitespace-normal">
                 {{ formatDate(new Date(history.detail_tanggal)) }}
               </td>
-              <td>{{ history.menu.menu_nama }}</td>
+              <td class="whitespace-normal">{{ history.menu.menu_nama }}</td>
               <td>{{ history.detail_jumlah }}</td>
-              <td>Rp. {{ history.detail_total.toLocaleString("id-ID") }},00</td>
+              <td class="whitespace-normal">
+                Rp. {{ history.detail_total.toLocaleString("id-ID") }},00
+              </td>
               <td class="capitalize">{{ history.detail_status }}</td>
             </tr>
           </tbody>

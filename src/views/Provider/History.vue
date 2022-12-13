@@ -42,8 +42,10 @@
             class="hover"
           >
             <td>{{ history.pemesanan_id }}</td>
-            <td>{{ history.users_customer.users_nama }}</td>
-            <td>
+            <td class="whitespace-normal">
+              {{ history.users_customer.users_nama }}
+            </td>
+            <td class="whitespace-normal">
               {{ formatDate(new Date(history.created_at)) }}
             </td>
             <td class="capitalize">{{ history.pemesanan_status }}</td>
