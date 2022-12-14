@@ -24,10 +24,18 @@
               class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li v-bind:class="getPage('provider-menus')">
-                <RouterLink to="/provider/menus">Menus</RouterLink>
+                <RouterLink
+                  :to="{ name: 'provider-menus', params: { page: 1 } }"
+                >
+                  Menus
+                </RouterLink>
               </li>
               <li v-bind:class="getPage('provider-history')">
-                <RouterLink to="/provider/history">History</RouterLink>
+                <RouterLink
+                  :to="{ name: 'provider-history', params: { page: 1 } }"
+                >
+                  History
+                </RouterLink>
               </li>
             </ul>
           </div>
@@ -41,18 +49,18 @@
           <div class="hidden lg:flex">
             <ul class="menu menu-horizontal rounded-box p-2 space-x-2">
               <li class="relative" v-bind:class="getPage('provider-menus')">
-                <RouterLink to="/provider/menus">Menus</RouterLink>
-                <!-- <div
-                  v-if="isThisPage('provider-menus')"
-                  class="absolute h-1 w-full bg-munch p-0 rounded bottom-0"
-                ></div> -->
+                <RouterLink
+                  :to="{ name: 'provider-menus', params: { page: 1 } }"
+                >
+                  Menus
+                </RouterLink>
               </li>
               <li class="relative" v-bind:class="getPage('provider-history')">
-                <RouterLink to="/provider/history">History</RouterLink>
-                <!-- <div
-                  v-if="isThisPage('provider-history')"
-                  class="absolute h-1 w-full bg-munch p-0 rounded bottom-0"
-                ></div> -->
+                <RouterLink
+                  :to="{ name: 'provider-history', params: { page: 1 } }"
+                >
+                  History
+                </RouterLink>
               </li>
             </ul>
           </div>
@@ -81,6 +89,11 @@
               tabindex="0"
               class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
             >
+              <li>
+                <RouterLink :to="{ name: 'provider-profile' }">
+                  Profile
+                </RouterLink>
+              </li>
               <li><RouterLink @click="logout" to="">Logout</RouterLink></li>
             </ul>
           </div>
@@ -90,15 +103,19 @@
   </div>
 </template>
 <script>
-import { useAuthStore } from '../stores/Auth/AuthStore';
-import { mapActions, mapState } from 'pinia';
+import { useAuthStore } from "../stores/Auth/AuthStore";
+import { mapActions, mapState } from "pinia";
+import router from "@/router";
 
 export default {
   computed: {
-    ...mapState(useAuthStore, ['firstName'])
+    ...mapState(useAuthStore, ["firstName"]),
   },
   methods: {
-    ...mapActions(useAuthStore, ['logout']),
+    ...mapActions(useAuthStore, ["logout"]),
+    profile() {
+      router.push({ name: "provider-profile" });
+    },
     isThisPage(name) {
       return this.$route.name == name;
     },
