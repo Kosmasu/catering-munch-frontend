@@ -125,9 +125,7 @@ export default {
     ...mapState(useProviderStore, ["histories"]),
   },
   created() {
-    this.fetchHistory().then((response) => {
-      console.log("this.histories", this.histories);
-    });
+    this.fetchHistory();
   },
   watch: {
     currentPage(newCurrentPage, oldCurrentPage) {

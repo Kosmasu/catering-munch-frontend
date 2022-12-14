@@ -88,9 +88,7 @@ export default {
     ...mapState(useProviderStore, ["menus"]),
   },
   created() {
-    this.fetchMenus().then((response) => {
-      console.log("this.menus:", this.menus);
-    });
+    this.fetchMenus();
   },
   watch: {
     currentPage(newCurrentPage, oldCurrentPage) {
