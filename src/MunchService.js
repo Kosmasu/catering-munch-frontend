@@ -74,7 +74,7 @@ class MunchService {
   }
 
   static me() {
-    return this.http.get("/mini-me");
+    return this.http.get("/me");
   }
 
   static mystat() {
@@ -163,6 +163,14 @@ class MunchService {
   }
 
   // PROVIDER
+  static updateDesc(id, desc) {
+    return this.http.patch(`/users/${id}`, {
+      params: {
+        users_desc: desc,
+      },
+    });
+  }
+
   static getMenus(batch_size, currentPage, provider_id, menu_nama) {
     return this.http.get("/menu", {
       params: {
