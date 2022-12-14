@@ -164,10 +164,9 @@ class MunchService {
 
   // PROVIDER
   static updateDesc(id, desc) {
+    console.log(id, desc);
     return this.http.patch(`/users/${id}`, {
-      params: {
-        users_desc: desc,
-      },
+      users_desc: desc,
     });
   }
 

@@ -7,6 +7,7 @@ export const useAuthStore = defineStore("AuthStore", {
     user: {
       id: null,
       nama: "guest",
+      desc: null,
       role: "guest",
       saldo: null,
     },
@@ -15,8 +16,14 @@ export const useAuthStore = defineStore("AuthStore", {
     firstName() {
       return this.user.nama.split(" ")[0];
     },
+    fullName() {
+      return this.user.nama;
+    },
     id() {
       return this.user.id;
+    },
+    desc() {
+      return this.user.desc;
     },
   },
   actions: {
@@ -29,6 +36,7 @@ export const useAuthStore = defineStore("AuthStore", {
           this.setUser(
             response.data.data.users_id,
             response.data.data.users_nama,
+            response.data.data.users_desc,
             response.data.data.users_role,
             response.data.data.users_saldo
           );
@@ -48,9 +56,10 @@ export const useAuthStore = defineStore("AuthStore", {
         }
       });
     },
-    setUser(id, nama, role, saldo) {
+    setUser(id, nama, desc, role, saldo) {
       this.user.id = id;
       this.user.nama = nama;
+      this.user.desc = desc;
       this.user.role = role;
       this.user.saldo = saldo;
     },
