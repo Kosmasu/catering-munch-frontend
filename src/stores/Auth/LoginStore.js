@@ -37,7 +37,6 @@ export const useLoginStore = defineStore("LoginStore", {
           return response;
         })
         .catch((error) => {
-          console.log("error:", error);
           this.errorData = error.response.data;
           return error;
         });

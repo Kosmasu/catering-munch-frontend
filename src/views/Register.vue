@@ -23,6 +23,13 @@
               label="Nama"
               :errors="this.errorData.errors"
             />
+            <input-vue
+              v-model="form.users_desc"
+              name="users_desc"
+              type="text"
+              label="Description (provider only)"
+              :errors="this.errorData.errors"
+            />
             <!-- EMAIL -->
             <input-vue
               v-model="form.users_email"

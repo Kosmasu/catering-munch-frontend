@@ -53,6 +53,7 @@ class MunchService {
 
   static register(
     nama,
+    desc,
     email,
     alamat,
     telepon,
@@ -63,6 +64,7 @@ class MunchService {
   ) {
     return this.http.post("/register", {
       users_nama: nama,
+      users_desc: desc,
       users_email: email,
       users_alamat: alamat,
       users_telepon: telepon,

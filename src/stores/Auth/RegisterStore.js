@@ -7,6 +7,7 @@ export const useRegisterStore = defineStore("RegisterStore", {
   state: () => ({
     form: {
       users_nama: undefined,
+      users_desc: undefined,
       users_email: undefined,
       users_password: undefined,
       users_password_confirmation: undefined,
@@ -24,26 +25,26 @@ export const useRegisterStore = defineStore("RegisterStore", {
   getters: {},
   actions: {
     async register() {
-      return await MunchService.register(
+      await MunchService.register(
         this.form.users_nama,
+        this.form.users_desc,
         this.form.users_email,
         this.form.users_alamat,
         this.form.users_telepon,
         this.form.users_password,
         this.form.users_password_confirmation,
         this.form.users_role,
-        this.form.tnc,
+        this.form.tnc
       )
         .then((response) => {
-          if (this.response.status == "created") {
+          if (response.data.status == "created") {
             router.push({ name: "login" });
-          } else {
-            console.log(this.result.status);
           }
+          return response;
         })
         .catch((error) => {
-          this.errorData = error.response.data
-          console.log('error register:',error);
+          this.errorData = error.response.data;
+          return error;
         });
     },
   },
