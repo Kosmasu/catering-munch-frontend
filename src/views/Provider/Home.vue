@@ -4,18 +4,18 @@
       <div class="text-3xl">Overview</div>
       <div>Monthly Review</div>
       <div class="divider" />
-      <div class="grid grid-cols-3 gap-4 text-center text-xl">
-        <div class="border-solid border-2 rounded-md py-4">
+      <div v-if="stats" class="flex flex-col space-y-2 lg:flex-row lg:space-x-4 lg:space-y-0 justify-between text-center text-xl">
+        <div class="flex-1 border-solid border-2 rounded-lg py-4">
           <div class="font-bold">Current Customer</div>
-          <div>{{ stats }}</div>
+          <div>{{ stats.thismonth_delivery }}</div>
         </div>
-        <div class="border-solid border-2 rounded-md py-4">
+        <div class="flex-1 border-solid border-2 rounded-lg py-4">
           <div class="font-bold">Total Pendapatan</div>
-          <div>Rp. {{ stats }},00</div>
+          <div>Rp. {{ stats.total_pendapatan }},00</div>
         </div>
-        <div class="border-solid border-2 rounded-md py-4">
+        <div class="flex-1 border-solid border-2 rounded-lg py-4">
           <div class="font-bold">Made Deliveries</div>
-          <div>{{ stats }}</div>
+          <div>{{ stats.made_delivery }}</div>
         </div>
       </div>
       <div class="text-2xl my-4">New Order</div>
@@ -181,15 +181,9 @@ export default {
     ...mapState(useProviderStore, ["stats", "histories", "orders"]),
   },
   created() {
-    this.fetchStats().then((response) => {
-      console.log("this.stats:", this.stats);
-    });
-    this.fetchWaiting().then((response) => {
-      console.log("this.histories:", this.histories);
-    });
-    this.fetchOrders().then((response) => {
-      console.log("this.orders:", this.orders);
-    });
+    this.fetchStats();
+    this.fetchWaiting();
+    this.fetchOrders();
   },
 };
 </script>
