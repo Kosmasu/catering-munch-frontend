@@ -11,6 +11,7 @@ import AdminHistory from "../views/Admin/History.vue";
 
 import ProviderLayout from "../views/Provider/Layout.vue";
 import ProviderHome from "../views/Provider/Home.vue";
+import ProviderProfile from "../views/Provider/Profile.vue";
 import ProviderMenus from "../views/Provider/Menus.vue";
 import ProviderMenusDetail from "../views/Provider/MenusDetail.vue";
 import ProviderMenusAdd from "../views/Provider/MenusAdd.vue";
@@ -107,6 +108,11 @@ const router = createRouter({
           path: "",
           name: "provider",
           component: ProviderHome,
+        },
+        {
+          path: "profile",
+          name: "provider-profile",
+          component: ProviderProfile,
         },
         {
           path: "menus",
