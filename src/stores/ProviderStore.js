@@ -212,7 +212,7 @@ export const useProviderStore = defineStore("ProviderStore", {
     },
     fillForm() {
       console.log(this.menus);
-      // this.form.menu_foto = this.menus.menu_foto;
+      this.form.menu_foto = this.menus.menu_foto;
       this.form.menu_nama = this.menus.menu_nama;
       this.form.menu_harga = this.menus.menu_harga;
       this.form.menu_status = this.menus.menu_status;

@@ -3,14 +3,19 @@
     <div class="border-solid border-2 rounded-lg m-12 p-4">
       <div class="text-3xl">Edit Menu</div>
       <form
+        v-if="form"
         @submit.prevent="this.editMenu"
         class="flex flex-col lg:flex-row mt-4 p-8 form-control"
       >
         <!-- FOTO -->
         <div class="flex-initial w-1/3">
           <div class="flex bg-base-200 w-1/2 h-36">
-            <img v-if="foto" :src="foto" class="m-auto w-24" />
-            <div v-else class="m-auto">Foto</div>
+            <img v-if="upload" :src="foto" class="m-auto w-24" />
+            <img
+              v-else
+              :src="'http://localhost:8000/storage/' + form.menu_foto"
+              class="m-auto w-24"
+            />
           </div>
           <input
             v-on:change="uploadFoto"
@@ -101,11 +106,13 @@ export default {
   },
   data() {
     return {
+      upload: false,
       foto: "",
     };
   },
   methods: {
     uploadFoto(e) {
+      this.upload = true;
       const files = e.target.files;
       if (!files.length) return;
 

@@ -2,10 +2,16 @@
   <div class="container">
     <div class="border-solid border-2 rounded-lg m-12 p-4">
       <div class="text-3xl">Detail Menu</div>
-      <div v-if="menus" class="flex flex-col lg:space-x-12 lg:flex-row mt-4 p-8">
+      <div
+        v-if="menus"
+        class="flex flex-col lg:space-x-12 lg:flex-row mt-4 p-8"
+      >
         <!-- FOTO -->
         <div class="flex-initial justify-center w-1/3">
-          <img src="@/assets/munch.png" alt="Foto" />
+          <img
+            :src="'http://localhost:8000/storage/' + menus.menu_foto"
+            alt="Foto"
+          />
         </div>
         <div class="flex flex-col flex-1 justify-center text-xl space-y-4">
           <div>Nama : {{ menus.menu_nama }}</div>

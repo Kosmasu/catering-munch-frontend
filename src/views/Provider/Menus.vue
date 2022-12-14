@@ -28,7 +28,10 @@
           >
             <td>{{ index + 1 }}</td>
             <td>
-              <img src="@/assets/munch.png" class="w-24" />
+              <img
+                :src="'http://localhost:8000/storage/' + menu.menu_foto"
+                class="w-24"
+              />
             </td>
             <td class="whitespace-normal">{{ menu.menu_nama }}</td>
             <td class="whitespace-normal">
