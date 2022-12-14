@@ -139,16 +139,15 @@ class MunchService {
         date_upper: date_upper,
         batch_size: batch_size,
         sort: {
-          column: "log_timestamps",
+          column: "log_timestamp",
           type: "desc",
         },
       },
     });
   }
 
-  static getHistoryMenu(batch_size, currentPage) {}
-  static getHistoryPemesanan(batch_size, currentPage) {}
-  static getHistoryRating(batch_size, currentPage) {}
+  static getHistoryMenu(batch_size, currentPage, date_lower, date_upper) {}
+
   static getHistoryTopup(batch_size, currentPage) {}
 
   static banUser(id) {

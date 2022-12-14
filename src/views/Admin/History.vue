@@ -5,15 +5,18 @@
     >
       <div class="flex-1 text-3xl m-2 xl:mt-6">Admin Log History</div>
       <div class="xl:mt-6">
-        <select-batch-size @on-batch-size-change="this.fetchHistory()" />
+        <select-batch-size @on-batch-size-change="onBatchChange" />
       </div>
       <div>
         <div class="text-center xl:text-left">History Filter</div>
-        <select v-model="filter" class="select select-bordered">
+        <select
+          v-model="filter"
+          @change="onFilterChange"
+          class="select select-bordered"
+        >
           <option value="log">Log</option>
           <option value="menu">Menu</option>
           <option value="pemesanan">Pemesanan</option>
-          <option value="rating">Rating</option>
           <option value="topup">Topup</option>
         </select>
       </div>
@@ -34,23 +37,81 @@
         />
       </div>
     </div>
-    <table class="table table-compact w-full text-center">
+    <table
+      v-if="filter == 'log'"
+      class="table table-compact w-full text-center"
+    >
       <thead>
         <tr>
           <th class="bg-primary">ID</th>
-          <th class="bg-primary">Action</th>
-          <th class="bg-primary">Detail</th>
-          <th class="bg-primary">Waktu</th>
+          <th class="bg-primary">Level</th>
+          <th class="bg-primary">Title</th>
+          <th class="bg-primary">Description</th>
+          <th class="bg-primary">Users</th>
+          <th class="bg-primary">Timestamp</th>
         </tr>
       </thead>
-      <tbody>
-        <tr v-for="log in histories">
+      <tbody v-if="histories">
+        <tr v-for="log in histories.data">
           <td>{{ log.log_id }}</td>
-          <td>{{ log.log_title }}</td>
+          <td class="capitalize">{{ log.log_level }}</td>
+          <td class="capitalize">{{ log.log_title }}</td>
           <td>{{ log.log_desc }}</td>
-          <td>{{ log.log_datetime }}</td>
+          <td>{{ log.users_id }}</td>
+          <td>{{ log.log_timestamp }}</td>
         </tr>
       </tbody>
+    </table>
+    <table
+      v-if="filter == 'menu'"
+      class="table table-compact w-full text-center"
+    >
+      <thead>
+        <tr>
+          <th></th>
+        </tr>
+      </thead>
+    </table>
+    <table
+      v-if="filter == 'pemesanan'"
+      class="table table-compact w-full text-center"
+    >
+      <thead>
+        <tr>
+          <th class="bg-primary">ID</th>
+          <th class="bg-primary">Provider</th>
+          <th class="bg-primary">Customer</th>
+          <th class="bg-primary">Jumlah</th>
+          <th class="bg-primary">Total</th>
+          <th class="bg-primary">Rating</th>
+          <th class="bg-primary">Status</th>
+          <th class="bg-primary">Action</th>
+        </tr>
+      </thead>
+      <tbody v-if="histories">
+        <tr v-for="pemesanan in this.histories.data">
+          <td>{{ pemesanan.pemesanan_id }}</td>
+          <td class="capitalize">{{ pemesanan.users_provider.users_nama }}</td>
+          <td class="capitalize">{{ pemesanan.users_customer.users_nama }}</td>
+          <td>{{ pemesanan.pemesanan_jumlah }}</td>
+          <td>
+            Rp. {{ pemesanan.pemesanan_total.toLocaleString("id-ID") }},00
+          </td>
+          <td>{{ pemesanan.pemesanan_rating }}</td>
+          <td class="capitalize">{{ pemesanan.pemesanan_status }}</td>
+          <td><button class="btn btn-primary">Detail</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <table
+      v-if="filter == 'topup'"
+      class="table table-compact w-full text-center"
+    >
+      <thead>
+        <tr>
+          <th></th>
+        </tr>
+      </thead>
     </table>
     <div v-if="histories" class="p-2">
       <pagination-vue v-model="currentPage" :paginatedData="histories" />
@@ -85,14 +146,35 @@ export default {
       "fetchHistoryRating",
       "fetchHistoryTopup",
     ]),
+    onBatchChange() {
+      if (this.filter == "log") {
+        this.fetchHistoryLog();
+      } else if (this.filter == "menu") {
+        this.fetchHistoryMenu();
+      } else if (this.filter == "pemesanan") {
+        this.fetchHistoryPemesanan();
+      } else {
+        this.fetchHistoryTopup();
+      }
+    },
+    onFilterChange() {
+      this.currentPage = 1;
+      if (this.filter == "log") {
+        this.fetchHistoryLog();
+      } else if (this.filter == "menu") {
+        this.fetchHistoryMenu();
+      } else if (this.filter == "pemesanan") {
+        this.fetchHistoryPemesanan();
+      } else {
+        this.fetchHistoryTopup();
+      }
+    },
   },
   computed: {
     ...mapState(useAdminStore, ["histories"]),
   },
   created() {
-    this.fetchHistoryLog().then((response) => {
-      console.log("this.histories", this.histories);
-    });
+    this.fetchHistoryLog();
   },
   watch: {
     currentPage(newCurrentPage, oldCurrentPage) {
@@ -102,8 +184,6 @@ export default {
         this.fetchHistoryMenu(newCurrentPage);
       } else if (this.filter == "pemesanan") {
         this.fetchHistoryPemesanan(newCurrentPage);
-      } else if (this.filter == "rating") {
-        this.fetchHistoryRating(newCurrentPage);
       } else {
         this.fetchHistoryTopup(newCurrentPage);
       }
@@ -116,8 +196,6 @@ export default {
         this.fetchHistoryMenu(this.currentPage, newQuery, this.date_upper);
       } else if (this.filter == "pemesanan") {
         this.fetchHistoryPemesanan(this.currentPage, newQuery, this.date_upper);
-      } else if (this.filter == "rating") {
-        this.fetchHistoryRating(this.currentPage, newQuery, this.date_upper);
       } else {
         this.fetchHistoryTopup(this.currentPage, newQuery, this.date_upper);
       }
@@ -130,8 +208,6 @@ export default {
         this.fetchHistoryMenu(this.currentPage, this.date_lower, newQuery);
       } else if (this.filter == "pemesanan") {
         this.fetchHistoryPemesanan(this.currentPage, this.date_lower, newQuery);
-      } else if (this.filter == "rating") {
-        this.fetchHistoryRating(this.currentPage, this.date_lower, newQuery);
       } else {
         this.fetchHistoryTopup(this.currentPage, this.date_lower, newQuery);
       }

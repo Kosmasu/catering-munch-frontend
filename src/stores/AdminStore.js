@@ -68,15 +68,30 @@ export const useAdminStore = defineStore("AdminStore", {
       )
         .then((response) => {
           this.histories = response.data.data;
-          console.log(this.histories);
         })
         .catch((error) => {
           console.error(error);
         });
     },
     async fetchHistoryMenu() {},
-    async fetchHistoryPemesanan() {},
-    async fetchHistoryRating() {},
+    async fetchHistoryPemesanan(
+      currentPage = 1,
+      date_lower = "",
+      date_upper = ""
+    ) {
+      await MunchService.getHistoryProvider(
+        useSettingStore().batch_size,
+        currentPage,
+        date_lower,
+        date_upper
+      )
+        .then((response) => {
+          this.histories = response.data.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     async fetchHistoryTopup() {},
     async banUser(role, id) {
       await MunchService.banUser(id)
