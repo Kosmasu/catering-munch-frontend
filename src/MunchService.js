@@ -148,9 +148,35 @@ class MunchService {
     });
   }
 
-  static getHistoryMenu(batch_size, currentPage, date_lower, date_upper) {}
+  static getHistoryMenu(batch_size, currentPage, date_lower, date_upper) {
+    return this.http.get(`/historyMenu`, {
+      params: {
+        page: currentPage,
+        date_lower: date_lower,
+        date_upper: date_upper,
+        batch_size: batch_size,
+        sort: {
+          column: "created_at",
+          type: "desc",
+        },
+      },
+    });
+  }
 
-  static getHistoryTopup(batch_size, currentPage) {}
+  static getHistoryTopup(batch_size, currentPage, date_lower, date_upper) {
+    return this.http.get(`/historyTopup`, {
+      params: {
+        page: currentPage,
+        date_lower: date_lower,
+        date_upper: date_upper,
+        batch_size: batch_size,
+        sort: {
+          column: "created_at",
+          type: "desc",
+        },
+      },
+    });
+  }
 
   static banUser(id) {
     return this.http.patch(`/users/banUser/${id}`);
@@ -218,20 +244,19 @@ class MunchService {
     date_upper,
     pemesanan_status
   ) {
-    return this.http.get(
-      `/pesanan?date_lower=${date_lower}&date_upper=${date_upper}`,
-      {
-        params: {
-          page: currentPage,
-          pemesanan_status: pemesanan_status,
-          batch_size: batch_size,
-          sort: {
-            column: "created_at",
-            type: "asc",
-          },
+    return this.http.get(`/pesanan`, {
+      params: {
+        page: currentPage,
+        date_lower: date_lower,
+        date_upper: date_upper,
+        pemesanan_status: pemesanan_status,
+        batch_size: batch_size,
+        sort: {
+          column: "created_at",
+          type: "asc",
         },
-      }
-    );
+      },
+    });
   }
 
   static getHistoryProviderDetail(pemesanan_id) {

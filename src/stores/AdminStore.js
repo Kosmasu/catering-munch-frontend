@@ -73,7 +73,20 @@ export const useAdminStore = defineStore("AdminStore", {
           console.error(error);
         });
     },
-    async fetchHistoryMenu() {},
+    async fetchHistoryMenu(currentPage = 1, date_lower = "", date_upper = "") {
+      await MunchService.getHistoryMenu(
+        useSettingStore().batch_size,
+        currentPage,
+        date_lower,
+        date_upper
+      )
+        .then((response) => {
+          this.histories = response.data.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     async fetchHistoryPemesanan(
       currentPage = 1,
       date_lower = "",
@@ -92,7 +105,20 @@ export const useAdminStore = defineStore("AdminStore", {
           console.error(error);
         });
     },
-    async fetchHistoryTopup() {},
+    async fetchHistoryTopup(currentPage = 1, date_lower, date_upper) {
+      await MunchService.getHistoryTopup(
+        useSettingStore().batch_size,
+        currentPage,
+        date_lower,
+        date_upper
+      )
+        .then((response) => {
+          this.histories = response.data.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     async banUser(role, id) {
       await MunchService.banUser(id)
         .then((response) => {

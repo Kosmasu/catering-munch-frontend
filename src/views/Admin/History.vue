@@ -68,9 +68,20 @@
     >
       <thead>
         <tr>
-          <th></th>
+          <th class="bg-primary">ID</th>
+          <th class="bg-primary">Menu ID</th>
+          <th class="bg-primary">Action</th>
+          <th class="bg-primary">Timestamp</th>
         </tr>
       </thead>
+      <tbody v-if="histories">
+        <tr v-for="menu in histories.data">
+          <td>{{ menu.history_menu_id }}</td>
+          <td>{{ menu.menu_id }}</td>
+          <td class="capitalize">{{ menu.history_menu_action }}</td>
+          <td>{{ menu.created_at }}</td>
+        </tr>
+      </tbody>
     </table>
     <table
       v-if="filter == 'pemesanan'"
