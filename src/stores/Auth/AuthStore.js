@@ -26,8 +26,8 @@ export const useAuthStore = defineStore("AuthStore", {
       return this.user.desc;
     },
     saldo() {
-      return this.user.saldo;
-    }
+      return this.user.saldo.toLocaleString("id-ID");
+    },
   },
   actions: {
     async sanctum() {
