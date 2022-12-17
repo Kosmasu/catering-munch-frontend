@@ -110,7 +110,14 @@
           </td>
           <td>{{ pemesanan.pemesanan_rating }}</td>
           <td class="capitalize">{{ pemesanan.pemesanan_status }}</td>
-          <td><button class="btn btn-primary">Detail</button></td>
+          <td>
+            <button
+              @click="detail(pemesanan.pemesanan_id)"
+              class="btn btn-primary"
+            >
+              Detail
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -147,6 +154,7 @@ import { mapActions, mapState } from "pinia";
 import { useAdminStore } from "@/stores/AdminStore";
 import PaginationVue from "@/components/Pagination.vue";
 import SelectBatchSize from "@/components/SelectBatchSize.vue";
+import router from "@/router";
 
 export default {
   name: "AdminHistory",
@@ -170,6 +178,9 @@ export default {
       "fetchHistoryRating",
       "fetchHistoryTopup",
     ]),
+    detail(id) {
+      router.push({ name: "admin-history-detail", params: { id } });
+    },
     onBatchChange() {
       if (this.filter == "log") {
         this.fetchHistoryLog();

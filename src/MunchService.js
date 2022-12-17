@@ -148,6 +148,39 @@ class MunchService {
     });
   }
 
+  static getHistoryPemesanan(
+    batch_size,
+    currentPage,
+    date_lower,
+    date_upper,
+    pemesanan_status
+  ) {
+    return this.http.get(`/pesanan`, {
+      params: {
+        page: currentPage,
+        date_lower: date_lower,
+        date_upper: date_upper,
+        pemesanan_status: pemesanan_status,
+        batch_size: batch_size,
+        sort: {
+          column: "created_at",
+          type: "desc",
+        },
+      },
+    });
+  }
+
+  static getHistoryPemesananDetail(pemesanan_id) {
+    return this.http.get("/pesanan/" + pemesanan_id, {
+      params: {
+        sort: {
+          column: "detail_tanggal",
+          type: "asc",
+        },
+      },
+    });
+  }
+
   static getHistoryMenu(batch_size, currentPage, date_lower, date_upper) {
     return this.http.get(`/historyMenu`, {
       params: {
@@ -237,38 +270,7 @@ class MunchService {
     return this.http.delete("/menu/" + id);
   }
 
-  static getHistoryProvider(
-    batch_size,
-    currentPage,
-    date_lower,
-    date_upper,
-    pemesanan_status
-  ) {
-    return this.http.get(`/pesanan`, {
-      params: {
-        page: currentPage,
-        date_lower: date_lower,
-        date_upper: date_upper,
-        pemesanan_status: pemesanan_status,
-        batch_size: batch_size,
-        sort: {
-          column: "created_at",
-          type: "desc",
-        },
-      },
-    });
-  }
-
-  static getHistoryProviderDetail(pemesanan_id) {
-    return this.http.get("/pesanan/" + pemesanan_id, {
-      params: {
-        sort: {
-          column: "detail_tanggal",
-          type: "asc",
-        },
-      },
-    });
-  }
+  
 
   static getPesanan(month, year) {
     return this.http.get("/pesanan/showDelivery", {

@@ -92,7 +92,7 @@ export const useAdminStore = defineStore("AdminStore", {
       date_lower = "",
       date_upper = ""
     ) {
-      await MunchService.getHistoryProvider(
+      await MunchService.getHistoryPemesanan(
         useSettingStore().batch_size,
         currentPage,
         date_lower,
@@ -112,6 +112,15 @@ export const useAdminStore = defineStore("AdminStore", {
         date_lower,
         date_upper
       )
+        .then((response) => {
+          this.histories = response.data.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    async fetchHistoryPemesananDetail(pemesanan_id) {
+      await MunchService.getHistoryPemesananDetail(pemesanan_id)
         .then((response) => {
           this.histories = response.data.data;
         })

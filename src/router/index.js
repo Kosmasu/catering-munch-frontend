@@ -8,6 +8,7 @@ import AdminHome from "../views/Admin/Home.vue";
 import AdminCustomers from "../views/Admin/Customers.vue";
 import AdminProviders from "../views/Admin/Providers.vue";
 import AdminHistory from "../views/Admin/History.vue";
+import AdminHistoryDetail from "../views/Admin/HistoryDetail.vue";
 
 import ProviderLayout from "../views/Provider/Layout.vue";
 import ProviderHome from "../views/Provider/Home.vue";
@@ -90,9 +91,19 @@ const router = createRouter({
           component: AdminProviders,
         },
         {
-          path: "history/:page?",
-          name: "admin-history",
-          component: AdminHistory,
+          path: "history",
+          children: [
+            {
+              path: ":page?",
+              name: "admin-history",
+              component: AdminHistory,
+            },
+            {
+              path: "detail/:id",
+              name: "admin-history-detail",
+              component: AdminHistoryDetail,
+            },
+          ],
         },
       ],
     },
