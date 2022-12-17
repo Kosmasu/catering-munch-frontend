@@ -9,6 +9,7 @@
         <!-- FOTO -->
         <div class="flex-initial justify-center w-1/3">
           <img
+            v-if="menus.menu_foto"
             :src="'http://localhost:8000/storage/' + menus.menu_foto"
             alt="Foto"
           />
