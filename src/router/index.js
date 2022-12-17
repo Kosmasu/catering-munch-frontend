@@ -25,7 +25,7 @@ import CustomerHome from "../views/Customer/Home.vue";
 import CustomerSearch from "../views/Customer/Search.vue";
 import CustomerPesan from "../views/Customer/Pesan.vue";
 import CustomerHistory from "../views/Customer/History.vue";
-import CustomerDetailHistory from "../views/Customer/DetailHistory.vue";
+import CustomerHistoryDetail from "../views/Customer/HistoryDetail.vue";
 import CustomerProfile from "../views/Customer/Profile.vue";
 import CustomerTopup from "../views/Customer/Topup.vue";
 import CustomerCheckout from "../views/Customer/Checkout.vue";
@@ -194,14 +194,14 @@ const router = createRouter({
           path: "history",
           children: [
             {
-              path: "",
+              path: ":page?",
               name: "customer-history",
               component: CustomerHistory,
             },
             {
-              path: ":id",
+              path: "detail/:id",
               name: "customer-history-detail",
-              component: CustomerDetailHistory,
+              component: CustomerHistoryDetail,
             },
           ],
         },
