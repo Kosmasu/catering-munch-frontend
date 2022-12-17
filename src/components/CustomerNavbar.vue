@@ -24,10 +24,16 @@
               class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li v-bind:class="getPage('customer-search')">
-                <RouterLink to="/customer/search">Search</RouterLink>
+                <RouterLink
+                  :to="{ name: 'customer-search', params: { page: 1 } }"
+                  >Search</RouterLink
+                >
               </li>
               <li v-bind:class="getPage('customer-history')">
-                <RouterLink to="/customer/history">History</RouterLink>
+                <RouterLink
+                  :to="{ name: 'customer-history', params: { page: 1 } }"
+                  >History</RouterLink
+                >
               </li>
             </ul>
           </div>
@@ -41,12 +47,16 @@
           <div class="hidden lg:flex">
             <ul class="menu menu-horizontal rounded-box p-2 space-x-2">
               <li v-bind:class="getPage('customer-search')">
-                <RouterLink :to="{ name: 'customer-search' }">
+                <RouterLink
+                  :to="{ name: 'customer-search', params: { page: 1 } }"
+                >
                   Search
                 </RouterLink>
               </li>
               <li v-bind:class="getPage('customer-history')">
-                <RouterLink :to="{ name: 'customer-history' }">
+                <RouterLink
+                  :to="{ name: 'customer-history', params: { page: 1 } }"
+                >
                   History
                 </RouterLink>
               </li>
@@ -55,7 +65,7 @@
         </div>
         <div class="navbar-end">
           <RouterLink :to="{ name: 'customer-topup' }" class="link">
-            <div class="mr-2">Saldo: Rp 0,00</div>
+            <div class="mr-2">Saldo: Rp. {{ saldo }},00</div>
           </RouterLink>
           <div class="dropdown dropdown-hover">
             <label tabindex="0" class="btn btn-primary">
@@ -85,11 +95,7 @@
                   >Profile</RouterLink
                 >
               </li>
-              <li @click="this.logout">
-                <RouterLink to=""
-                  >Logout</RouterLink
-                >
-              </li>
+              <li @click="logout"><RouterLink to="">Logout</RouterLink></li>
             </ul>
           </div>
         </div>
@@ -98,15 +104,15 @@
   </div>
 </template>
 <script>
-import { useAuthStore } from '@/stores/Auth/AuthStore';
-import { mapActions, mapState } from 'pinia';
+import { useAuthStore } from "@/stores/Auth/AuthStore";
+import { mapActions, mapState } from "pinia";
 
 export default {
   computed: {
-    ...mapState(useAuthStore, ['firstName'])
+    ...mapState(useAuthStore, ["firstName", "saldo"]),
   },
   methods: {
-    ...mapActions(useAuthStore, ['logout']),
+    ...mapActions(useAuthStore, ["logout"]),
     isThisPage(name) {
       return this.$route.name == name;
     },
