@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div class="m-4 font-semibold text-3xl text-center">Top Up</div>
-    <div class="rounded-lg border-2 p-4">
+    <div class="m-12 font-semibold text-4xl text-center">Top Up</div>
+    <div class="border-2 rounded-lg p-4">
       <form @submit.prevent="this.topup" class="form-control">
         <!-- NOMINAL -->
         <input-vue
