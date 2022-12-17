@@ -231,16 +231,25 @@ class MunchService {
     });
   }
 
-  static getMenus(batch_size, currentPage, provider_id, menu_nama) {
+  static getMenus(
+    batch_size,
+    currentPage,
+    provider_id,
+    menu_nama,
+    menu_status,
+    sort_column,
+    sort_type,
+  ) {
     return this.http.get("/menu", {
       params: {
         page: currentPage,
         provider_id: provider_id,
         menu_nama: menu_nama,
+        menu_status: menu_status,
         batch_size: batch_size,
         sort: {
-          column: "menu_id",
-          type: "asc",
+          column: sort_column,
+          type: sort_type,
         },
       },
     });
