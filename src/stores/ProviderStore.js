@@ -36,12 +36,21 @@ export const useProviderStore = defineStore("ProviderStore", {
           console.error(error);
         });
     },
-    async fetchMenus(currentPage = 1, menu_nama = "") {
+    async fetchMenus(
+      currentPage = 1,
+      menu_nama = "",
+      menu_status = null,
+      sort_column = "menu_id",
+      sort_type = "asc"
+    ) {
       await MunchService.getMenus(
         useSettingStore().batch_size,
         currentPage,
         useAuthStore().user.id,
-        menu_nama
+        menu_nama,
+        menu_status,
+        sort_column,
+        sort_type
       )
         .then((response) => {
           this.menus = response.data.data;
@@ -115,7 +124,6 @@ export const useProviderStore = defineStore("ProviderStore", {
         this.profile.users_desc
       )
         .then((response) => {
-          console.log(response);
           if (response.data.status == "created") {
             useAuthStore().me();
             router.push({ name: "provider" });
@@ -211,7 +219,6 @@ export const useProviderStore = defineStore("ProviderStore", {
         });
     },
     fillForm() {
-      console.log(this.menus);
       this.form.menu_foto = this.menus.menu_foto;
       this.form.menu_nama = this.menus.menu_nama;
       this.form.menu_harga = this.menus.menu_harga;

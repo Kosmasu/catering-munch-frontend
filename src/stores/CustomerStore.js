@@ -8,6 +8,7 @@ export const useCustomerStore = defineStore("CustomerStore", {
   state: () => ({
     menus: undefined,
     histories: undefined,
+    profile: undefined,
     formTopup: {
       nominal: undefined,
       password: undefined,
@@ -23,12 +24,31 @@ export const useCustomerStore = defineStore("CustomerStore", {
   }),
   getters: {},
   actions: {
-    async fetchMenus(currentPage = 1, menu_nama = "") {
+    async fetchProfile() {
+      await MunchService.me()
+        .then((response) => {
+          this.profile = response.data.data;
+          console.log(this.profile);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    async fetchMenus(
+      currentPage = 1,
+      menu_nama = "",
+      menu_status = "tersedia",
+      sort_column = "menu_nama",
+      sort_type = "asc"
+    ) {
       await MunchService.getMenus(
-        useSettingStore().batch_size,
+        8,
         currentPage,
         null,
-        menu_nama
+        menu_nama,
+        menu_status,
+        sort_column,
+        sort_type
       )
         .then((response) => {
           this.menus = response.data.data;
@@ -36,6 +56,24 @@ export const useCustomerStore = defineStore("CustomerStore", {
         .catch((error) => {
           console.error(error);
         });
+    },
+    async fetchProviderMenus(
+      provider_id,
+      currentPage = 1,
+      menu_nama = "",
+      menu_status = "tersedia",
+      sort_column = "menu_nama",
+      sort_type = "asc"
+    ) {
+      await MunchService.getMenus(
+        useSettingStore().batch_size,
+        currentPage,
+        provider_id,
+        menu_nama,
+        menu_status,
+        sort_column,
+        sort_type
+      );
     },
     async fetchHistoryPemesanan(
       currentPage = 1,
