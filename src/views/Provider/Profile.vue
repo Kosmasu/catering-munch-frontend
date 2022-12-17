@@ -1,13 +1,13 @@
 <template>
   <div class="container">
-    <div class="border-solid border-2 rounded-lg my-8 p-4">
+    <div class="border-solid border-2 rounded-lg my-8 p-4 text-xl">
       <div class="text-3xl">Profile</div>
-      <div class="capitalize text-xl underline">{{ this.fullName }}</div>
+      <div class="capitalize">Nama : {{ this.fullName }}</div>
       <form @submit.prevent="this.updateDesc">
         <div>Description</div>
         <textarea
           v-model="profile.users_desc"
-          class="w-full rounded-lg border p-2.5 text-xl"
+          class="w-full rounded-lg border p-2.5"
         />
         <button class="btn btn-primary mt-4 w-full">Save</button>
       </form>
