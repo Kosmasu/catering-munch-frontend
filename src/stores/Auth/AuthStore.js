@@ -25,6 +25,9 @@ export const useAuthStore = defineStore("AuthStore", {
     desc() {
       return this.user.desc;
     },
+    saldo() {
+      return this.user.saldo;
+    }
   },
   actions: {
     async sanctum() {
