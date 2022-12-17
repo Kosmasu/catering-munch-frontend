@@ -1,15 +1,37 @@
 <template>
   <div class="container">
-    <div class="m-2 font-semibold text-2xl text-center">Profile</div>
-    <div class="rounded-lg border-2 p-4">
-      <div class="font-semibold text-xl">Detail Profile</div>
-      <div>Nama</div>
-      <div>Email</div>
-      <div>Alamat</div>
+    <div class="border-2 rounded-lg my-8 p-4 text-xl">
+      <div class="text-3xl">Profile</div>
+      <table class="border-separate">
+        <tbody>
+          <tr>
+            <td>Nama</td>
+            <td>:</td>
+            <td class="capitalize">{{ user.nama }}</td>
+          </tr>
+          <tr>
+            <td>Saldo</td>
+            <td>:</td>
+            <td>Rp. {{ user.saldo.toLocaleString("id-ID") }},00</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
 <script>
-export default {};
+import { mapState } from "pinia";
+import { useAuthStore } from "@/stores/Auth/AuthStore.js";
+
+export default {
+  name: "CustomerProfile",
+  data() {
+    return {};
+  },
+  methods: {},
+  computed: {
+    ...mapState(useAuthStore, ["user"]),
+  },
+};
 </script>
 <style></style>
