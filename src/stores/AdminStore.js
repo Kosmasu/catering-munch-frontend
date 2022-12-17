@@ -105,7 +105,7 @@ export const useAdminStore = defineStore("AdminStore", {
           console.error(error);
         });
     },
-    async fetchHistoryTopup(currentPage = 1, date_lower, date_upper) {
+    async fetchHistoryTopup(currentPage = 1, date_lower = "", date_upper = "") {
       await MunchService.getHistoryTopup(
         useSettingStore().batch_size,
         currentPage,
@@ -131,7 +131,6 @@ export const useAdminStore = defineStore("AdminStore", {
     async banUser(role, id) {
       await MunchService.banUser(id)
         .then((response) => {
-          // console.log("user id", id, "banned");
           if (role == "customer") {
             this.fetchCustomers();
           } else {
@@ -146,7 +145,6 @@ export const useAdminStore = defineStore("AdminStore", {
     async unbanUser(role, id) {
       await MunchService.unbanUser(id)
         .then((response) => {
-          // console.log("user id", id, "unbanned");
           if (role == "customer") {
             this.fetchCustomers();
           } else {
@@ -161,7 +159,6 @@ export const useAdminStore = defineStore("AdminStore", {
     async approveProvider(id) {
       await MunchService.approveProvider(id)
         .then((response) => {
-          // console.log("user id", id, "approved");
           this.fetchProviders();
           this.fetchWaitingProviders();
         })
