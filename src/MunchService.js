@@ -270,8 +270,6 @@ class MunchService {
     return this.http.delete("/menu/" + id);
   }
 
-  
-
   static getPesanan(month, year) {
     return this.http.get("/pesanan/showDelivery", {
       params: {
@@ -303,9 +301,10 @@ class MunchService {
     return this.http.post(`/pesanan/receive/${detail_id}`);
   }
 
-  static topup(nominal) {
+  static topup(topup) {
     return this.http.patch(`/topup`, {
-      users_saldo: nominal,
+      topup_amount: topup.nominal,
+      password: topup.password,
     });
   }
 }
