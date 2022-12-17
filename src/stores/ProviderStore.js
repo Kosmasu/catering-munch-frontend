@@ -89,7 +89,7 @@ export const useProviderStore = defineStore("ProviderStore", {
         });
     },
     async fetchWaiting() {
-      await MunchService.getHistoryProvider(10, 1, "", "", "menunggu")
+      await MunchService.getHistoryPemesanan(10, 1, "", "", "menunggu")
         .then((response) => {
           this.histories = response.data.data;
         })
