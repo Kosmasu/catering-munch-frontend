@@ -23,6 +23,7 @@ import ProviderHistoryDetail from "../views/Provider/HistoryDetail.vue";
 import CustomerLayout from "../views/Customer/Layout.vue";
 import CustomerHome from "../views/Customer/Home.vue";
 import CustomerSearch from "../views/Customer/Search.vue";
+import CustomerSearchProvider from "../views/Customer/Provider.vue";
 import CustomerPesan from "../views/Customer/Pesan.vue";
 import CustomerHistory from "../views/Customer/History.vue";
 import CustomerHistoryDetail from "../views/Customer/HistoryDetail.vue";
@@ -182,8 +183,18 @@ const router = createRouter({
         },
         {
           path: "search",
-          name: "customer-search",
-          component: CustomerSearch,
+          children: [
+            {
+              path: ":page?",
+              name: "customer-search",
+              component: CustomerSearch,
+            },
+            {
+              path: "provider/:id/:page?",
+              name: "customer-search-provider",
+              component: CustomerSearchProvider,
+            },
+          ],
         },
         {
           path: "pesan",
