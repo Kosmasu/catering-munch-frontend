@@ -100,7 +100,7 @@
         </tr>
       </thead>
       <tbody v-if="histories">
-        <tr v-for="pemesanan in this.histories.data">
+        <tr v-for="pemesanan in histories.data">
           <td>{{ pemesanan.pemesanan_id }}</td>
           <td class="capitalize">{{ pemesanan.users_provider.users_nama }}</td>
           <td class="capitalize">{{ pemesanan.users_customer.users_nama }}</td>
@@ -120,9 +120,22 @@
     >
       <thead>
         <tr>
-          <th></th>
+          <th class="bg-primary">ID</th>
+          <th class="bg-primary">Customer</th>
+          <th class="bg-primary">Nominal</th>
+          <th class="bg-primary">Response</th>
+          <th class="bg-primary">Timestamp</th>
         </tr>
       </thead>
+      <tbody v-if="histories">
+        <tr v-for="topup in histories.data">
+          <td>{{ topup.topup_id }}</td>
+          <td>{{ topup.users.users_nama }}</td>
+          <td>Rp. {{ topup.topup_nominal.toLocaleString("id-ID") }},00</td>
+          <td>{{ topup.topup_response }}</td>
+          <td>{{ topup.topup_tanggal }}</td>
+        </tr>
+      </tbody>
     </table>
     <div v-if="histories" class="p-2">
       <pagination-vue v-model="currentPage" :paginatedData="histories" />

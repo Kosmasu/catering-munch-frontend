@@ -171,7 +171,7 @@ class MunchService {
         date_upper: date_upper,
         batch_size: batch_size,
         sort: {
-          column: "created_at",
+          column: "topup_tanggal",
           type: "desc",
         },
       },
@@ -253,7 +253,7 @@ class MunchService {
         batch_size: batch_size,
         sort: {
           column: "created_at",
-          type: "asc",
+          type: "desc",
         },
       },
     });
@@ -299,6 +299,12 @@ class MunchService {
   // CUSTOMER
   static terimaPesanan(detail_id) {
     return this.http.post(`/pesanan/receive/${detail_id}`);
+  }
+
+  static topup(nominal) {
+    return this.http.patch(`/topup`, {
+      users_saldo: nominal,
+    });
   }
 }
 
