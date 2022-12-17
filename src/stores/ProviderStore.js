@@ -65,7 +65,7 @@ export const useProviderStore = defineStore("ProviderStore", {
       date_upper = "",
       pemesanan_status = ""
     ) {
-      await MunchService.getHistoryProvider(
+      await MunchService.getHistoryPemesanan(
         useSettingStore().batch_size,
         currentPage,
         date_lower,
@@ -80,7 +80,7 @@ export const useProviderStore = defineStore("ProviderStore", {
         });
     },
     async fetchHistoryDetail(pemesanan_id) {
-      await MunchService.getHistoryProviderDetail(pemesanan_id)
+      await MunchService.getHistoryPemesananDetail(pemesanan_id)
         .then((response) => {
           this.histories = response.data.data;
         })

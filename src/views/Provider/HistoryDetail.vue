@@ -132,9 +132,7 @@ export default {
     ...mapState(useProviderStore, ["histories"]),
   },
   created() {
-    this.fetchHistoryDetail(this.$route.params.id).then((response) =>
-      console.log(this.histories)
-    );
+    this.fetchHistoryDetail(this.$route.params.id);
   },
 };
 </script>
