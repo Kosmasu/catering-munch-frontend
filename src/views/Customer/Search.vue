@@ -7,11 +7,19 @@
         placeholder="Search…"
         class="input input-primary"
       />
-      <select v-model="filter" @change="onFilterChange" class="select select-primary">
+      <select
+        v-model="filter"
+        @change="onFilterChange"
+        class="select select-primary"
+      >
         <option value="menu_nama">Nama</option>
         <option value="menu_harga">Harga</option>
       </select>
-      <select v-model="sort" @change="onSortChange" class="select select-primary">
+      <select
+        v-model="sort"
+        @change="onSortChange"
+        class="select select-primary"
+      >
         <option value="asc">Ascending</option>
         <option value="desc">Descending</option>
       </select>
@@ -83,25 +91,25 @@ export default {
       router.push({ name: "customer-search-provider", params: { id } });
     },
     onFilterChange() {
-      
+      this.fetchMenus(this.currentPage, this.query, this.filter, this.sort);
     },
     onSortChange() {
-
+      this.fetchMenus(this.currentPage, this.query, this.filter, this.sort);
     },
   },
   computed: {
     ...mapState(useCustomerStore, ["menus"]),
   },
   created() {
-    this.fetchMenus();
+    this.fetchMenus(this.currentPage, this.query, this.filter, this.sort);
   },
   watch: {
     currentPage(newCurrentPage, oldCurrentPage) {
-      this.fetchMenus(newCurrentPage);
+      this.fetchMenus(newCurrentPage, this.query, this.filter, this.sort);
     },
     query(newQuery, oldQuery) {
       this.currentPage = 1;
-      this.fetchMenus(this.currentPage, newQuery);
+      this.fetchMenus(this.currentPage, newQuery, this.filter, this.sort);
     },
   },
 };

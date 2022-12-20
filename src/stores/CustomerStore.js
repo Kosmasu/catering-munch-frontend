@@ -37,9 +37,9 @@ export const useCustomerStore = defineStore("CustomerStore", {
     async fetchMenus(
       currentPage = 1,
       menu_nama = "",
-      menu_status = "tersedia",
       sort_column = "menu_nama",
-      sort_type = "asc"
+      sort_type = "asc",
+      menu_status = "tersedia"
     ) {
       await MunchService.getMenus(
         8,
