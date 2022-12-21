@@ -44,7 +44,10 @@
           </td>
           <td>Rp, {{ menu.menu_harga.toLocaleString("id-ID") }},00</td>
           <td>
-            <button @click="detail(menu.menu_id)" class="btn btn-primary">
+            <button
+              @click="detail(menu.users.users_id)"
+              class="btn btn-primary"
+            >
               Detail
             </button>
           </td>
@@ -88,7 +91,7 @@ export default {
   methods: {
     ...mapActions(useCustomerStore, ["fetchMenus"]),
     detail(id) {
-      router.push({ name: "customer-search-provider", params: { id } });
+      router.push({ name: "customer-search-detail", params: { id } });
     },
     onFilterChange() {
       this.fetchMenus(this.currentPage, this.query, this.filter, this.sort);

@@ -72,7 +72,13 @@ export const useCustomerStore = defineStore("CustomerStore", {
         menu_status,
         sort_column,
         sort_type
-      );
+      )
+        .then((response) => {
+          this.menus = response.data.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
     async fetchHistoryPemesanan(
       currentPage = 1,

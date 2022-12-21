@@ -23,7 +23,7 @@ import ProviderHistoryDetail from "../views/Provider/HistoryDetail.vue";
 import CustomerLayout from "../views/Customer/Layout.vue";
 import CustomerHome from "../views/Customer/Home.vue";
 import CustomerSearch from "../views/Customer/Search.vue";
-import CustomerSearchProvider from "../views/Customer/Provider.vue";
+import CustomerSearchDetail from "../views/Customer/SearchDetail.vue";
 import CustomerPesan from "../views/Customer/Pesan.vue";
 import CustomerHistory from "../views/Customer/History.vue";
 import CustomerHistoryDetail from "../views/Customer/HistoryDetail.vue";
@@ -190,16 +190,11 @@ const router = createRouter({
               component: CustomerSearch,
             },
             {
-              path: "provider/:id/:page?",
-              name: "customer-search-provider",
-              component: CustomerSearchProvider,
+              path: "provider/:id",
+              name: "customer-search-detail",
+              component: CustomerSearchDetail,
             },
           ],
-        },
-        {
-          path: "pesan",
-          name: "customer-pesan",
-          component: CustomerPesan,
         },
         {
           path: "history",
@@ -225,6 +220,11 @@ const router = createRouter({
           path: "topup",
           name: "customer-topup",
           component: CustomerTopup,
+        },
+        {
+          path: "pesan/:id",
+          name: "customer-pesan",
+          component: CustomerPesan,
         },
         {
           path: "checkout",
