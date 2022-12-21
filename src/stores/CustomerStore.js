@@ -117,6 +117,7 @@ export const useCustomerStore = defineStore("CustomerStore", {
       await MunchService.getHistoryPemesananDetail(pemesanan_id)
         .then((response) => {
           this.histories = response.data.data;
+          console.log(this.histories);
         })
         .catch((error) => {
           console.error(error);
