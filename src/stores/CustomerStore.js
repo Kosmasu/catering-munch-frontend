@@ -28,7 +28,6 @@ export const useCustomerStore = defineStore("CustomerStore", {
       await MunchService.me()
         .then((response) => {
           this.profile = response.data.data;
-          console.log(this.profile);
         })
         .catch((error) => {
           console.error(error);

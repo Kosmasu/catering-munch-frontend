@@ -2,7 +2,7 @@
   <div class="container">
     <div class="m-12 font-semibold text-4xl text-center">Profile</div>
     <div class="border-2 p-4 rounded-lg text-xl">
-      <table class="border-separate">
+      <table class="border-separate w-full">
         <tbody v-if="profile">
           <tr>
             <td>Nama</td>

@@ -1,16 +1,57 @@
 <template>
   <div class="container">
-    <div class="border-solid border-2 rounded-lg my-8 p-4 text-xl">
-      <div class="text-3xl">Profile</div>
-      <div class="capitalize">Nama : {{ this.fullName }}</div>
-      <form @submit.prevent="this.updateDesc">
-        <div>Description</div>
-        <textarea
-          v-model="profile.users_desc"
-          class="w-full rounded-lg border p-2.5"
+    <div class="m-12 font-semibold text-4xl text-center">Profile</div>
+    <div class="border-2 p-4 rounded-lg text-xl">
+      <table class="border-separate w-full">
+        <tbody v-if="profile">
+          <tr>
+            <td>Nama</td>
+            <td>:</td>
+            <td class="capitalize">{{ profile.users_nama }}</td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>:</td>
+            <td>{{ profile.users_email }}</td>
+          </tr>
+          <tr>
+            <td>Nomor Telepon</td>
+            <td>:</td>
+            <td>{{ profile.users_telepon }}</td>
+          </tr>
+          <tr>
+            <td>Alamat</td>
+            <td>:</td>
+            <td>{{ profile.users_alamat }}</td>
+          </tr>
+          <tr>
+            <td>Description</td>
+            <td>:</td>
+            <td>
+              <textarea
+                v-model="profile.users_desc"
+                class="w-full rounded-lg border p-2.5"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <button
+                @click="this.updateDesc"
+                class="btn btn-primary mt-4 w-full"
+              >
+                Save
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-if="!profile" class="text-center">
+        <font-awesome-icon
+          icon="fa-solid fa-spinner"
+          class="text-6xl animate-spin"
         />
-        <button class="btn btn-primary mt-4 w-full">Save</button>
-      </form>
+      </div>
     </div>
   </div>
 </template>
@@ -29,15 +70,15 @@ export default {
     return {};
   },
   methods: {
-    ...mapActions(useProviderStore, ["updateDesc", "fillProfile"]),
+    ...mapActions(useProviderStore, ["updateDesc", "fetchProfile"]),
   },
   computed: {
-    ...mapState(useAuthStore, ["fullName"]),
+    ...mapState(useAuthStore, ["profile"]),
     ...mapWritableState(useProviderStore, ["profile"]),
     ...mapState(useProviderStore, ["errorData"]),
   },
   created() {
-    this.fillProfile();
+    this.fetchProfile();
   },
 };
 </script>
