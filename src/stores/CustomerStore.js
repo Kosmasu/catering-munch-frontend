@@ -75,6 +75,7 @@ export const useCustomerStore = defineStore("CustomerStore", {
       )
         .then((response) => {
           this.menus = response.data.data;
+          console.log("this.menus", this.menus);
         })
         .catch((error) => {
           console.error(error);
