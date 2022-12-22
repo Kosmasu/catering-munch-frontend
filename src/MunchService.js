@@ -238,7 +238,7 @@ class MunchService {
     menu_nama,
     menu_status,
     sort_column,
-    sort_type,
+    sort_type
   ) {
     return this.http.get("/menu", {
       params: {
@@ -308,6 +308,12 @@ class MunchService {
   // CUSTOMER
   static terimaPesanan(detail_id) {
     return this.http.post(`/pesanan/receive/${detail_id}`);
+  }
+
+  static ratePesanan(pemesanan_id, rating) {
+    return this.http.patch(`/pesanan/${pemesanan_id}/rate`, {
+      rating: rating,
+    });
   }
 
   static topup(topup) {

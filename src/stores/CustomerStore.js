@@ -117,10 +117,18 @@ export const useCustomerStore = defineStore("CustomerStore", {
       await MunchService.getHistoryPemesananDetail(pemesanan_id)
         .then((response) => {
           this.histories = response.data.data;
-          console.log(this.histories);
         })
         .catch((error) => {
           console.error(error);
+        });
+    },
+    async ratePesanan(pemesanan_id, rating) {
+      await MunchService.ratePesanan(pemesanan_id, rating)
+        .then((response) => {
+          this.fetchHistoryPemesananDetail(pemesanan_id);
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
     async topup() {

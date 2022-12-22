@@ -120,9 +120,14 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useCustomerStore, ["fetchHistoryPemesananDetail"]),
+    ...mapActions(useCustomerStore, [
+      "fetchHistoryPemesananDetail",
+      "ratePesanan",
+    ]),
     submit() {
-      console.log(this.rating);
+      if (this.rating > 0) {
+        this.ratePesanan(this.$route.params.id, this.rating);
+      }
     },
     formatDate(date) {
       const months = [
