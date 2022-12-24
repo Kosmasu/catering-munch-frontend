@@ -37,6 +37,9 @@
                   History
                 </RouterLink>
               </li>
+              <li>
+                <button @click="generateReport">Generate Report</button>
+              </li>
             </ul>
           </div>
           <button
@@ -61,6 +64,9 @@
                 >
                   History
                 </RouterLink>
+              </li>
+              <li>
+                <button @click="generateReport">Generate Report</button>
               </li>
             </ul>
           </div>
@@ -104,6 +110,7 @@
 </template>
 <script>
 import { useAuthStore } from "../stores/Auth/AuthStore";
+import { useProviderStore } from "../stores/ProviderStore";
 import { mapActions, mapState } from "pinia";
 import router from "@/router";
 
@@ -113,6 +120,7 @@ export default {
   },
   methods: {
     ...mapActions(useAuthStore, ["logout"]),
+    ...mapActions(useProviderStore, ["generateReport"]),
     profile() {
       router.push({ name: "provider-profile" });
     },

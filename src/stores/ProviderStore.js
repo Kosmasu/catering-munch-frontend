@@ -127,6 +127,15 @@ export const useProviderStore = defineStore("ProviderStore", {
           console.error(error);
         });
     },
+    async generateReport() {
+      return await MunchService.generateReport()
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     async updateDesc() {
       return await MunchService.updateDesc(
         useAuthStore().user.id,

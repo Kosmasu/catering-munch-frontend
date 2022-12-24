@@ -230,6 +230,10 @@ class MunchService {
   }
 
   // PROVIDER
+  static generateReport() {
+    return this.http.get(`/report`);
+  }
+
   static updateDesc(id, desc) {
     console.log(id, desc);
     return this.http.patch(`/users/${id}`, {
