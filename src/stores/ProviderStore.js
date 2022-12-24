@@ -117,7 +117,8 @@ export const useProviderStore = defineStore("ProviderStore", {
     async fetchOrders() {
       await MunchService.getPesanan(
         new Date().getMonth() + 1,
-        new Date().getFullYear()
+        new Date().getFullYear(),
+        "belum dikirim"
       )
         .then((response) => {
           this.orders = response.data.data;

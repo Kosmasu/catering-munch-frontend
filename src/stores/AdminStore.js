@@ -38,7 +38,9 @@ export const useAdminStore = defineStore("AdminStore", {
       await MunchService.getProviders(
         useSettingStore().batch_size,
         currentPage,
-        users_nama
+        users_nama,
+        "users_id",
+        "asc"
       )
         .then((response) => {
           this.providers = response.data.data;
