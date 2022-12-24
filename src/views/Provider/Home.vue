@@ -4,7 +4,10 @@
       <div class="text-3xl">Overview</div>
       <div>Monthly Review</div>
       <div class="divider" />
-      <div v-if="stats" class="flex flex-col space-y-2 lg:flex-row lg:space-x-4 lg:space-y-0 justify-between text-center text-xl">
+      <div
+        v-if="stats"
+        class="flex flex-col space-y-2 lg:flex-row lg:space-x-4 lg:space-y-0 justify-between text-center text-xl"
+      >
         <div class="flex-1 border-solid border-2 rounded-lg py-4">
           <div class="font-bold">Current Customer</div>
           <div>{{ stats.thismonth_delivery }}</div>
@@ -102,9 +105,14 @@
               {{ order.detail_status }}
             </td>
             <td>
-              <button @click="deliver(order.detail_id)" class="btn btn-primary">
+              <button
+                v-if="order.detail_status == 'belum dikirim'"
+                @click="deliver(order.detail_id)"
+                class="btn btn-primary"
+              >
                 Deliver
               </button>
+              <div v-else>-</div>
             </td>
           </tr>
         </tbody>
