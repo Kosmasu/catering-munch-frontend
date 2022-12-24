@@ -103,7 +103,13 @@ class MunchService {
     });
   }
 
-  static getProviders(batch_size, currentPage, users_nama) {
+  static getProviders(
+    batch_size,
+    currentPage,
+    users_nama,
+    sort_column,
+    sort_type
+  ) {
     return this.http.get(`/users`, {
       params: {
         page: currentPage,
@@ -111,8 +117,8 @@ class MunchService {
         users_nama: users_nama,
         batch_size: batch_size,
         sort: {
-          column: "users_id",
-          type: "asc",
+          column: sort_column,
+          type: sort_type,
         },
       },
     });
@@ -279,7 +285,7 @@ class MunchService {
     return this.http.delete("/menu/" + id);
   }
 
-  static getPesanan(month, year) {
+  static getPesanan(month, year, status) {
     return this.http.get("/pesanan/showDelivery", {
       params: {
         month: month,
@@ -288,7 +294,7 @@ class MunchService {
           column: "detail_tanggal",
           type: "asc",
         },
-        detail_status: "belum dikirim",
+        detail_status: status,
       },
     });
   }

@@ -24,6 +24,38 @@ export const useCustomerStore = defineStore("CustomerStore", {
   }),
   getters: {},
   actions: {
+    async fetchCateringAnda() {
+      await MunchService.getPesanan(
+        new Date().getMonth() + 1,
+        new Date().getFullYear(),
+        "terkirim"
+      )
+        .then((response) => {
+          this.cateringAnda = response.data.data;
+          console.log("this.cateringAnda", this.cateringAnda);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    async fetchTopCatering() {
+      await MunchService.getProviders(5, 1, "", "users_rating", "desc")
+        .then((response) => {
+          this.topCatering = response.data.data.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    async fetchPesanLagi() {
+      await MunchService.getHistoryPemesanan(5, 1, "", "", "selesai")
+        .then((response) => {
+          this.pesanLagi = response.data.data.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     async fetchProfile() {
       await MunchService.me()
         .then((response) => {
@@ -75,7 +107,6 @@ export const useCustomerStore = defineStore("CustomerStore", {
       )
         .then((response) => {
           this.menus = response.data.data;
-          console.log("this.menus", this.menus);
         })
         .catch((error) => {
           console.error(error);
@@ -117,6 +148,15 @@ export const useCustomerStore = defineStore("CustomerStore", {
       await MunchService.getHistoryPemesananDetail(pemesanan_id)
         .then((response) => {
           this.histories = response.data.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    async acceptPesanan(detail_id) {
+      await MunchService.terimaPesanan(detail_id)
+        .then((response) => {
+          this.fetchCateringAnda();
         })
         .catch((error) => {
           console.error(error);
