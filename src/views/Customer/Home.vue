@@ -1,5 +1,5 @@
 <template>
-  <div class="container space-y-4 mt-4">
+  <div class="container space-y-4 mt-12">
     <div class="font-semibold text-2xl">Catering Anda</div>
     <div class="flex gap-2">
       <table class="table table-compact w-full text-center">
