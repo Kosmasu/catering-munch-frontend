@@ -1,16 +1,23 @@
 <template>
   <div class="container">
     <div class="m-6 font-semibold text-3xl text-center">Pesan</div>
-    <div v-if="menus" class="grid grid-cols-2 gap-8 rounded-lg border-2 p-4">
-      <div>
+    <div
+      v-if="menus"
+      class="grid grid-cols-1 lg:grid-cols-2 gap-8 rounded-lg border-2 p-4"
+    >
+      <div class="text-center">
         <div class="font-semibold text-xl">Pilih Tanggal</div>
-        <v-calendar :attributes="attributes" @dayclick="onDayClick" />
-        <div>{{ days }}</div>
+        <v-calendar
+          :min-date="new Date()"
+          :attributes="attributes"
+          @dayclick="onDayClick"
+        />
+        <!-- <div>{{ days }}</div> -->
       </div>
 
       <div>
-        <div class="font-semibold text-xl">Pilih Menu</div>
-        <div class="grid grid-cols-4 gap-4">
+        <div class="font-semibold text-xl text-center">Pilih Menu</div>
+        <div class="grid grid-cols-2 justify-items-center">
           <div v-for="menu in menus.data">
             <label class="label cursor-pointer justify-start">
               <input
@@ -19,13 +26,16 @@
                 v-bind:value="menu"
                 class="checkbox"
               />
-              <span class="label">{{ menu.menu_nama }}</span>
+              <span class="label whitespace-normal"
+                >{{ menu.menu_nama }} - Rp.
+                {{ menu.menu_harga.toLocaleString("id-ID") }},00</span
+              >
             </label>
           </div>
         </div>
-        <div>
-          <button @click="submit" class="btn btn-primary">Submit</button>
-        </div>
+        <button @click="tambah" class="btn btn-primary w-full mt-4">
+          Tambah
+        </button>
       </div>
 
       <!-- <span>Every</span>
@@ -42,30 +52,40 @@
       />
     </div>
     <div class="mt-4 rounded-lg border-2 p-4">
-      <div class="font-semibold text-xl">List Pemesanan</div>
-      <div class="font-semibold text-lg">Detail</div>
-      <div v-for="(order, index) in orders" :key="index">
-        <div class="font-semibold">
-          {{ order.day.id }}
-        </div>
-        <div v-for="(menu, index) in order.order" :key="index">
-          &emsp; {{ menu.menu_id }} - {{ menu.menu_nama }} -
-          {{ menu.menu_harga }}
+      <div class="font-semibold text-xl text-center">Detail Pemesanan</div>
+      <div class="grid grid-cols-3">
+        <div v-for="(order, index) in orders" :key="index">
+          <div class="font-semibold">
+            <button @click="hapus(index)" class="btn btn-sm btn-primary">
+              X
+            </button>
+            {{ order.day.id }}
+          </div>
+          <div v-for="(menu, key) in order.order" :key="key">
+            &emsp; *{{ menu.menu_nama }} - Rp.
+            {{ menu.menu_harga.toLocaleString("id-ID") }},00
+          </div>
         </div>
       </div>
       <div class="font-semibold text-lg">Summary</div>
-      <div>Jumlah : {{ orders.length }}</div>
-      <div>Total : Rp. 0,00</div>
+      <div>Jumlah : {{ orders.length }} hari</div>
+      <div>Total : Rp. {{ total.toLocaleString("id-ID") }},00</div>
       <div>
-        <button class="btn btn-primary">Proceed to Checkout</button>
+        <button @click="addToCart" class="btn btn-primary">
+          Proceed to Cart
+        </button>
+        <font-awesome-icon
+          v-if="isLoading"
+          icon="fa-solid fa-spinner"
+          class="text-3xl animate-spin"
+        />
       </div>
     </div>
   </div>
 </template>
 <script>
-import { mapActions, mapState, mapWritableState } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useCustomerStore } from "@/stores/CustomerStore.js";
-import InputVue from "@/components/Inputs/Input.vue";
 import router from "@/router";
 
 export default {
@@ -73,15 +93,17 @@ export default {
   components: {},
   data() {
     return {
-      provider_id: undefined,
       selectedMenus: [],
       orders: [],
+      total: 0,
 
       days: [],
+
+      isLoading: false,
     };
   },
   methods: {
-    ...mapActions(useCustomerStore, ["fetchProviderMenus"]),
+    ...mapActions(useCustomerStore, ["fetchProviderMenus", "addCart"]),
     onDayClick(day) {
       const idx = this.days.findIndex((d) => d.id === day.id);
       if (idx >= 0) {
@@ -97,7 +119,10 @@ export default {
       console.log(this.dayOfWeek);
       // this.days.push({ weekdays: [this.dayOfWeek] });
     },
-    submit() {
+    hapus(index) {
+      this.orders.splice(index, 1);
+    },
+    tambah() {
       this.days.forEach((day) => {
         const idx = this.orders.findIndex((o) => o.day.id === day.id);
         if (idx >= 0) {
@@ -115,7 +140,21 @@ export default {
       this.orders.sort((a, b) =>
         a.day.id > b.day.id ? 1 : b.day.id > a.day.id ? -1 : 0
       );
-      console.log(this.orders);
+      this.total = 0;
+      this.orders.forEach((order) => {
+        this.total += order.order[0].menu_harga;
+      });
+      this.selectedMenus = [];
+      this.days = [];
+    },
+    addToCart() {
+      this.isLoading = true;
+      this.orders.forEach((order) => {
+        order.order.forEach((o) => {
+          this.addCart(o.menu_id, order.day.id);
+        });
+      });
+      router.push({ name: "customer-cart" });
     },
   },
   computed: {
@@ -131,8 +170,7 @@ export default {
     },
   },
   created() {
-    this.provider_id = this.$route.params.id;
-    this.fetchProviderMenus(this.provider_id);
+    this.fetchProviderMenus(this.$route.params.id);
   },
   watch: {},
 };

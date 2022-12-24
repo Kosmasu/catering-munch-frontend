@@ -316,6 +316,36 @@ class MunchService {
     return this.http.post(`/pesanan/receive/${detail_id}`);
   }
 
+  static getCart() {
+    return this.http.get(`/cart`);
+  }
+
+  static addCart(menu_id, cart_jumlah, cart_tanggal) {
+    return this.http.post(`/cart`, {
+      menu_id: menu_id,
+      cart_jumlah: cart_jumlah,
+      cart_tanggal: cart_tanggal,
+    });
+  }
+
+  // static editCart(cart_id, cart_jumlah) {
+  //   return this.http.patch(`/cart/${cart_id}`, {
+  //     cart_jumlah: cart_jumlah,
+  //   });
+  // }
+
+  static deleteCart(cart_id) {
+    return this.http.delete(`/cart/${cart_id}`);
+  }
+
+  static clearCart() {
+    return this.http.delete(`/cart/clear`);
+  }
+
+  static checkoutCart() {
+    return this.http.post(`/pesanan`);
+  }
+
   static ratePesanan(pemesanan_id, rating) {
     return this.http.patch(`/pesanan/${pemesanan_id}/rate`, {
       rating: rating,

@@ -9,6 +9,7 @@ export const useCustomerStore = defineStore("CustomerStore", {
     menus: undefined,
     histories: undefined,
     profile: undefined,
+    carts: undefined,
     formTopup: {
       nominal: undefined,
       password: undefined,
@@ -24,6 +25,16 @@ export const useCustomerStore = defineStore("CustomerStore", {
   }),
   getters: {},
   actions: {
+    async fetchCart() {
+      await MunchService.getCart()
+        .then((response) => {
+          this.carts = response.data.data;
+          console.log(this.carts);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     async fetchCateringAnda() {
       await MunchService.getPesanan(
         new Date().getMonth() + 1,
@@ -32,7 +43,6 @@ export const useCustomerStore = defineStore("CustomerStore", {
       )
         .then((response) => {
           this.cateringAnda = response.data.data;
-          console.log("this.cateringAnda", this.cateringAnda);
         })
         .catch((error) => {
           console.error(error);
@@ -162,6 +172,35 @@ export const useCustomerStore = defineStore("CustomerStore", {
           console.error(error);
         });
     },
+    async addCart(menu_id, cart_tanggal) {
+      await MunchService.addCart(menu_id, 1, cart_tanggal)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    // async editCart() {},
+    async deleteCart(cart_id) {
+      await MunchService.deleteCart(cart_id)
+        .then((response) => {
+          this.fetchCart();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    async clearCart() {
+      await MunchService.clearCart()
+        .then((response) => {
+          this.fetchCart();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    async checkoutCart() {},
     async ratePesanan(pemesanan_id, rating) {
       await MunchService.ratePesanan(pemesanan_id, rating)
         .then((response) => {

@@ -8,10 +8,17 @@
     @input="$emit('update:modelValue', $event.target.value)"
     :placeholder="this.label"
     class="input input-bordered"
-    :class="{'input-bordered': !this.isError, 'input-error': this.isError}"
+    :class="{ 'input-bordered': !this.isError, 'input-error': this.isError }"
   />
-  <label v-if="this.errors && Object.hasOwn(this.errors, this.name)" class="label">
-    <span v-for="(item, index) in this.errors[this.name]" :key="index" class="label-text text-error">
+  <label
+    v-if="this.errors && Object.hasOwn(this.errors, this.name)"
+    class="label"
+  >
+    <span
+      v-for="(item, index) in this.errors[this.name]"
+      :key="index"
+      class="label-text text-error"
+    >
       {{ item }}
     </span>
   </label>
@@ -22,7 +29,7 @@ export default {
   props: {
     modelValue: {
       type: String,
-      required: true, 
+      required: true,
       default: "",
     },
     type: {
@@ -45,17 +52,13 @@ export default {
       default: null,
     },
   },
-  emits: [
-    "update:modelValue",
-  ],
+  emits: ["update:modelValue"],
   computed: {
     isError() {
-      return this.errors && Object.hasOwn(this.errors, this.name)
-    }
-  }
-}
+      return this.errors && Object.hasOwn(this.errors, this.name);
+    },
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

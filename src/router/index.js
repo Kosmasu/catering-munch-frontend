@@ -29,7 +29,7 @@ import CustomerHistory from "../views/Customer/History.vue";
 import CustomerHistoryDetail from "../views/Customer/HistoryDetail.vue";
 import CustomerProfile from "../views/Customer/Profile.vue";
 import CustomerTopup from "../views/Customer/Topup.vue";
-import CustomerCheckout from "../views/Customer/Checkout.vue";
+import CustomerCart from "../views/Customer/Cart.vue";
 
 import CobaAxios from "../views/CobaAxios.vue";
 import { useAuthStore } from "../stores/Auth/AuthStore";
@@ -227,9 +227,9 @@ const router = createRouter({
           component: CustomerPesan,
         },
         {
-          path: "checkout",
-          name: "customer-checkout",
-          component: CustomerCheckout,
+          path: "cart",
+          name: "customer-cart",
+          component: CustomerCart,
         },
       ],
     },

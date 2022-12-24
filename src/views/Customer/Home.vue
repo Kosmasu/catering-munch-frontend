@@ -1,5 +1,6 @@
 <template>
-  <div class="container space-y-4 mt-12">
+  <div class="container space-y-4 mt-8">
+    <div class="font-bold text-3xl text-center">MUNCH</div>
     <div class="font-semibold text-2xl">Catering Anda</div>
     <div class="flex gap-2">
       <table class="table table-compact w-full text-center">
@@ -29,6 +30,9 @@
               <div v-else>-</div>
             </td>
           </tr>
+          <tr v-if="cateringAnda.length == 0">
+            <td colspan="5">Tidak ada Catering saat ini!</td>
+          </tr>
         </tbody>
         <tbody v-else>
           <tr>
@@ -45,7 +49,7 @@
     <div class="font-semibold text-2xl">Top Catering</div>
     <div class="flex gap-2">
       <carousel-menu-vue v-if="topCatering" :providers="topCatering" />
-      <div v-else class="text-center">
+      <div v-else>
         <font-awesome-icon
           icon="fa-solid fa-spinner"
           class="text-6xl animate-spin"
@@ -59,11 +63,14 @@
         :providers="pesanLagi"
         :type="'objek'"
       />
-      <div v-else class="text-center">
+      <div v-else>
         <font-awesome-icon
           icon="fa-solid fa-spinner"
           class="text-6xl animate-spin"
         />
+      </div>
+      <div v-if="pesanLagi && pesanLagi.length == 0">
+        Anda belum pernah memesan Catering!
       </div>
     </div>
   </div>

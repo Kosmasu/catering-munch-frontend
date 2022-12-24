@@ -35,6 +35,9 @@
                   >History</RouterLink
                 >
               </li>
+              <li v-bind:class="getPage('customer-cart')">
+                <RouterLink :to="{ name: 'customer-cart' }">Cart</RouterLink>
+              </li>
             </ul>
           </div>
           <button
@@ -59,6 +62,9 @@
                 >
                   History
                 </RouterLink>
+              </li>
+              <li v-bind:class="getPage('customer-cart')">
+                <RouterLink :to="{ name: 'customer-cart' }">Cart</RouterLink>
               </li>
             </ul>
           </div>
