@@ -38,7 +38,7 @@
                 </RouterLink>
               </li>
               <li>
-                <button @click="generateReport">Generate Report</button>
+                <button @click="download">Generate Report</button>
               </li>
             </ul>
           </div>
@@ -66,7 +66,7 @@
                 </RouterLink>
               </li>
               <li>
-                <button @click="generateReport">Generate Report</button>
+                <button @click="download">Generate Report</button>
               </li>
             </ul>
           </div>
@@ -117,10 +117,20 @@ import router from "@/router";
 export default {
   computed: {
     ...mapState(useAuthStore, ["firstName"]),
+    ...mapState(useProviderStore, ["report"]),
   },
   methods: {
     ...mapActions(useAuthStore, ["logout"]),
     ...mapActions(useProviderStore, ["generateReport"]),
+    async download() {
+      await this.generateReport().then((response) => {
+        var fileURL = window.URL.createObjectURL(new Blob([this.report.data]));
+        var fileLink = document.createElement("a");
+        fileLink.href = fileURL;
+        fileLink.setAttribute("download", "report.xlsx");
+        fileLink.click();
+      });
+    },
     profile() {
       router.push({ name: "provider-profile" });
     },

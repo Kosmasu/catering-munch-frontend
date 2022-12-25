@@ -22,6 +22,7 @@ export const useProviderStore = defineStore("ProviderStore", {
       message: undefined,
       errors: undefined,
     },
+    report: undefined,
   }),
   getters: {},
   actions: {
@@ -128,9 +129,10 @@ export const useProviderStore = defineStore("ProviderStore", {
         });
     },
     async generateReport() {
-      return await MunchService.generateReport()
+      await MunchService.generateReport()
         .then((response) => {
           console.log(response);
+          this.report = response;
         })
         .catch((error) => {
           console.error(error);
