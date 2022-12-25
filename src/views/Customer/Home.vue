@@ -31,7 +31,7 @@
             </td>
           </tr>
           <tr v-if="cateringAnda.length == 0">
-            <td colspan="5">Tidak ada Catering saat ini!</td>
+            <td colspan="5">Tidak ada Catering bulan ini!</td>
           </tr>
         </tbody>
         <tbody v-else>

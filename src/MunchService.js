@@ -231,7 +231,9 @@ class MunchService {
 
   // PROVIDER
   static generateReport() {
-    return this.http.get(`/report`);
+    return this.http.get(`/report/penjualan`, {
+      responseType: "blob",
+    });
   }
 
   static updateDesc(id, desc) {
@@ -347,7 +349,7 @@ class MunchService {
   }
 
   static checkoutCart() {
-    return this.http.post(`/pesanan`);
+    return this.http.post(`/pesanan/pesanCart`);
   }
 
   static ratePesanan(pemesanan_id, rating) {

@@ -200,7 +200,18 @@ export const useCustomerStore = defineStore("CustomerStore", {
           console.error(error);
         });
     },
-    async checkoutCart() {},
+    async checkoutCart() {
+      this.errorData.message = undefined;
+      await MunchService.checkoutCart()
+        .then((response) => {
+          this.fetchCart();
+          router.push({ name: "customer" });
+        })
+        .catch((error) => {
+          this.errorData.message = error.response.data.message;
+          console.error(error);
+        });
+    },
     async ratePesanan(pemesanan_id, rating) {
       await MunchService.ratePesanan(pemesanan_id, rating)
         .then((response) => {

@@ -148,13 +148,15 @@ export default {
       this.days = [];
     },
     addToCart() {
-      this.isLoading = true;
-      this.orders.forEach((order) => {
-        order.order.forEach((o) => {
-          this.addCart(o.menu_id, order.day.id);
+      if (this.orders.length > 0) {
+        this.isLoading = true;
+        this.orders.forEach((order) => {
+          order.order.forEach((o) => {
+            this.addCart(o.menu_id, order.day.id);
+          });
         });
-      });
-      router.push({ name: "customer-cart" });
+        router.push({ name: "customer-cart" });
+      }
     },
   },
   computed: {
