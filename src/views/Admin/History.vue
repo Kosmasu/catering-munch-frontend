@@ -164,7 +164,7 @@ export default {
   },
   data() {
     return {
-      filter: "log",
+      filter: "pemesanan",
       date_lower: "",
       date_upper: "",
       currentPage: 1,
@@ -209,7 +209,7 @@ export default {
     ...mapState(useAdminStore, ["histories"]),
   },
   created() {
-    this.fetchHistoryLog();
+    this.fetchHistoryPemesanan();
   },
   watch: {
     currentPage(newCurrentPage, oldCurrentPage) {
